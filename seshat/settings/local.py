@@ -53,6 +53,7 @@ my_current_server = "127.0.0.1:8000"
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 ALLOWED_HOSTS = ['127.0.0.1',
+                 '51.141.239.61',
                  'localhost']
 
 if 'test' in sys.argv:
