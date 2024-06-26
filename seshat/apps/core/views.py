@@ -713,6 +713,18 @@ def seshat_comment_part_create_from_null_view_OLD(request, com_id, subcom_order)
                                     page_from=int(page_from),
                                     page_to=int(page_to)
                                 )
+                            elif page_from:
+                                citation, created = Citation.objects.get_or_create(
+                                    ref=reference,
+                                    page_from=int(page_from),
+                                    page_to=int(page_from)
+                                )
+                            elif page_to:
+                                citation, created = Citation.objects.get_or_create(
+                                    ref=reference,
+                                    page_from=int(page_to),
+                                    page_to=int(page_to)
+                                )
                                 #print(page_from, "AAAAAAAAAAAAAAAAAAAAND ", page_to)
                             else:
                                 citation, created = Citation.objects.get_or_create(
@@ -791,6 +803,18 @@ def seshat_comment_part_create_from_null_view(request, com_id, subcom_order):
                                 citation, created = Citation.objects.get_or_create(
                                     ref=reference,
                                     page_from=int(page_from),
+                                    page_to=int(page_to)
+                                )
+                            elif page_from:
+                                citation, created = Citation.objects.get_or_create(
+                                    ref=reference,
+                                    page_from=int(page_from),
+                                    page_to=int(page_from)
+                                )
+                            elif page_to:
+                                citation, created = Citation.objects.get_or_create(
+                                    ref=reference,
+                                    page_from=int(page_to),
                                     page_to=int(page_to)
                                 )
                                 #print(page_from, "AAAAAAAAAAAAAAAAAAAAND ", page_to)
@@ -899,6 +923,18 @@ def seshat_comment_part_create_from_null_view_inline(request, app_name, model_na
                                     page_from=int(page_from),
                                     page_to=int(page_to)
                                 )
+                            elif page_from:
+                                citation, created = Citation.objects.get_or_create(
+                                    ref=reference,
+                                    page_from=int(page_from),
+                                    page_to=int(page_from)
+                                )
+                            elif page_to:
+                                citation, created = Citation.objects.get_or_create(
+                                    ref=reference,
+                                    page_from=int(page_to),
+                                    page_to=int(page_to)
+                                )
                                 #print(page_from, "AAAAAAAAAAAAAAAAAAAAND ", page_to)
                             else:
                                 citation, created = Citation.objects.get_or_create(
@@ -955,6 +991,8 @@ def seshat_comment_part_create_from_null_view_inline(request, app_name, model_na
 def seshat_private_comment_part_create_from_null_view(request, private_com_id):
     if request.method == 'POST':
         form = SeshatPrivateCommentPartForm(request.POST)
+        oopsi = request.POST.getlist('selected_items')
+        print("ooopsiiiiiiiiiiiiiiii,", oopsi)
         big_father = SeshatPrivateComment.objects.get(id=private_com_id)
 
         if form.is_valid():
@@ -2260,7 +2298,18 @@ def do_zotero(results):
                 pot_title = "NO_TITLE_PROVIDED_IN_ZOTERO"
             #print("Years: ", my_dic.get('year'))
             #print("****************")
-            newref = Reference(title=pot_title, year=my_dic.get('year'), creator=my_dic.get('mainCreator'), zotero_link=my_dic.get('key'))
+            # item_type
+            try:
+                if item['data']['itemType']:
+                    full_item = item['data']['itemType']
+                    my_dic['item_type'] = full_item
+                else:
+                    my_dic['item_type'] = 'No_Item_Type'
+                    #pass #print("year is empty for index: ", i, item['data']['itemType'])
+                #pass #print(my_dic['year'])
+            except:
+                my_dic['item_type'] = 'No_Item_Type'
+            newref = Reference(title=pot_title, year=my_dic.get('year'), creator=my_dic.get('mainCreator'), zotero_link=my_dic.get('key'), item_type=my_dic.get('item_type'))
             #newref = Reference(title=my_dic['title'], year=my_dic['year'], creator=my_dic['mainCreator'], zotero_link=my_dic['key'])
 
             if my_dic.get('year') < 2040:
@@ -2365,7 +2414,8 @@ def synczotero100(request):
     new_refs = do_zotero(results)
     context = {}
     context["newly_adds"] = new_refs
-    update_citations_from_inside_zotero_update()
+    # Seemingly problematic call from Zotero to Nginx
+    #update_citations_from_inside_zotero_update()
     #num_1_ref = Reference.objects.get(zotero_link ="FGFSZUNB")
     #num_1_ref.year = 2014
     #num_1_ref.save()
@@ -2803,6 +2853,18 @@ def update_seshat_comment_part_view(request, pk):
                                     page_from=int(page_from),
                                     page_to=int(page_to)
                                 )
+                            elif page_from:
+                                citation, created = Citation.objects.get_or_create(
+                                    ref=reference,
+                                    page_from=int(page_from),
+                                    page_to=int(page_from)
+                                )
+                            elif page_to:
+                                citation, created = Citation.objects.get_or_create(
+                                    ref=reference,
+                                    page_from=int(page_to),
+                                    page_to=int(page_to)
+                                )
                             else:
                                 citation, created = Citation.objects.get_or_create(
                                     ref=reference,
@@ -3006,6 +3068,18 @@ def create_a_comment_with_a_subcomment_newer(request, app_name, model_name, inst
                                 citation, created = Citation.objects.get_or_create(
                                     ref=reference,
                                     page_from=int(page_from),
+                                    page_to=int(page_to)
+                                )
+                            elif page_from:
+                                citation, created = Citation.objects.get_or_create(
+                                    ref=reference,
+                                    page_from=int(page_from),
+                                    page_to=int(page_from)
+                                )
+                            elif page_to:
+                                citation, created = Citation.objects.get_or_create(
+                                    ref=reference,
+                                    page_from=int(page_to),
                                     page_to=int(page_to)
                                 )
                                 #print(page_from, "AAAAAAAAAAAAAAAAAAAAND ", page_to)
@@ -3345,3 +3419,16 @@ def search_suggestions(request):
         Q(new_name__icontains=search_term)
     ).order_by('start_year')  # Limit to 5 suggestions [:5]
     return render(request, 'core/partials/_search_suggestions.html', {'polities': polities})
+
+
+def xxyyzz(request, com_id):
+    if request.method == 'POST':
+        my_items = request.POST.getlist('selected_items')
+        for item in my_items:
+            my_sp = SeshatPrivateCommentPart.objects.get(id=int(item))
+            my_sp.is_done= True
+            my_sp.save()
+        return redirect(reverse('seshatprivatecomment-update', kwargs={'pk': com_id}))
+
+    return redirect(reverse('seshatprivatecomment-update', kwargs={'pk': com_id}))
+

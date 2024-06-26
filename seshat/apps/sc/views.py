@@ -7647,6 +7647,7 @@ def download_csv_information(request):
 
 
 
+from seshat.apps.core.forms import  SeshatCommentPartForm2
 
 
 # Define a custom test function to check for the 'core.add_capital' permission
@@ -7661,6 +7662,7 @@ def has_add_capital_permission(user):
 def dynamic_detail_view(request, pk, model_class, myvar, var_name_display):
     # Retrieve the object for the given model class
     obj = get_object_or_404(model_class, pk=pk)
+    form_inline_new = SeshatCommentPartForm2(request.POST)
 
     context = {
         'object': obj,
@@ -7668,9 +7670,13 @@ def dynamic_detail_view(request, pk, model_class, myvar, var_name_display):
         "var_name_display": var_name_display,
         'create_new_url': myvar+"-create",
         'see_all_url': myvar+"s_all",
+        'letsdo': 'Let us do it!!!',
+        'form': form_inline_new,
+        'db_section': 'rt',
     }
 
     return render(request, 'sc/sc_detail.html', context)
+
 
 
 # Use the login_required, permission_required, and user_passes_test decorators
