@@ -7,36 +7,90 @@ function updateSliderOutput() {
 }
 
 function adjustSliderUp() {
-    slider.value = Number(slider.value) + 1;
+    increment = Number(document.getElementById('increment').value)
+    slider.value = Number(slider.value) + increment;
     enterYearInput.value = slider.value; // Sync enterYear input with dateSlide value
     updateSliderOutput(); // Update the displayed year
     plotPolities(); // This function is defined differently in the world_map and polity_map templates
 }
 
 function adjustSliderDown() {
-    slider.value = Number(slider.value) - 1;
+    increment = Number(document.getElementById('increment').value)
+    slider.value = Number(slider.value) - increment;
     enterYearInput.value = slider.value; // Sync enterYear input with dateSlide value
     updateSliderOutput(); // Update the displayed year
     plotPolities(); // This function is defined differently in the world_map and polity_map templates
 }
 
+function adjustSliderStartYear() {
+    slider.value = slider.min;
+    enterYearInput.value = slider.value; // Sync enterYear input with dateSlide value
+    updateSliderOutput(); // Update the displayed year
+    plotPolities(); // This function is defined differently in the world_map and polity_map templates
+}
+
+function adjustSliderEndYear() {
+    slider.value = slider.max;
+    enterYearInput.value = slider.value; // Sync enterYear input with dateSlide value
+    updateSliderOutput(); // Update the displayed year
+    plotPolities(); // This function is defined differently in the world_map and polity_map templates
+}
+
+function playRateValue() {
+    console.log('called')
+    var increment = Number(document.getElementById('increment').value);
+    var playRate = document.getElementById('playRate')
+    playRate.textContent = increment + ' y/s';
+    plotPolities();
+}
+
+function setSliderTicks (tickYears) {
+    var datalist = document.getElementById('yearTickmarks');
+    var tickmarkValuesDiv = document.getElementById('yearTickmarkValues');
+
+    // If the data list already has options, remove them
+    while (datalist.firstChild) {
+        datalist.removeChild(datalist.firstChild);
+    };
+    // If the tickmark values div already has spans, remove them
+    while (tickmarkValuesDiv.firstChild) {
+        tickmarkValuesDiv.removeChild(tickmarkValuesDiv.firstChild);
+    };
+
+    // Loop to add tickmarks
+    i = 0;
+    for (const tickValue of tickYears) {
+        var option = document.createElement('option');
+        option.value = tickValue;
+        datalist.appendChild(option);
+
+        // Create and add corresponding span for tickmark labels
+        var span = document.createElement('span');
+        span.textContent = tickValue;
+        span.style.position = 'absolute';
+        span.style.textAlign = 'center';
+
+        // Use transform to center the span over the tickmark, with special handling for the first and last span
+        var leftPercentage = (i / (tickYears.length - 1) * 100);
+        span.style.left = `${leftPercentage}%`;
+        if (i === 0) {
+            span.style.transform = 'translateX(0%)'; // No translation for the first span
+            span.style.textAlign = 'left'; // Align text to the left for the first span
+       } else if (i === (tickYears.length - 1)) {
+            span.style.transform = 'translateX(-100%)'; // Adjust the last span to prevent overflow
+        } else {
+            span.style.transform = 'translateX(-50%)'; // Center all other spans
+        }
+        tickmarkValuesDiv.appendChild(span);
+        i++;
+    }
+};
+
 function startPlay() {
     stopPlay(); // Clear existing interval before starting a new one
+    var increment = Number(document.getElementById('increment').value);
 
-    var animationSpeed = parseFloat(playRateInput.value);
-    if (animationSpeed == 1) {
-        var yearsPerSecond = 1;
-    } else if (animationSpeed == 2) {
-        var yearsPerSecond = 5;
-    } else if (animationSpeed == 3) {
-        var yearsPerSecond = 20;
-    } else if (animationSpeed == 4) {
-        var yearsPerSecond = 50;
-    } else if (animationSpeed == 5) {
-        var yearsPerSecond = 100;
-    }
-
-    var milliseconds = 1 / (yearsPerSecond / 1000);
+    var milliseconds = 1 / (increment / 1000);
 
     playInterval = setInterval(function () {
         // Increment the slider value by 1
@@ -59,6 +113,9 @@ function stopPlay() {
 function storeYear() {
     var year = document.getElementById('enterYear').value;
     history.pushState(null, '', '/core/world_map/?year=' + year);
+    if (!allPolitiesLoaded) {
+        document.getElementById('loadingIndicator').style.display = 'block';
+    }
 }
 
 function switchBaseMap() {
@@ -100,7 +157,7 @@ function switchBaseMap() {
         baseShapeData.forEach(function (shape) {
             // Ensure the geometry is not empty
             if (shape.geometry && shape.geometry.type) {
-                gadmFillColour = 'none';  // Default fill colour
+                gadmFillColour = "#fffdf2";  // Default fill colour
                 if (shape.country.toLowerCase().includes('sea')) {
                     gadmFillColour = 'lightblue';
                 }
@@ -146,7 +203,7 @@ function switchBaseMap() {
                         fillColor: gadmFillColour,   // Set the fill color based on the "colour" field
                         color: 'black',       // Set the border color
                         weight: 1,            // Set the border weight
-                        fillOpacity: 1        // Set the fill opacity
+                        fillOpacity: 0.5        // Set the fill opacity
                     });
                     polygon.bringToBack(); // Move the province layers to back so they are always behind polity shapes
                     provinceLayers.push(polygon); // Add the layer to the array
@@ -223,6 +280,9 @@ function updateLegend() {
         legendDiv.appendChild(legendTitle);
 
         for (var key in oneLanguageColourMapping) {
+            if (key === 'No Seshat page') {  // Skip the "No Seshat page" key as it's the same colour as "Uncoded" (see world_map.html)
+                continue;
+            }
             var legendItem = document.createElement('p');
 
             var colorBox = document.createElement('span');
@@ -251,6 +311,9 @@ function updateLegend() {
         legendDiv.appendChild(legendTitle);
 
         for (var key in variableColourMapping) {
+            if (key === 'no seshat page') {  // Skip the "No Seshat page" key as it's the same colour as "Uncoded" (see world_map.html)
+                continue;
+            }
             var legendItem = document.createElement('p');
 
             var colorBox = document.createElement('span');
@@ -278,7 +341,7 @@ function updateLegend() {
         colorBox.style.display = 'inline-block';
         colorBox.style.width = '20px';
         colorBox.style.height = '20px';
-        colorBox.style.backgroundColor = 'white';
+        colorBox.style.backgroundColor = '#fffdf2';
         colorBox.style.border = '1px solid black';
         colorBox.style.marginRight = '10px';
 
@@ -287,6 +350,14 @@ function updateLegend() {
 
         legendDiv.appendChild(legendItem);
     }
+}
+
+function clearSelection() {
+    document.getElementById('popup').innerHTML = '';
+    shapesData.forEach(function (shape) {
+        shape['weight'] = 0;
+    });
+    plotPolities();
 }
 
 function updateCategoricalVariableSelection(variable){
