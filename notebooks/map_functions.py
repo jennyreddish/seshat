@@ -75,8 +75,8 @@ def create_map(selected_year, gdf, map_output):
 
     # Add the polygons to the map
     for _, row in filtered_gdf.iterrows():
-        # Ignore rows where the ColorKey is None
-        if row['ColorKey'] is None:
+        # Ignore rows where the DisplayName is None
+        if row['DisplayName'] is None:
             continue
         # Convert the geometry to GeoJSON
         geojson = folium.GeoJson(
