@@ -50,8 +50,8 @@ class Command(BaseCommand):
                 area=row['Area'],
                 start_year=row['FromYear'],
                 end_year=row['ToYear'],
-                polity_start_year=polity_start_year,
-                polity_end_year=polity_end_year,
+                polity_start_year=row['PolityStartYear'],
+                polity_end_year=row['PolityEndYear'],
                 colour=row['Color']
             )
 
@@ -123,5 +123,11 @@ def cliopatria_gdf(cliopatria_geojson_path):
 
     # Drop intermediate columns
     gdf.drop(['CleanName', 'CleanMember_of'], axis=1, inplace=True)
+
+    # Add a column called 'PolityStartYear' to the GeoDataFrame which is the minimum 'FromYear' of all shapes with the same 'Name'
+    gdf['PolityStartYear'] = gdf.groupby('Name')['FromYear'].transform('min')
+
+    # Add a column called 'PolityEndYear' to the GeoDataFrame which is the maximum 'ToYear' of all shapes with the same 'Name'
+    gdf['PolityEndYear'] = gdf.groupby('Name')['ToYear'].transform('max')
 
     return gdf
