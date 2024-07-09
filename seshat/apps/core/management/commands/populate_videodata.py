@@ -81,14 +81,14 @@ class Command(BaseCommand):
                             polity_name = properties['Type'] + ': ' + polity_name
                         if polity_name not in polity_years:
                             polity_years[polity_name] = []
-                        polity_years[polity_name].append(properties['Year'])
+                        polity_years[polity_name].append(properties['FromYear'])
                         if polity_colour_key not in polity_shapes:
                             polity_shapes[polity_colour_key] = []
                         polity_shapes[polity_colour_key].append(feature)
 
                         all_polities.add(polity_colour_key)
 
-                        self.stdout.write(self.style.SUCCESS(f'Found shape for {polity_name} ({properties["Year"]})'))
+                        self.stdout.write(self.style.SUCCESS(f'Found shape for {polity_name} ({properties['FromYear']})'))
 
         # Sort the polities and generate a colour mapping
         unique_polities = sorted(all_polities)
@@ -103,7 +103,7 @@ class Command(BaseCommand):
                 polity_name = properties["Name"].replace('(', '').replace(')', '')
                 if properties['Type'] != 'POLITY':
                     polity_name = properties['Type'] + ': ' + polity_name
-                self.stdout.write(self.style.SUCCESS(f'Importing shape for {polity_name} ({properties["Year"]})'))
+                self.stdout.write(self.style.SUCCESS(f'Importing shape for {polity_name} ({properties['FromYear']})'))
                 
                 # Get a sorted list of the shape years this polity
                 this_polity_years = sorted(polity_years[polity_name])
@@ -123,12 +123,12 @@ class Command(BaseCommand):
                     raise ValueError(f'First shape year for {polity_name} is not the start year of the polity')
                 
                 # Find the closest higher value from end_years to the shape year
-                next_end_year = min(end_years, key=lambda x: x if x >= properties['Year'] else float('inf'))
+                next_end_year = min(end_years, key=lambda x: x if x >= properties['FromYear'] else float('inf'))
 
-                if properties['Year'] in end_years:  # If the shape year is in the list of polity end years, the start year is the end year
-                    end_year = properties['Year']
+                if properties['FromYear'] in end_years:  # If the shape year is in the list of polity end years, the start year is the end year
+                    end_year = properties['FromYear']
                 else:
-                    this_year_index = this_polity_years.index(properties['Year'])  
+                    this_year_index = this_polity_years.index(properties['FromYear'])  
                     try:  # Try to use the next shape year minus one as the end year if possible, unless it's higher than the next_end_year
                         next_shape_year_minus_one = this_polity_years[this_year_index + 1] - 1
                         end_year = next_shape_year_minus_one if next_shape_year_minus_one < next_end_year else next_end_year
@@ -140,7 +140,7 @@ class Command(BaseCommand):
                 if geom.geom_type == 'Polygon':
                     geom = MultiPolygon(geom)
 
-                self.stdout.write(self.style.SUCCESS(f'Creating VideoShapefile instance for {polity_name} ({properties["Year"]} - {end_year})'))
+                self.stdout.write(self.style.SUCCESS(f'Creating VideoShapefile instance for {polity_name} ({properties['FromYear']} - {end_year})'))
 
                 VideoShapefile.objects.create(
                     geom=geom,
@@ -149,14 +149,14 @@ class Command(BaseCommand):
                     wikipedia_name=properties['Wikipedia'],
                     seshat_id=properties['SeshatID'],
                     area=properties['Area'],
-                    start_year=properties['Year'],
+                    start_year=properties['FromYear'],
                     end_year=end_year,
                     polity_start_year=polity_start_year,
                     polity_end_year=polity_end_year,
                     colour=pol_col_map[polity_colour_key]
                 )
 
-                self.stdout.write(self.style.SUCCESS(f'Successfully imported shape for {polity_name} ({properties["Year"]})'))
+                self.stdout.write(self.style.SUCCESS(f'Successfully imported shape for {polity_name} ({properties['FromYear']})'))
 
             self.stdout.write(self.style.SUCCESS(f'Successfully imported all shapes for {polity_name}'))
 
