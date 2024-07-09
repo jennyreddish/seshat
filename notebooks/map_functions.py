@@ -81,9 +81,6 @@ def create_map(selected_year, gdf, map_output):
     # Filter the gdf for shapes that overlap with the selected_year
     filtered_gdf = gdf[(gdf['FromYear'] <= selected_year) & (gdf['ToYear'] >= selected_year)]
 
-    # Remove '0x' and add '#' to the start of the color strings
-    filtered_gdf['Color'] = '#' + filtered_gdf['Color'].str.replace('0x', '')
-
     # Transform the CRS of the GeoDataFrame to WGS84 (EPSG:4326)
     filtered_gdf = filtered_gdf.to_crs(epsg=4326)
 
