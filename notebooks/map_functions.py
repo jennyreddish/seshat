@@ -58,7 +58,7 @@ def create_map(selected_year, gdf, map_output):
     m = folium.Map(location=[0, 0], zoom_start=2, tiles='https://a.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png', attr='CartoDB')
 
     # Filter the gdf for shapes that overlap with the selected_year
-    filtered_gdf = gdf[(gdf['Year'] <= selected_year) & (gdf['EndYear'] >= selected_year)]
+    filtered_gdf = gdf[(gdf['FromYear'] <= selected_year) & (gdf['ToYear'] >= selected_year)]
 
     # Remove '0x' and add '#' to the start of the color strings
     filtered_gdf['Color'] = '#' + filtered_gdf['Color'].str.replace('0x', '')
@@ -110,8 +110,8 @@ def display_map(gdf, display_year):
     # Create a slider for input
     year_slider = widgets.IntSlider(
         value=display_year,
-        min=gdf['Year'].min(),
-        max=gdf['EndYear'].max(),
+        min=gdf['FromYear'].min(),
+        max=gdf['ToYear'].max(),
         description='Year:',
     )
 
