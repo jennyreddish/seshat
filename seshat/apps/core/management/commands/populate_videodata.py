@@ -12,24 +12,19 @@ class Command(BaseCommand):
     help = 'Populates the database with Shapefiles'
 
     def add_arguments(self, parser):
-        parser.add_argument('dir', type=str, help='Directory containing geojson files')
+        parser.add_argument('geojson_file', type=str, help='Path to the geojson file')
 
     def handle(self, *args, **options):
-        dir = options['dir']
+        geojson_file = options['geojson_file']
 
         # Clear the VideoShapefile table
         self.stdout.write(self.style.SUCCESS('Clearing VideoShapefile table...'))
         VideoShapefile.objects.all().delete()
         self.stdout.write(self.style.SUCCESS('VideoShapefile table cleared'))
 
-        # Iterate over files in the directory
-        for filename in os.listdir(dir):
-            if filename.endswith('.geojson'):
-                file_path = os.path.join(dir, filename)
-
         # Load the Cliopatria shape dataset with GeoPandas
-        self.stdout.write(self.style.SUCCESS(f"Loading Cliopatria shape dataset from {file_path}"))
-        gdf = cliopatria_gdf(file_path)
+        self.stdout.write(self.style.SUCCESS(f"Loading Cliopatria shape dataset from {geojson_file}"))
+        gdf = cliopatria_gdf(geojson_file)
 
         self.stdout.write(self.style.SUCCESS('Adding data to the database...'))
         # Iterate through the GeoDataframe and create VideoShapefile instances
@@ -55,7 +50,7 @@ class Command(BaseCommand):
                 colour=row['Color']
             )
 
-        self.stdout.write(self.style.SUCCESS(f"Successfully imported all data from {filename}"))
+        self.stdout.write(self.style.SUCCESS(f"Successfully imported all data from {os.path.basename(geojson_file)}"))
 
         ###########################################################
         ### Adjust the tolerance param of ST_Simplify as needed ###
