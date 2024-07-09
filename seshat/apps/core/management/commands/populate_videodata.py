@@ -28,13 +28,13 @@ class Command(BaseCommand):
                 file_path = os.path.join(dir, filename)
 
         # Load the Cliopatria shape dataset with GeoPandas
-        self.stdout.write(self.style.SUCCESS(f'Loading Cliopatria shape dataset from {file_path}'))
+        self.stdout.write(self.style.SUCCESS(f"Loading Cliopatria shape dataset from {file_path}"))
         gdf = cliopatria_gdf(file_path)
 
         self.stdout.write(self.style.SUCCESS('Adding data to the database...'))
         # Iterate through the GeoDataframe and create VideoShapefile instances
         for index, row in gdf.iterrows():
-            self.stdout.write(self.style.SUCCESS(f'Creating VideoShapefile instance for {row['DisplayName']} ({row['FromYear']} - {row['ToYear']})'))
+            self.stdout.write(self.style.SUCCESS(f"Creating VideoShapefile instance for {row['DisplayName']} ({row['FromYear']} - {row['ToYear']})"))
             
             # Save geom and convert Polygon to MultiPolygon if necessary
             geom = GEOSGeometry(json.dumps(row['geometry']))
@@ -55,7 +55,7 @@ class Command(BaseCommand):
                 colour=row['Color']
             )
 
-        self.stdout.write(self.style.SUCCESS(f'Successfully imported all data from {filename}'))
+        self.stdout.write(self.style.SUCCESS(f"Successfully imported all data from {filename}"))
 
         ###########################################################
         ### Adjust the tolerance param of ST_Simplify as needed ###
@@ -85,7 +85,7 @@ def cliopatria_gdf(cliopatria_geojson_path):
     """
     gdf = gpd.read_file(cliopatria_geojson_path)
 
-    self.stdout.write(self.style.SUCCESS(f'Generating shape names...'))
+    self.stdout.write(self.style.SUCCESS(f"Generating shape names..."))
 
     # Remove parentheses from 'Name' and 'MemberOf'
     gdf['CleanName'] = gdf['Name'].str.replace('[()]', '', regex=True)
@@ -107,8 +107,8 @@ def cliopatria_gdf(cliopatria_geojson_path):
     # Add type prefix to DisplayName where type is not 'POLITY'
     gdf.loc[gdf['Type'] != 'POLITY', 'DisplayName'] = gdf['Type'] + ': ' + gdf['DisplayName']
 
-    self.stdout.write(self.style.SUCCESS(f'Generated shape names for {len(gdf)} shapes.'))
-    self.stdout.write(self.style.SUCCESS(f'Assigning colours to shapes...'))
+    self.stdout.write(self.style.SUCCESS(f"Generated shape names for {len(gdf)} shapes."))
+    self.stdout.write(self.style.SUCCESS(f"Assigning colours to shapes..."))
 
     # Use DistinctiPy package to assign a colour based on the ColorKey field
     colour_keys = gdf['ColorKey'].unique()
@@ -121,8 +121,8 @@ def cliopatria_gdf(cliopatria_geojson_path):
     # Drop intermediate columns
     gdf.drop(['CleanName', 'CleanMember_of'], axis=1, inplace=True)
 
-    self.stdout.write(self.style.SUCCESS(f'Assigned colours to {len(gdf)} shapes.'))
-    self.stdout.write(self.style.SUCCESS(f'Determing polity start and end years...'))
+    self.stdout.write(self.style.SUCCESS(f"Assigned colours to {len(gdf)} shapes."))
+    self.stdout.write(self.style.SUCCESS(f"Determing polity start and end years..."))
 
     # Add a column called 'PolityStartYear' to the GeoDataFrame which is the minimum 'FromYear' of all shapes with the same 'Name'
     gdf['PolityStartYear'] = gdf.groupby('Name')['FromYear'].transform('min')
@@ -130,6 +130,6 @@ def cliopatria_gdf(cliopatria_geojson_path):
     # Add a column called 'PolityEndYear' to the GeoDataFrame which is the maximum 'ToYear' of all shapes with the same 'Name'
     gdf['PolityEndYear'] = gdf.groupby('Name')['ToYear'].transform('max')
 
-    self.stdout.write(self.style.SUCCESS(f'Determined polity start and end years for {len(gdf)} shapes.'))
+    self.stdout.write(self.style.SUCCESS(f"Determined polity start and end years for {len(gdf)} shapes."))
 
     return gdf
