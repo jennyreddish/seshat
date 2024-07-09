@@ -39,8 +39,6 @@ class Command(BaseCommand):
         else:
             self.stdout.write(self.style.ERROR("No file found with 'name_years.json' in the filename"))
 
-        # Dict of all the shape years for a given polity
-        polity_years = {}
         # Set of all polities, for generating colour mapping
         all_polities = set()
         # Dict of all the polities found and the shapes they include
@@ -79,9 +77,6 @@ class Command(BaseCommand):
                     if polity_name:
                         if properties['Type'] != 'POLITY':
                             polity_name = properties['Type'] + ': ' + polity_name
-                        if polity_name not in polity_years:
-                            polity_years[polity_name] = []
-                        polity_years[polity_name].append(properties['FromYear'])
                         if polity_colour_key not in polity_shapes:
                             polity_shapes[polity_colour_key] = []
                         polity_shapes[polity_colour_key].append(feature)
