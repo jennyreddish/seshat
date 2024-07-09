@@ -12,6 +12,7 @@ def convert_name(gdf, i):
         Where gdf is the geodataframe, i is the index of the row/shape of interest.
         Returns the name to display on the map.
         Returns None if we don't want to display the shape (see comments below for details).
+        Also returns the key to use for the color mapping.
     """
     polity_name = gdf.loc[i, 'Name'].replace('(', '').replace(')', '')  # Remove spaces and brackets from name
     polity_colour_key = polity_name
