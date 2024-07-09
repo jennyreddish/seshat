@@ -1,9 +1,9 @@
 import geopandas as gpd
-import json
 import folium
 import folium
 import ipywidgets as widgets
 from IPython.display import display, clear_output
+from distinctipy import get_colors, get_hex
 
 
 def convert_name(gdf, i):
@@ -63,6 +63,14 @@ def cliopatria_gdf(cliopatria_geojson_path):
             # Set the ColorKey column to the key to use for the color mapping
             gdf.loc[i, 'ColorKey'] = polity_colour_key
 
+    # Use DistinctiPy package to assign a colour based on the ColorKey field in the geodataframe
+    colour_keys = gdf['ColorKey'].unique()
+    colours = []
+    for col in get_colors(len(colour_keys)):
+        colours.append(get_hex(col))
+    colour_mapping = dict(zip(colour_keys, colours))
+    # Add the colour to a new column in the geodataframe
+    gdf['Color'] = gdf['ColorKey'].map(colour_mapping)
     return gdf
 
 
