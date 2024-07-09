@@ -30,8 +30,8 @@ class Command(BaseCommand):
         # Load the Cliopatria shape dataset with GeoPandas
         self.stdout.write(self.style.SUCCESS(f'Loading Cliopatria shape dataset from {file_path}'))
         gdf = cliopatria_gdf(file_path)
-        self.stdout.write(self.style.SUCCESS('Cliopatria shape dataset loaded'))
 
+        self.stdout.write(self.style.SUCCESS('Adding data to the database...'))
         # Iterate through the GeoDataframe and create VideoShapefile instances
         for index, row in gdf.iterrows():
             self.stdout.write(self.style.SUCCESS(f'Creating VideoShapefile instance for {row['DisplayName']} ({row['FromYear']} - {row['ToYear']})'))
@@ -111,23 +111,29 @@ def cliopatria_gdf(cliopatria_geojson_path):
     gdf = gpd.read_file(cliopatria_geojson_path)
 
     # Apply vectorized name conversion
+    self.stdout.write(self.style.SUCCESS(f'Generating shape names...'))
     vectorized_convert_name(gdf)
+    self.stdout.write(self.style.SUCCESS(f'Generated shape names for {len(gdf)} shapes.'))
 
     # Use DistinctiPy package to assign a colour based on the ColorKey field
+    self.stdout.write(self.style.SUCCESS(f'Assigning colours to shapes...'))
     colour_keys = gdf['ColorKey'].unique()
     colours = [get_hex(col) for col in get_colors(len(colour_keys))]
     colour_mapping = dict(zip(colour_keys, colours))
 
     # Map colors to a new column efficiently
     gdf['Color'] = gdf['ColorKey'].map(colour_mapping)
+    self.stdout.write(self.style.SUCCESS(f'Assigned colours to {len(gdf)} shapes.'))
 
     # Drop intermediate columns
     gdf.drop(['CleanName', 'CleanMember_of'], axis=1, inplace=True)
 
+    self.stdout.write(self.style.SUCCESS(f'Determing polity start and end years...'))
     # Add a column called 'PolityStartYear' to the GeoDataFrame which is the minimum 'FromYear' of all shapes with the same 'Name'
     gdf['PolityStartYear'] = gdf.groupby('Name')['FromYear'].transform('min')
 
     # Add a column called 'PolityEndYear' to the GeoDataFrame which is the maximum 'ToYear' of all shapes with the same 'Name'
     gdf['PolityEndYear'] = gdf.groupby('Name')['ToYear'].transform('max')
+    self.stdout.write(self.style.SUCCESS(f'Determined polity start and end years for {len(gdf)} shapes.'))
 
     return gdf
