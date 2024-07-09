@@ -61,6 +61,14 @@ def create_map(selected_year, gdf, map_output):
     # Filter the gdf for shapes that overlap with the selected_year
     filtered_gdf = gdf[(gdf['FromYear'] <= selected_year) & (gdf['ToYear'] >= selected_year)]
 
+    # Filter the gdf for shapes where the personal unions etc is already plotted
+    dontPlotMeBecauseImInAUnion = []
+    def process_seshat_id(row):
+        if ';' in row['SeshatID']:
+            these_seshat_ids = row['SeshatID'].split(';')
+            dontPlotMeBecauseImInAUnion.extend(these_seshat_ids)
+    filtered_gdf.apply(process_seshat_id, axis=1)
+
     # Transform the CRS of the GeoDataFrame to WGS84 (EPSG:4326)
     filtered_gdf = filtered_gdf.to_crs(epsg=4326)
 
@@ -76,7 +84,7 @@ def create_map(selected_year, gdf, map_output):
     # Add the polygons to the map
     for _, row in filtered_gdf.iterrows():
         # Ignore rows where the DisplayName is None
-        if row['DisplayName'] is None:
+        if row['DisplayName'] is None or row['SeshatID'] in dontPlotMeBecauseImInAUnion:
             continue
         # Convert the geometry to GeoJSON
         geojson = folium.GeoJson(
