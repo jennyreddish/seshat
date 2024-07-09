@@ -62,6 +62,7 @@ def create_map(selected_year, gdf, map_output):
     filtered_gdf = gdf[(gdf['FromYear'] <= selected_year) & (gdf['ToYear'] >= selected_year)]
 
     # Filter the gdf for shapes where the personal unions etc is already plotted
+    # This logic also exists in JavaScript in the plotPolities() function in the world_map.html
     dontPlotMeBecauseImInAUnion = []
     def process_seshat_id(row):
         if ';' in row['SeshatID']:
