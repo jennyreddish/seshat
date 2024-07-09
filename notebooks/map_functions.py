@@ -6,71 +6,51 @@ from IPython.display import display, clear_output
 from distinctipy import get_colors, get_hex
 
 
-def convert_name(gdf, i):
+def vectorized_convert_name(gdf):
     """
-        Convert the polity name of a shape in the Cliopatria dataset to what we want to display on the Seshat world map.
-        Where gdf is the geodataframe, i is the index of the row/shape of interest.
-        Returns the name to display on the map.
-        Returns None if we don't want to display the shape (see comments below for details).
-        Also returns the key to use for the color mapping.
+    Corrected vectorized version of convert_name to process the entire DataFrame at once.
     """
-    polity_name = gdf.loc[i, 'Name'].replace('(', '').replace(')', '')  # Remove spaces and brackets from name
-    polity_colour_key = polity_name
-    # If a shape has components (is a composite) we'll load the components instead
-    # ... unless the components have their own components, then load the top level shape
-    # ... or the shape is in a personal union, then load the personal union shape instead
-    try:
-        if gdf.loc[i, 'Components']:  # If the shape has components
-            if ';' not in gdf.loc[i, 'SeshatID']:  # If the shape is not a personal union
-                if len(gdf.loc[i, 'Components']) > 0 and '(' not in gdf.loc[i, 'Components']:  # If the components don't have components
-                    polity_name = None
-    except KeyError:  # If the shape has no components, don't modify the name
-        pass
-    try:
-        if gdf.loc[i, 'Member_of']:
-            # If a shape is a component, get the parent polity to use as the polity_colour_key
-            if len(gdf.loc[i, 'Member_of']) > 0:
-                polity_colour_key = gdf.loc[i, 'Member_of'].replace('(', '').replace(')', '')
-    except KeyError:
-        pass
-    return polity_name, polity_colour_key
+    # Remove parentheses from 'Name' and 'MemberOf'
+    gdf['CleanName'] = gdf['Name'].str.replace('[()]', '', regex=True)
+    gdf['CleanMember_of'] = gdf['MemberOf'].str.replace('[()]', '', regex=True)
 
+    # Initialize DisplayName and ColorKey
+    gdf['DisplayName'] = gdf['CleanName']
+    gdf['ColorKey'] = gdf['CleanName']
+
+    # Conditions for setting DisplayName to None
+    # If the shape has components, is not a personal union, and the components don't have components
+    has_components = gdf['Components'].notna() & gdf['Components'].str.len() > 0
+    not_personal_union = ~gdf['SeshatID'].str.contains(';')
+    components_without_components = ~gdf['Components'].str.contains('\\(')
+    gdf.loc[has_components & not_personal_union & components_without_components, 'DisplayName'] = None
+
+    # Correct Update ColorKey for shapes that are components of another shape
+    gdf.loc[gdf['MemberOf'].notna() & gdf['MemberOf'].str.len() > 0, 'ColorKey'] = gdf['CleanMember_of']
+
+    # Add type prefix to DisplayName where type is not 'POLITY'
+    gdf.loc[gdf['Type'] != 'POLITY', 'DisplayName'] = gdf['Type'] + ': ' + gdf['DisplayName']
 
 def cliopatria_gdf(cliopatria_geojson_path):
     """
-        Load the Cliopatria shape dataset with GeoPandas and add the DisplayName column to the geodataframe.
+    Load the Cliopatria shape dataset with GeoPandas, process names and colors efficiently.
     """
-    # Load the geojson and json files
     gdf = gpd.read_file(cliopatria_geojson_path)
 
-    # Create new columns in the geodataframe
-    gdf['DisplayName'] = None
-    gdf['ColorKey'] = None
+    # Apply vectorized name conversion
+    vectorized_convert_name(gdf)
 
-    # Loop through the geodataframe
-    for i in range(len(gdf)):
-
-        # Get the name to display
-        polity_name, polity_colour_key = convert_name(gdf, i)
-
-        if polity_name:  # convert_name returns None if we don't want to display the shape
-            if gdf.loc[i, 'Type'] != 'POLITY':  # Add the type to the name if it's not a polity
-                polity_name = gdf.loc[i, 'Type'] + ': ' + polity_name
-
-            # Set the DisplayName column to the name to display
-            gdf.loc[i, 'DisplayName'] = polity_name
-
-            # Set the ColorKey column to the key to use for the color mapping
-            gdf.loc[i, 'ColorKey'] = polity_colour_key
-
-    # Use DistinctiPy package to assign a colour based on the ColorKey field in the geodataframe
+    # Use DistinctiPy package to assign a colour based on the ColorKey field
     colour_keys = gdf['ColorKey'].unique()
-    colours = []
-    for col in get_colors(len(colour_keys)):
-        colours.append(get_hex(col))
+    colours = [get_hex(col) for col in get_colors(len(colour_keys))]
     colour_mapping = dict(zip(colour_keys, colours))
-    # Add the colour to a new column in the geodataframe
+
+    # Map colors to a new column efficiently
     gdf['Color'] = gdf['ColorKey'].map(colour_mapping)
+
+    # Drop intermediate columns
+    gdf.drop(['CleanName', 'CleanMember_of'], axis=1, inplace=True)
+
     return gdf
 
 
@@ -95,6 +75,9 @@ def create_map(selected_year, gdf, map_output):
 
     # Add the polygons to the map
     for _, row in filtered_gdf.iterrows():
+        # Ignore rows where the ColorKey is None
+        if row['ColorKey'] is None:
+            continue
         # Convert the geometry to GeoJSON
         geojson = folium.GeoJson(
             row.geometry,
