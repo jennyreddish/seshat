@@ -1,11 +1,12 @@
 import os
 import json
-import fnmatch
+import geopandas as gpd
 from distinctipy import get_colors, get_hex
 from django.contrib.gis.geos import GEOSGeometry, MultiPolygon
 from django.core.management.base import BaseCommand
 from django.db import connection
 from seshat.apps.core.models import VideoShapefile
+
 
 class Command(BaseCommand):
     help = 'Populates the database with Shapefiles'
@@ -21,91 +22,38 @@ class Command(BaseCommand):
         VideoShapefile.objects.all().delete()
         self.stdout.write(self.style.SUCCESS('VideoShapefile table cleared'))
 
-        # Set of all polities, for generating colour mapping
-        all_polities = set()
-        # Dict of all the polities found and the shapes they include
-        polity_shapes = {}
         # Iterate over files in the directory
         for filename in os.listdir(dir):
             if filename.endswith('.geojson'):
                 file_path = os.path.join(dir, filename)
 
-                # Read and parse the GeoJSON file
-                with open(file_path, 'r') as geojson_file:
-                    geojson_data = json.load(geojson_file)
+        # Load the Cliopatria shape dataset with GeoPandas
+        self.stdout.write(self.style.SUCCESS(f'Loading Cliopatria shape dataset from {file_path}'))
+        gdf = cliopatria_gdf(file_path)
+        self.stdout.write(self.style.SUCCESS('Cliopatria shape dataset loaded'))
 
-                # Extract data and create VideoShapefile instances
-                for feature in geojson_data['features']:
-                    properties = feature['properties']
-                    polity_name = properties['Name'].replace('(', '').replace(')', '')  # Remove spaces and brackets from name
-                    polity_colour_key = polity_name
-                    try:
-                        # If a shape has components we'll load the components instead
-                        # ... unless the components have their own components, then load the top level shape
-                        # ... or the shape is a personal union, then load the personal union shape
-                        if properties['Components']:
-                            if ';' not in properties['SeshatID']:
-                                if len(properties['Components']) > 0 and '(' not in properties['Components']:
-                                    polity_name = None
-                    except KeyError:
-                        pass
-                    try:
-                        if properties['Member_of']:
-                            # If a shape is a component, get the parent polity to use as the polity_colour_key
-                            if len(properties['Member_of']) > 0:
-                                polity_colour_key = properties['Member_of'].replace('(', '').replace(')', '')
-                    except KeyError:
-                        pass
-                    if polity_name:
-                        if properties['Type'] != 'POLITY':
-                            polity_name = properties['Type'] + ': ' + polity_name
-                        if polity_colour_key not in polity_shapes:
-                            polity_shapes[polity_colour_key] = []
-                        polity_shapes[polity_colour_key].append(feature)
+        # Iterate through the GeoDataframe and create VideoShapefile instances
+        for index, row in gdf.iterrows():
+            self.stdout.write(self.style.SUCCESS(f'Creating VideoShapefile instance for {row['DisplayName']} ({row['FromYear']} - {row['ToYear']})'))
+            
+            # Save geom and convert Polygon to MultiPolygon if necessary
+            geom = GEOSGeometry(json.dumps(row['geometry']))
+            if geom.geom_type == 'Polygon':
+                geom = MultiPolygon(geom)
 
-                        all_polities.add(polity_colour_key)
-
-                        self.stdout.write(self.style.SUCCESS(f'Found shape for {polity_name} ({properties['FromYear']})'))
-
-        # Sort the polities and generate a colour mapping
-        unique_polities = sorted(all_polities)
-        self.stdout.write(self.style.SUCCESS(f'Generating colour mapping for {len(unique_polities)} polities'))
-        pol_col_map = polity_colour_mapping(unique_polities)
-        self.stdout.write(self.style.SUCCESS(f'Colour mapping generated'))
-
-        # Iterate through polity_shapes and create VideoShapefile instances
-        for polity_colour_key, features in polity_shapes.items():
-            for feature in features:
-                properties = feature['properties']
-                polity_name = properties["Name"].replace('(', '').replace(')', '')
-                if properties['Type'] != 'POLITY':
-                    polity_name = properties['Type'] + ': ' + polity_name
-                self.stdout.write(self.style.SUCCESS(f'Importing shape for {polity_name} ({properties['FromYear']})'))
-                
-                # Save geom and convert Polygon to MultiPolygon if necessary
-                geom = GEOSGeometry(json.dumps(feature['geometry']))
-                if geom.geom_type == 'Polygon':
-                    geom = MultiPolygon(geom)
-
-                self.stdout.write(self.style.SUCCESS(f'Creating VideoShapefile instance for {polity_name} ({properties['FromYear']} - {properties['ToYear']})'))
-
-                VideoShapefile.objects.create(
-                    geom=geom,
-                    name=polity_name,
-                    polity=polity_colour_key,
-                    wikipedia_name=properties['Wikipedia'],
-                    seshat_id=properties['SeshatID'],
-                    area=properties['Area'],
-                    start_year=properties['FromYear'],
-                    end_year=properties['ToYear'],
-                    polity_start_year=polity_start_year,
-                    polity_end_year=polity_end_year,
-                    colour=pol_col_map[polity_colour_key]
-                )
-
-                self.stdout.write(self.style.SUCCESS(f'Successfully imported shape for {polity_name} ({properties['FromYear']})'))
-
-            self.stdout.write(self.style.SUCCESS(f'Successfully imported all shapes for {polity_name}'))
+            VideoShapefile.objects.create(
+                geom=geom,
+                name=row['DisplayName'],
+                polity=row['ColorKey'],
+                wikipedia_name=row['Wikipedia'],
+                seshat_id=row['SeshatID'],
+                area=row['Area'],
+                start_year=row['FromYear'],
+                end_year=row['ToYear'],
+                polity_start_year=polity_start_year,
+                polity_end_year=polity_end_year,
+                colour=row['Color']
+            )
 
         self.stdout.write(self.style.SUCCESS(f'Successfully imported all data from {filename}'))
 
@@ -131,9 +79,49 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Simplified geometries added'))
 
 
-def polity_colour_mapping(polities):
-    """Use DistinctiPy package to assign a colour to each polity"""
-    colours = []
-    for col in get_colors(len(polities)):
-        colours.append(get_hex(col))
-    return dict(zip(polities, colours))
+def vectorized_convert_name(gdf):
+    """
+    Corrected vectorized version of convert_name to process the entire DataFrame at once.
+    """
+    # Remove parentheses from 'Name' and 'MemberOf'
+    gdf['CleanName'] = gdf['Name'].str.replace('[()]', '', regex=True)
+    gdf['CleanMember_of'] = gdf['MemberOf'].str.replace('[()]', '', regex=True)
+
+    # Initialize DisplayName and ColorKey
+    gdf['DisplayName'] = gdf['CleanName']
+    gdf['ColorKey'] = gdf['CleanName']
+
+    # Conditions for setting DisplayName to None
+    # If the shape has components, is not a personal union, and the components don't have components
+    has_components = gdf['Components'].notna() & gdf['Components'].str.len() > 0
+    not_personal_union = ~gdf['SeshatID'].str.contains(';')
+    components_without_components = ~gdf['Components'].str.contains('\\(')
+    gdf.loc[has_components & not_personal_union & components_without_components, 'DisplayName'] = None
+
+    # Correct Update ColorKey for shapes that are components of another shape
+    gdf.loc[gdf['MemberOf'].notna() & gdf['MemberOf'].str.len() > 0, 'ColorKey'] = gdf['CleanMember_of']
+
+    # Add type prefix to DisplayName where type is not 'POLITY'
+    gdf.loc[gdf['Type'] != 'POLITY', 'DisplayName'] = gdf['Type'] + ': ' + gdf['DisplayName']
+
+def cliopatria_gdf(cliopatria_geojson_path):
+    """
+    Load the Cliopatria shape dataset with GeoPandas, process names and colors efficiently.
+    """
+    gdf = gpd.read_file(cliopatria_geojson_path)
+
+    # Apply vectorized name conversion
+    vectorized_convert_name(gdf)
+
+    # Use DistinctiPy package to assign a colour based on the ColorKey field
+    colour_keys = gdf['ColorKey'].unique()
+    colours = [get_hex(col) for col in get_colors(len(colour_keys))]
+    colour_mapping = dict(zip(colour_keys, colours))
+
+    # Map colors to a new column efficiently
+    gdf['Color'] = gdf['ColorKey'].map(colour_mapping)
+
+    # Drop intermediate columns
+    gdf.drop(['CleanName', 'CleanMember_of'], axis=1, inplace=True)
+
+    return gdf
