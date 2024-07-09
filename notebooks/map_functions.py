@@ -14,6 +14,7 @@ def convert_name(gdf, i):
         Returns None if we don't want to display the shape (see comments below for details).
     """
     polity_name = gdf.loc[i, 'Name'].replace('(', '').replace(')', '')  # Remove spaces and brackets from name
+    polity_colour_key = polity_name
     # If a shape has components (is a composite) we'll load the components instead
     # ... unless the components have their own components, then load the top level shape
     # ... or the shape is in a personal union, then load the personal union shape instead
@@ -24,7 +25,14 @@ def convert_name(gdf, i):
                     polity_name = None
     except KeyError:  # If the shape has no components, don't modify the name
         pass
-    return polity_name
+    try:
+        if gdf.loc[i, 'Member_of']:
+            # If a shape is a component, get the parent polity to use as the polity_colour_key
+            if len(gdf.loc[i, 'Member_of']) > 0:
+                polity_colour_key = gdf.loc[i, 'Member_of'].replace('(', '').replace(')', '')
+    except KeyError:
+        pass
+    return polity_name, polity_colour_key
 
 
 def cliopatria_gdf(cliopatria_geojson_path):
@@ -36,12 +44,13 @@ def cliopatria_gdf(cliopatria_geojson_path):
 
     # Create new columns in the geodataframe
     gdf['DisplayName'] = None
+    gdf['ColorKey'] = None
 
     # Loop through the geodataframe
     for i in range(len(gdf)):
 
         # Get the name to display
-        polity_name = convert_name(gdf, i)
+        polity_name, polity_colour_key = convert_name(gdf, i)
 
         if polity_name:  # convert_name returns None if we don't want to display the shape
             if gdf.loc[i, 'Type'] != 'POLITY':  # Add the type to the name if it's not a polity
@@ -49,6 +58,9 @@ def cliopatria_gdf(cliopatria_geojson_path):
 
             # Set the DisplayName column to the name to display
             gdf.loc[i, 'DisplayName'] = polity_name
+
+            # Set the ColorKey column to the key to use for the color mapping
+            gdf.loc[i, 'ColorKey'] = polity_colour_key
 
     return gdf
 
