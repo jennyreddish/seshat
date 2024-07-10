@@ -20,7 +20,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f"File {cliopatria_geojson_path} does not exist"))
             return
         if not cliopatria_geojson_path.endswith('_seshat_processed.geojson'):
-            self.stdout.write(self.style.ERROR(f"File {cliopatria_geojson_path} should the suffix '_seshat_processed.geojson'"))
+            self.stdout.write(self.style.ERROR(f"File {cliopatria_geojson_path} should have the suffix '_seshat_processed.geojson'"))
             self.stdout.write(self.style.ERROR(f"Please run the cliopatria/convert_data.py script first"))
             return
 
