@@ -1,11 +1,15 @@
 import os
 import json
+import logging
 import geopandas as gpd
 from distinctipy import get_colors, get_hex
 from django.contrib.gis.geos import GEOSGeometry, MultiPolygon
 from django.core.management.base import BaseCommand
 from django.db import connection
 from seshat.apps.core.models import VideoShapefile
+
+
+logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
@@ -15,16 +19,25 @@ class Command(BaseCommand):
         parser.add_argument('geojson_file', type=str, help='Path to the geojson file')
 
     def handle(self, *args, **options):
-        geojson_file = options['geojson_file']
+
+        # Load the Cliopatria shape dataset with GeoPandas
+        cliopatria_geojson_path = options['geojson_file']
+        self.stdout.write(self.style.SUCCESS(f"Loading Cliopatria shape dataset from {cliopatria_geojson_path}..."))
+        logger.debug(f"Attempting to read GeoJSON file: {cliopatria_geojson_path}")
+        try:
+            gdf = gpd.read_file(cliopatria_geojson_path)
+            logger.debug("Successfully read GeoJSON file.")
+        except Exception as e:
+            logger.error(f"Failed to read GeoJSON file: {e}")
+            raise
 
         # Clear the VideoShapefile table
         self.stdout.write(self.style.SUCCESS('Clearing VideoShapefile table...'))
         VideoShapefile.objects.all().delete()
         self.stdout.write(self.style.SUCCESS('VideoShapefile table cleared'))
 
-        # Load the Cliopatria shape dataset with GeoPandas
-        self.stdout.write(self.style.SUCCESS(f"Loading Cliopatria shape dataset from {geojson_file}"))
-        gdf = cliopatria_gdf(geojson_file)
+        self.stdout.write(self.style.SUCCESS(f"Generating shape names and colors..."))
+        gdf = cliopatria_gdf(gdf)
 
         self.stdout.write(self.style.SUCCESS('Adding data to the database...'))
         # Iterate through the GeoDataframe and create VideoShapefile instances
@@ -74,13 +87,10 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Simplified geometries added'))
 
 
-def cliopatria_gdf(cliopatria_geojson_path):
+def cliopatria_gdf(gdf):
     """
     Load the Cliopatria shape dataset with GeoPandas, process names and colors efficiently.
     """
-    gdf = gpd.read_file(cliopatria_geojson_path)
-
-    self.stdout.write(self.style.SUCCESS(f"Generating shape names..."))
 
     # Remove parentheses from 'Name' and 'MemberOf'
     gdf['CleanName'] = gdf['Name'].str.replace('[()]', '', regex=True)
