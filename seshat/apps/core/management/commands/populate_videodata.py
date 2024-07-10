@@ -14,11 +14,20 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        # TODO: change this to use JSON instead of GeoPandas
-        # Load the Cliopatria shape dataset with GeoPandas
+        # Ensure the file exists and has the suffix "_seshat_processed.geojson"
         cliopatria_geojson_path = options['geojson_file']
+        if not os.path.exists(cliopatria_geojson_path):
+            self.stdout.write(self.style.ERROR(f"File {cliopatria_geojson_path} does not exist"))
+            return
+        if not cliopatria_geojson_path.endswith('_seshat_processed.geojson'):
+            self.stdout.write(self.style.ERROR(f"File {cliopatria_geojson_path} should the suffix '_seshat_processed.geojson'"))
+            self.stdout.write(self.style.ERROR(f"Please run the cliopatria/convert_data.py script first"))
+            return
+
+        # Load the Cliopatria shape dataset with JSON
         self.stdout.write(self.style.SUCCESS(f"Loading Cliopatria shape dataset from {cliopatria_geojson_path}..."))
-        gdf = gpd.read_file(cliopatria_geojson_path)
+        with open(cliopatria_geojson_path) as f:
+            cliopatria_data = json.load(f)
         self.stdout.write(self.style.SUCCESS(f"Successfully loaded Cliopatria shape dataset from {cliopatria_geojson_path}"))
 
         # Clear the VideoShapefile table
@@ -26,34 +35,32 @@ class Command(BaseCommand):
         VideoShapefile.objects.all().delete()
         self.stdout.write(self.style.SUCCESS('VideoShapefile table cleared'))
 
-        self.stdout.write(self.style.SUCCESS(f"Generating shape names and colors..."))
-        gdf = cliopatria_gdf(gdf)
-
+        # Iterate through the data and create VideoShapefile instances
         self.stdout.write(self.style.SUCCESS('Adding data to the database...'))
-        # Iterate through the GeoDataframe and create VideoShapefile instances
-        for index, row in gdf.iterrows():
-            self.stdout.write(self.style.SUCCESS(f"Creating VideoShapefile instance for {row['DisplayName']} ({row['FromYear']} - {row['ToYear']})"))
+        for feature in cliopatria_data['features']:
+            properties = feature['properties']
+            self.stdout.write(self.style.SUCCESS(f"Creating VideoShapefile instance for {properties['DisplayName']} ({properties['FromYear']} - {properties['ToYear']})"))
             
             # Save geom and convert Polygon to MultiPolygon if necessary
-            geom = GEOSGeometry(json.dumps(row['geometry']))
+            geom = GEOSGeometry(json.dumps(properties['geometry']))
             if geom.geom_type == 'Polygon':
                 geom = MultiPolygon(geom)
 
             VideoShapefile.objects.create(
                 geom=geom,
-                name=row['DisplayName'],
-                polity=row['ColorKey'],
-                wikipedia_name=row['Wikipedia'],
-                seshat_id=row['SeshatID'],
-                area=row['Area'],
-                start_year=row['FromYear'],
-                end_year=row['ToYear'],
-                polity_start_year=row['PolityStartYear'],
-                polity_end_year=row['PolityEndYear'],
-                colour=row['Color']
+                name=properties['DisplayName'],
+                polity=properties['ColorKey'],
+                wikipedia_name=properties['Wikipedia'],
+                seshat_id=properties['SeshatID'],
+                area=properties['Area'],
+                start_year=properties['FromYear'],
+                end_year=properties['ToYear'],
+                polity_start_year=properties['PolityStartYear'],
+                polity_end_year=properties['PolityEndYear'],
+                colour=properties['Color']
             )
 
-        self.stdout.write(self.style.SUCCESS(f"Successfully imported all data from {os.path.basename(geojson_file)}"))
+        self.stdout.write(self.style.SUCCESS(f"Successfully imported all data from {cliopatria_geojson_path}"))
 
         ###########################################################
         ### Adjust the tolerance param of ST_Simplify as needed ###
