@@ -1,15 +1,11 @@
 import os
 import json
-import logging
 import geopandas as gpd
 from distinctipy import get_colors, get_hex
 from django.contrib.gis.geos import GEOSGeometry, MultiPolygon
 from django.core.management.base import BaseCommand
 from django.db import connection
 from seshat.apps.core.models import VideoShapefile
-
-
-logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
@@ -23,12 +19,11 @@ class Command(BaseCommand):
         # Load the Cliopatria shape dataset with GeoPandas
         cliopatria_geojson_path = options['geojson_file']
         self.stdout.write(self.style.SUCCESS(f"Loading Cliopatria shape dataset from {cliopatria_geojson_path}..."))
-        logger.debug(f"Attempting to read GeoJSON file: {cliopatria_geojson_path}")
         try:
             gdf = gpd.read_file(cliopatria_geojson_path)
-            logger.debug("Successfully read GeoJSON file.")
+            self.stdout.write(self.style.SUCCESS(f"Successfully loaded Cliopatria shape dataset from {cliopatria_geojson_path}"))
         except Exception as e:
-            logger.error(f"Failed to read GeoJSON file: {e}")
+            self.stdout.write(self.style.ERROR(f"Error loading Cliopatria shape dataset from {cliopatria_geojson_path}"))
             raise
 
         # Clear the VideoShapefile table
