@@ -27,8 +27,8 @@ def cliopatria_gdf(gdf):
     # Add type prefix to DisplayName where type is not 'POLITY'
     gdf.loc[gdf['Type'] != 'POLITY', 'DisplayName'] = gdf['Type'] + ': ' + gdf['DisplayName']
 
-    self.stdout.write(self.style.SUCCESS(f"Generated shape names for {len(gdf)} shapes."))
-    self.stdout.write(self.style.SUCCESS(f"Assigning colours to shapes..."))
+    print(f"Generated shape names for {len(gdf)} shapes.")
+    print("Assigning colours to shapes...")
 
     # Use DistinctiPy package to assign a colour based on the ColorKey field
     colour_keys = gdf['ColorKey'].unique()
@@ -41,8 +41,8 @@ def cliopatria_gdf(gdf):
     # Drop intermediate columns
     gdf.drop(['CleanName', 'CleanMember_of'], axis=1, inplace=True)
 
-    self.stdout.write(self.style.SUCCESS(f"Assigned colours to {len(gdf)} shapes."))
-    self.stdout.write(self.style.SUCCESS(f"Determing polity start and end years..."))
+    print(f"Assigned colours to {len(gdf)} shapes.")
+    print("Determining polity start and end years...")
 
     # Add a column called 'PolityStartYear' to the GeoDataFrame which is the minimum 'FromYear' of all shapes with the same 'Name'
     gdf['PolityStartYear'] = gdf.groupby('Name')['FromYear'].transform('min')
@@ -50,7 +50,7 @@ def cliopatria_gdf(gdf):
     # Add a column called 'PolityEndYear' to the GeoDataFrame which is the maximum 'ToYear' of all shapes with the same 'Name'
     gdf['PolityEndYear'] = gdf.groupby('Name')['ToYear'].transform('max')
 
-    self.stdout.write(self.style.SUCCESS(f"Determined polity start and end years for {len(gdf)} shapes."))
+    print(f"Determined polity start and end years for {len(gdf)} shapes.")
 
     return gdf
 
