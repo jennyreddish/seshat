@@ -19,12 +19,8 @@ class Command(BaseCommand):
         # Load the Cliopatria shape dataset with GeoPandas
         cliopatria_geojson_path = options['geojson_file']
         self.stdout.write(self.style.SUCCESS(f"Loading Cliopatria shape dataset from {cliopatria_geojson_path}..."))
-        try:
-            gdf = gpd.read_file(cliopatria_geojson_path)
-            self.stdout.write(self.style.SUCCESS(f"Successfully loaded Cliopatria shape dataset from {cliopatria_geojson_path}"))
-        except Exception as e:
-            self.stdout.write(self.style.ERROR(f"Error loading Cliopatria shape dataset from {cliopatria_geojson_path}"))
-            raise
+        gdf = gpd.read_file(cliopatria_geojson_path)
+        self.stdout.write(self.style.SUCCESS(f"Successfully loaded Cliopatria shape dataset from {cliopatria_geojson_path}"))
 
         # Clear the VideoShapefile table
         self.stdout.write(self.style.SUCCESS('Clearing VideoShapefile table...'))
