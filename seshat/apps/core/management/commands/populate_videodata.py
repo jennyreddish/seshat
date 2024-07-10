@@ -42,7 +42,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(f"Creating VideoShapefile instance for {properties['DisplayName']} ({properties['FromYear']} - {properties['ToYear']})"))
             
             # Save geom and convert Polygon to MultiPolygon if necessary
-            geom = GEOSGeometry(json.dumps(properties['geometry']))
+            geom = GEOSGeometry(json.dumps(feature['geometry']))
             if geom.geom_type == 'Polygon':
                 geom = MultiPolygon(geom)
 
