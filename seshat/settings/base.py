@@ -449,7 +449,8 @@ else: # linux
         GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'
         GEOS_LIBRARY_PATH = '/usr/lib/x86_64-linux-gnu/libgeos_c.so'
     else:
-        GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so.30'
+        GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'  # Test site setting
+        # GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so.30'  # Production site setting
         # TODO: find a way to specify this based on the VM: aarch64 or x86_64
         # GEOS_LIBRARY_PATH = '/usr/lib/aarch64-linux-gnu/libgeos_c.so'
         GEOS_LIBRARY_PATH = '/usr/lib/x86_64-linux-gnu/libgeos_c.so'
