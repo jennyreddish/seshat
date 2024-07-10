@@ -39,6 +39,8 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Adding data to the database...'))
         for feature in cliopatria_data['features']:
             properties = feature['properties']
+            if properties['DisplayName'] is None:  # Ignore rows where the DisplayName is None
+                continue
             self.stdout.write(self.style.SUCCESS(f"Creating VideoShapefile instance for {properties['DisplayName']} ({properties['FromYear']} - {properties['ToYear']})"))
             
             # Save geom and convert Polygon to MultiPolygon if necessary
