@@ -218,6 +218,7 @@ function updateLegend() {
     var legendDiv = document.getElementById('variableLegend');
     var selectedYear1 = document.getElementById('dateSlide').value;  // Giving it the same name as a var used in the templated JS caused an error
     var selectedYearInt1 = parseInt(selectedYear1);
+    var displayComponent = document.getElementById('switchPolitiesComponents').value;
 
     // Clear the current legend
     legendDiv.innerHTML = '';
@@ -230,8 +231,10 @@ function updateLegend() {
             shape_name_col_dict['polity'] = shape.polity;
             shape_name_col_dict['colour'] = shape.colour;
             if (shape.weight > 0 && !addedPolityNames.includes(shape_name_col_dict['polity'])) {
-                // If the shape spans the selected year
-                if ((parseInt(shape.start_year) <= selectedYearInt1 && parseInt(shape.end_year) >= selectedYearInt1)) {
+                // If the shape spans the selected year and should be displayed according to the shouldDisplayComponent() function
+                if ((parseInt(shape.start_year) <= selectedYearInt1 && parseInt(shape.end_year) >= selectedYearInt1)
+                    && shouldDisplayComponent(displayComponent, shape)
+                ) {
                     // Add the polity to the list of added polities
                     addedPolities.push(shape_name_col_dict);
                     addedPolityNames.push(shape_name_col_dict['polity']);

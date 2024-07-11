@@ -613,8 +613,7 @@
 
                     displayComponent = document.getElementById('switchPolitiesComponents').value;
 
-                    // If the shape spans the selected year
-                    // Filter out "Personal Union" composites where the seshat_id includes a semicolon to avoid overlaps
+                    // If the shape spans the selected year and should be displayed according to the shouldDisplayComponent() function
                     if ((parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt)
                         && shouldDisplayComponent(displayComponent, shape)
                     ) {
