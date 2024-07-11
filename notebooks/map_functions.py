@@ -11,6 +11,7 @@ def create_map(selected_year, gdf, map_output, components=False):
     # Filter the gdf for shapes that overlap with the selected_year
     filtered_gdf = gdf[(gdf['FromYear'] <= selected_year) & (gdf['ToYear'] >= selected_year)]
 
+    # This logic is duplicated in shouldDisplayComponent() in map_functions.js
     if components:
         # Only shapes where the "Components" column is not populated (i.e., the shape doesn't have components, it is a lowest-level component itself)
         filtered_gdf = filtered_gdf[(filtered_gdf['Components'].isnull()) | (filtered_gdf['Components'] == '')]

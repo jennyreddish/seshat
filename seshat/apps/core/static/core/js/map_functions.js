@@ -403,3 +403,16 @@ function longAbsentPresentVarName(var_name){
     }
     return var_name;
 }
+
+function shouldDisplayComponent(displayComponent, shape) {
+    if (displayComponent == 'polities'
+        && shape.seshat_id.includes(';') === false
+        && (shape.member_of === null || shape.member_of === '')) {
+        return true;
+    } else if (displayComponent == 'components'
+        && (shape.components === null || shape.components === '')) {
+        return true;
+    } else {
+        return false;
+    }
+}

@@ -191,6 +191,11 @@
                     </fieldset>
                     <label for="opacitySlide">Opacity:</label>
                     <input type="range" name="opacitySlide" id="opacitySlide" min="0.1" max="1" step="0.1" value="0.5" class="slider" onchange="plotPolities()" style="width: 150px;"><br><br>
+                    <label for="switchPolitiesComponents">Colour by:</label>
+                    <select name="switchPolitiesComponents" id="switchPolitiesComponents" onchange="plotPolities()">
+                        <option value="polities">Polities</option>
+                        <option value="components">Components</option>
+                    </select><br><br>
                     <!-- TODO: Uncomment this when there are more capitals with coordinates in the database -->
                     <!-- <label for="showCapitals">Show capital cities</label>
                     <input type="checkbox" id="showCapitals" name="showCapitals" onclick=plotPolities()><br><br> -->
@@ -606,11 +611,12 @@
                         }
                     }
 
+                    displayComponent = document.getElementById('switchPolitiesComponents').value;
+
                     // If the shape spans the selected year
                     // Filter out "Personal Union" composites where the seshat_id includes a semicolon to avoid overlaps
                     if ((parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt)
-                        && shape.seshat_id.includes(';') === false
-                        && (shape.member_of === null || shape.member_of === '')
+                        && shouldDisplayComponent(displayComponent, shape)
                     ) {
 
                         if (shapeWeight > 0){
