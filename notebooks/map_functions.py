@@ -17,6 +17,8 @@ def create_map(selected_year, gdf, map_output, components=False):
     else:
         # Only shapes where the "MemberOf" column is not populated (i.e., the shape is not a member of another shape, it is a top-level shape itself)
         filtered_gdf = filtered_gdf[(filtered_gdf['MemberOf'].isnull()) | (filtered_gdf['MemberOf'] == '')]
+        # Also filter out "Personal Union" composites where the SeshatId includes a semicolon to avoid overlaps
+        filtered_gdf = filtered_gdf[~filtered_gdf['SeshatID'].str.contains(';')]
 
     # Transform the CRS of the GeoDataFrame to WGS84 (EPSG:4326)
     filtered_gdf = filtered_gdf.to_crs(epsg=4326)
