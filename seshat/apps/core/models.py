@@ -1123,7 +1123,7 @@ class Religion(models.Model):
 
 class VideoShapefile(models.Model):
     """
-    Model representing a video shapefile.
+    Model representing Cliopatria polity borders dataset.
     """
     id = models.AutoField(primary_key=True)
     geom = models.MultiPolygonField()
