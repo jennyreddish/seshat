@@ -226,24 +226,15 @@ function updateLegend() {
         var addedPolities = [];
         var addedPolityNames = [];
         shapesData.forEach(function (shape) {
-            // If the polity shape is part of a personal union or meta-polity active in the selected year, don't add it to the legend
-            var ignore = false;
-            if (shape.union_name) {
-                if ((parseInt(shape.union_start_year) <= selectedYearInt1 && parseInt(shape.union_end_year) >= selectedYearInt1)) {
-                    ignore = true;
-                };
-            };
-            if (!ignore) {
-                shape_name_col_dict = {};
-                shape_name_col_dict['polity'] = shape.polity;
-                shape_name_col_dict['colour'] = shape.colour;
-                if (shape.weight > 0 && !addedPolityNames.includes(shape_name_col_dict['polity'])) {
-                    // If the shape spans the selected year
-                    if ((parseInt(shape.start_year) <= selectedYearInt1 && parseInt(shape.end_year) >= selectedYearInt1)) {
-                        // Add the polity to the list of added polities
-                        addedPolities.push(shape_name_col_dict);
-                        addedPolityNames.push(shape_name_col_dict['polity']);
-                    };
+            shape_name_col_dict = {};
+            shape_name_col_dict['polity'] = shape.polity;
+            shape_name_col_dict['colour'] = shape.colour;
+            if (shape.weight > 0 && !addedPolityNames.includes(shape_name_col_dict['polity'])) {
+                // If the shape spans the selected year
+                if ((parseInt(shape.start_year) <= selectedYearInt1 && parseInt(shape.end_year) >= selectedYearInt1)) {
+                    // Add the polity to the list of added polities
+                    addedPolities.push(shape_name_col_dict);
+                    addedPolityNames.push(shape_name_col_dict['polity']);
                 };
             };
         });
