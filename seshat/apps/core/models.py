@@ -1138,8 +1138,8 @@ class VideoShapefile(models.Model):
     polity_start_year=models.IntegerField()
     polity_end_year=models.IntegerField()
     colour=models.CharField(max_length=7)
-    components=models.CharField(max_length=200, null=True)
-    member_of=models.CharField(max_length=200, null=True)
+    components=models.CharField(max_length=500, null=True)
+    member_of=models.CharField(max_length=500, null=True)
 
     def __str__(self):
         return "Name: %s" % self.name
