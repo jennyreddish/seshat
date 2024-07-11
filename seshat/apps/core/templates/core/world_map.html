@@ -608,7 +608,10 @@
 
                     // If the shape spans the selected year
                     // Filter out "Personal Union" composites where the seshat_id includes a semicolon to avoid overlaps
-                    if ((parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt) && shape.seshat_id.includes(';') === false) {
+                    if ((parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt)
+                        && shape.seshat_id.includes(';') === false
+                        && (shape.member_of === null || shape.member_of === '')
+                    ) {
 
                         if (shapeWeight > 0){
                             atLeastOnePolityHighlighted = true;
