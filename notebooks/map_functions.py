@@ -88,9 +88,9 @@ def display_map(gdf, display_year):
     # Define a function to be called when the value of the radio button changes
     def on_radio_change(change):
         if change['new'] == 'Polities':
-            create_map(display_year, gdf, map_output)
+            create_map(year_input.value, gdf, map_output)
         elif change['new'] == 'Components':
-            create_map(display_year, gdf, map_output, components=True)
+            create_map(year_input.value, gdf, map_output, components=True)
 
     # Attach the function to the text box
     year_input.observe(on_value_change, names='value')
