@@ -48,29 +48,31 @@ class ShapesTest(TestCase):
             id=1,
             geom=self.square,
             simplified_geom=self.square,
-            name="Test shape",
-            polity="Testpolityname",
+            name="Testpolityname",
             seshat_id="Test seshat_id",
             area=100.0,
             start_year=2000,
             end_year=2020,
             polity_start_year=2000,
             polity_end_year=2020,
-            colour="#FFFFFF"
+            colour="#FFFFFF",
+            components="Test components",
+            member_of="Test member_of"
         )
         VideoShapefile.objects.create(
             id=2,
             geom=self.square,
             simplified_geom=self.square,
-            name="Test shape 2",
-            polity="Testpolityname2",
+            name="Testpolityname2",
             seshat_id="Test seshat_id 2",
             area=100.0,
             start_year=0,
             end_year=1000,
             polity_start_year=0,
             polity_end_year=1000,
-            colour="#FFFFFF"
+            colour="#FFFFFF",
+            components="Test components",
+            member_of="Test member_of"
         )
         self.gadm_shapefile = GADMShapefile.objects.create(
             geom=self.square,
@@ -160,7 +162,7 @@ class ShapesTest(TestCase):
     def test_video_shapefile_creation(self):
         """Test the creation of a VideoShapefile instance."""
         self.assertIsInstance(self.video_shapefile, VideoShapefile)
-        self.assertEqual(self.video_shapefile.name, "Test shape")
+        self.assertEqual(self.video_shapefile.name, "Testpolityname")
 
     def test_gadm_shapefile_creation(self):
         """Test the creation of a GADMShapefile instance."""
@@ -200,8 +202,7 @@ class ShapesTest(TestCase):
             'shapes': [
                 {
                     'seshat_id': 'Test seshat_id',
-                    'name': 'Test shape',
-                    'polity': 'Testpolityname',
+                    'name': 'Testpolityname',
                     'start_year': 2000,
                     'end_year': 2020,
                     'polity_start_year': 2000,
@@ -209,12 +210,13 @@ class ShapesTest(TestCase):
                     'colour': "#FFFFFF",
                     'area': 100.0,
                     'geom_json': self.geo_square,
-                    'id': 1
+                    'id': 1,
+                    'components': 'Test components',
+                    'member_of': 'Test member_of',
                 },
                 {
                     'seshat_id': 'Test seshat_id 2',
-                    'name': 'Test shape 2',
-                    'polity': 'Testpolityname2',
+                    'name': 'Testpolityname2',
                     'start_year': 0,
                     'end_year': 1000,
                     'polity_start_year': 0,
@@ -222,7 +224,9 @@ class ShapesTest(TestCase):
                     'colour': "#FFFFFF",
                     'area': 100.0,
                     'geom_json': self.geo_square,
-                    'id': 2
+                    'id': 2,
+                    'components': 'Test components',
+                    'member_of': 'Test member_of',
                 }
             ],
             'earliest_year': 0,
@@ -247,8 +251,7 @@ class ShapesTest(TestCase):
             'shapes': [
                 {
                     'seshat_id': 'Test seshat_id',
-                    'name': 'Test shape',
-                    'polity': 'Testpolityname',
+                    'name': 'Testpolityname',
                     'start_year': 2000,
                     'end_year': 2020,
                     'polity_start_year': 2000,
@@ -256,7 +259,9 @@ class ShapesTest(TestCase):
                     'colour': "#FFFFFF",
                     'area': 100.0,
                     'geom_json': self.geo_square,
-                    'id': 1
+                    'id': 1,
+                    'components': 'Test components',
+                    'member_of': 'Test member_of',
                 }
             ],
             'earliest_year': 0,  # This is the earliest year in the database, not the earliest year of the polity
@@ -280,8 +285,7 @@ class ShapesTest(TestCase):
             'shapes': [
                 {
                     'seshat_id': 'Test seshat_id',
-                    'name': 'Test shape',
-                    'polity': 'Testpolityname',
+                    'name': 'Testpolityname',
                     'start_year': 2000,
                     'end_year': 2020,
                     'polity_start_year': 2000,
@@ -289,7 +293,9 @@ class ShapesTest(TestCase):
                     'colour': "#FFFFFF",
                     'area': 100.0,
                     'geom_json': self.geo_square,
-                    'id': 1
+                    'id': 1,
+                    'components': 'Test components',
+                    'member_of': 'Test member_of',
                 }
             ],
             'earliest_year': 2000,  # This is the earliest year of the polity
@@ -336,8 +342,7 @@ class ShapesTest(TestCase):
                 'shapes': [
                     {
                         'seshat_id': 'Test seshat_id',
-                        'name': 'Test shape',
-                        'polity': 'Testpolityname',
+                        'name': 'Testpolityname',
                         'start_year': 2000,
                         'end_year': 2020,
                         'polity_start_year': 2000,
@@ -345,7 +350,9 @@ class ShapesTest(TestCase):
                         'colour': "#FFFFFF",
                         'area': 100.0,
                         'geom_json': self.geo_square,
-                        'id': 1
+                        'id': 1,
+                        'components': 'Test components',
+                        'member_of': 'Test member_of',
                     }
                 ],
                 'earliest_year': 2000,
@@ -372,8 +379,7 @@ class ShapesTest(TestCase):
                 'shapes': [
                     {
                         'seshat_id': 'Test seshat_id 2',
-                        'name': 'Test shape 2',
-                        'polity': 'Testpolityname2',
+                        'name': 'Testpolityname2',
                         'start_year': 0,
                         'end_year': 1000,
                         'polity_start_year': 0,  # Note: this is taken from the shape objectm, not the polity object (they don't match in this test case)
@@ -381,7 +387,9 @@ class ShapesTest(TestCase):
                         'colour': "#FFFFFF",
                         'area': 100.0,
                         'geom_json': self.geo_square,
-                        'id': 2
+                        'id': 2,
+                        'components': 'Test components',
+                        'member_of': 'Test member_of',
                     }
                 ],
                 'earliest_year': 0,
@@ -433,8 +441,7 @@ class ShapesTest(TestCase):
         shapes = [
                     {
                         'seshat_id': 'Test seshat_id 2',
-                        'name': 'Test shape 2',
-                        'polity': 'Testpolityname2',
+                        'name': 'Testpolityname2',
                         'start_year': 0,
                         'end_year': 1000,
                         'polity_start_year': 0,
@@ -442,7 +449,9 @@ class ShapesTest(TestCase):
                         'colour': "#FFFFFF",
                         'area': 100.0,
                         'geom_json': self.geo_square,
-                        'id': 2
+                        'id': 2,
+                        'components': 'Test components',
+                        'member_of': 'Test member_of',
                     }
                 ]
         app_map = {
@@ -473,8 +482,7 @@ class ShapesTest(TestCase):
         shapes = [
                     {
                         'seshat_id': 'Test seshat_id 2',
-                        'name': 'Test shape 2',
-                        'polity': 'Testpolityname2',
+                        'name': 'Testpolityname2',
                         'start_year': 0,
                         'end_year': 1000,
                         'polity_start_year': 0,
@@ -482,7 +490,9 @@ class ShapesTest(TestCase):
                         'colour': "#FFFFFF",
                         'area': 100.0,
                         'geom_json': self.geo_square,
-                        'id': 2
+                        'id': 2,
+                        'components': 'Test components',
+                        'member_of': 'Test member_of',
                     }
                 ]
         result_shapes, result_variables = assign_categorical_variables_to_shapes(shapes, {})
