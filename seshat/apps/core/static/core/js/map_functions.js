@@ -228,7 +228,7 @@ function updateLegend() {
         var addedPolityNames = [];
         shapesData.forEach(function (shape) {
             shape_name_col_dict = {};
-            shape_name_col_dict['polity'] = shape.polity;
+            shape_name_col_dict['polity'] = shape.name;
             shape_name_col_dict['colour'] = shape.colour;
             if (shape.weight > 0 && !addedPolityNames.includes(shape_name_col_dict['polity'])) {
                 // If the shape spans the selected year and should be displayed according to the shouldDisplayComponent() function
