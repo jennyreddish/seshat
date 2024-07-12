@@ -110,6 +110,17 @@ def display_map(gdf, display_year):
 
     # Define a function to be called when the value of the text box changes
     def on_value_change(change):
+        """
+        This function is called when the value of the text box or slider changes.
+        It calls create_map with the newly selected year and the GeoDataFrame gdf.
+        It sets the components parameter based on the current value of the radio button.
+
+        Args:
+            change (dict): A dictionary containing information about the change.
+
+        Returns:
+            None
+        """
         if components_radio.value == 'Polities':
             create_map(change['new'], gdf, map_output)
         elif components_radio.value == 'Components':
@@ -117,6 +128,17 @@ def display_map(gdf, display_year):
 
     # Define a function to be called when the value of the radio button changes
     def on_radio_change(change):
+        """
+        This function is called when the value of the radio button changes. It calls
+        create_map with the newly selected year of the text box and the GeoDataFrame gdf.
+        It sets the components parameter based on the current value of the radio button.
+
+        Args:
+            change (dict): A dictionary containing information about the change.
+
+        Returns:
+            None
+        """
         if change['new'] == 'Polities':
             create_map(year_input.value, gdf, map_output)
         elif change['new'] == 'Components':
