@@ -55,7 +55,9 @@ class ShapesTest(TestCase):
             end_year=2020,
             polity_start_year=2000,
             polity_end_year=2020,
-            colour="#FFFFFF"
+            colour="#FFFFFF",
+            components="Test components",
+            member_of="Test member_of"
         )
         VideoShapefile.objects.create(
             id=2,
@@ -68,7 +70,9 @@ class ShapesTest(TestCase):
             end_year=1000,
             polity_start_year=0,
             polity_end_year=1000,
-            colour="#FFFFFF"
+            colour="#FFFFFF",
+            components="Test components",
+            member_of="Test member_of"
         )
         self.gadm_shapefile = GADMShapefile.objects.create(
             geom=self.square,
@@ -206,7 +210,9 @@ class ShapesTest(TestCase):
                     'colour': "#FFFFFF",
                     'area': 100.0,
                     'geom_json': self.geo_square,
-                    'id': 1
+                    'id': 1,
+                    'components': 'Test components',
+                    'member_of': 'Test member_of',
                 },
                 {
                     'seshat_id': 'Test seshat_id 2',
@@ -218,7 +224,9 @@ class ShapesTest(TestCase):
                     'colour': "#FFFFFF",
                     'area': 100.0,
                     'geom_json': self.geo_square,
-                    'id': 2
+                    'id': 2,
+                    'components': 'Test components',
+                    'member_of': 'Test member_of',
                 }
             ],
             'earliest_year': 0,
@@ -251,7 +259,9 @@ class ShapesTest(TestCase):
                     'colour': "#FFFFFF",
                     'area': 100.0,
                     'geom_json': self.geo_square,
-                    'id': 1
+                    'id': 1,
+                    'components': 'Test components',
+                    'member_of': 'Test member_of',
                 }
             ],
             'earliest_year': 0,  # This is the earliest year in the database, not the earliest year of the polity
@@ -283,7 +293,9 @@ class ShapesTest(TestCase):
                     'colour': "#FFFFFF",
                     'area': 100.0,
                     'geom_json': self.geo_square,
-                    'id': 1
+                    'id': 1,
+                    'components': 'Test components',
+                    'member_of': 'Test member_of',
                 }
             ],
             'earliest_year': 2000,  # This is the earliest year of the polity
@@ -338,7 +350,9 @@ class ShapesTest(TestCase):
                         'colour': "#FFFFFF",
                         'area': 100.0,
                         'geom_json': self.geo_square,
-                        'id': 1
+                        'id': 1,
+                        'components': 'Test components',
+                        'member_of': 'Test member_of',
                     }
                 ],
                 'earliest_year': 2000,
@@ -373,7 +387,9 @@ class ShapesTest(TestCase):
                         'colour': "#FFFFFF",
                         'area': 100.0,
                         'geom_json': self.geo_square,
-                        'id': 2
+                        'id': 2,
+                        'components': 'Test components',
+                        'member_of': 'Test member_of',
                     }
                 ],
                 'earliest_year': 0,
@@ -433,7 +449,9 @@ class ShapesTest(TestCase):
                         'colour': "#FFFFFF",
                         'area': 100.0,
                         'geom_json': self.geo_square,
-                        'id': 2
+                        'id': 2,
+                        'components': 'Test components',
+                        'member_of': 'Test member_of',
                     }
                 ]
         app_map = {
@@ -472,7 +490,9 @@ class ShapesTest(TestCase):
                         'colour': "#FFFFFF",
                         'area': 100.0,
                         'geom_json': self.geo_square,
-                        'id': 2
+                        'id': 2,
+                        'components': 'Test components',
+                        'member_of': 'Test member_of',
                     }
                 ]
         result_shapes, result_variables = assign_categorical_variables_to_shapes(shapes, {})
