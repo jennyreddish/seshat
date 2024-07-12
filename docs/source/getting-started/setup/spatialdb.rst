@@ -49,6 +49,6 @@ GADM
 1. `Download <https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-gpkg.zip>`_ the whole world GeoPackage file from the `GADM website <https://gadm.org/download_world.html>`_.
 2. Populate the ``core_gadmshapefile``, ``core_gadmcountries`` and ``core_gadmprovinces`` tables using the following command:
 
-    .. code-block:: bash
+   .. code-block:: bash
 
-        $ python manage.py populate_gadm /path/to/gpkg_file
+      $ python manage.py populate_gadm /path/to/gpkg_file
