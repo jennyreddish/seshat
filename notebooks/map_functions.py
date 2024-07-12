@@ -5,6 +5,21 @@ from IPython.display import display, clear_output
 
 
 def create_map(selected_year, gdf, map_output, components=False):
+    """
+    Create a map of the world with the shapes from the GeoDataFrame gdf that
+    overlap with the selected_year. If components is True, only shapes that
+    are components are displayed. If components is False, only shapes that are
+    not components (full polities) are displayed.
+
+    Args:
+        selected_year (int): The year to display shapes for.
+        gdf (GeoDataFrame): The GeoDataFrame containing the shapes.
+        map_output (Output): The Output widget to display the map in.
+        components (bool): Whether to display components or not.
+
+    Returns:
+        None
+    """
     global m
     m = folium.Map(location=[0, 0], zoom_start=2, tiles='https://a.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png', attr='CartoDB')
 
@@ -55,7 +70,19 @@ def create_map(selected_year, gdf, map_output, components=False):
 
 
 def display_map(gdf, display_year):
+    """
+    Display a map of the world with the shapes from the GeoDataFrame gdf that
+    overlap with the display_year. The user can change the year using a text box
+    or a slider, and can switch between displaying polities and components using
+    a radio button.
 
+    Args:
+        gdf (GeoDataFrame): The GeoDataFrame containing the shapes.
+        display_year (int): The year to display shapes for.
+
+    Returns:
+        None
+    """
     # Create a text box for input
     year_input = widgets.IntText(
         value=display_year,
