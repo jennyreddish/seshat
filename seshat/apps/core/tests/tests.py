@@ -158,7 +158,7 @@ class ShapesTest(TestCase):
     def test_video_shapefile_creation(self):
         """Test the creation of a VideoShapefile instance."""
         self.assertIsInstance(self.video_shapefile, VideoShapefile)
-        self.assertEqual(self.video_shapefile.name, "Test shape")
+        self.assertEqual(self.video_shapefile.name, "Testpolityname")
 
     def test_gadm_shapefile_creation(self):
         """Test the creation of a GADMShapefile instance."""
