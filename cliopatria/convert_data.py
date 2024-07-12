@@ -4,7 +4,14 @@ import sys
 
 def cliopatria_gdf(gdf):
     """
-    Load the Cliopatria shape dataset with GeoPandas, process names and colors efficiently.
+    Load the Cliopatria polity borders dataset from a GeoDataFrame created by GeoPandas (from a GeoJSON file).
+    Process the Cliopatria dataset for loading to the Seshat database and visualisation in the Seshat website.
+
+    Args:
+        gdf (GeoDataFrame): A GeoDataFrame containing the Cliopatria polity borders dataset.
+
+    Returns:
+        GeoDataFrame: The input GeoDataFrame with additional columns 'DisplayName', 'Color', 'PolityStartYear', and 'PolityEndYear'.
     """
 
     # Generate DisplayName for each shape based on the 'Name' field
