@@ -48,8 +48,7 @@ class ShapesTest(TestCase):
             id=1,
             geom=self.square,
             simplified_geom=self.square,
-            name="Test shape",
-            polity="Testpolityname",
+            name="Testpolityname",
             seshat_id="Test seshat_id",
             area=100.0,
             start_year=2000,
@@ -62,8 +61,7 @@ class ShapesTest(TestCase):
             id=2,
             geom=self.square,
             simplified_geom=self.square,
-            name="Test shape 2",
-            polity="Testpolityname2",
+            name="Testpolityname2",
             seshat_id="Test seshat_id 2",
             area=100.0,
             start_year=0,
@@ -200,8 +198,7 @@ class ShapesTest(TestCase):
             'shapes': [
                 {
                     'seshat_id': 'Test seshat_id',
-                    'name': 'Test shape',
-                    'polity': 'Testpolityname',
+                    'name': 'Testpolityname',
                     'start_year': 2000,
                     'end_year': 2020,
                     'polity_start_year': 2000,
@@ -213,8 +210,7 @@ class ShapesTest(TestCase):
                 },
                 {
                     'seshat_id': 'Test seshat_id 2',
-                    'name': 'Test shape 2',
-                    'polity': 'Testpolityname2',
+                    'name': 'Testpolityname2',
                     'start_year': 0,
                     'end_year': 1000,
                     'polity_start_year': 0,
@@ -247,8 +243,7 @@ class ShapesTest(TestCase):
             'shapes': [
                 {
                     'seshat_id': 'Test seshat_id',
-                    'name': 'Test shape',
-                    'polity': 'Testpolityname',
+                    'name': 'Testpolityname',
                     'start_year': 2000,
                     'end_year': 2020,
                     'polity_start_year': 2000,
@@ -280,8 +275,7 @@ class ShapesTest(TestCase):
             'shapes': [
                 {
                     'seshat_id': 'Test seshat_id',
-                    'name': 'Test shape',
-                    'polity': 'Testpolityname',
+                    'name': 'Testpolityname',
                     'start_year': 2000,
                     'end_year': 2020,
                     'polity_start_year': 2000,
@@ -336,8 +330,7 @@ class ShapesTest(TestCase):
                 'shapes': [
                     {
                         'seshat_id': 'Test seshat_id',
-                        'name': 'Test shape',
-                        'polity': 'Testpolityname',
+                        'name': 'Testpolityname',
                         'start_year': 2000,
                         'end_year': 2020,
                         'polity_start_year': 2000,
@@ -372,8 +365,7 @@ class ShapesTest(TestCase):
                 'shapes': [
                     {
                         'seshat_id': 'Test seshat_id 2',
-                        'name': 'Test shape 2',
-                        'polity': 'Testpolityname2',
+                        'name': 'Testpolityname2',
                         'start_year': 0,
                         'end_year': 1000,
                         'polity_start_year': 0,  # Note: this is taken from the shape objectm, not the polity object (they don't match in this test case)
@@ -433,8 +425,7 @@ class ShapesTest(TestCase):
         shapes = [
                     {
                         'seshat_id': 'Test seshat_id 2',
-                        'name': 'Test shape 2',
-                        'polity': 'Testpolityname2',
+                        'name': 'Testpolityname2',
                         'start_year': 0,
                         'end_year': 1000,
                         'polity_start_year': 0,
@@ -473,8 +464,7 @@ class ShapesTest(TestCase):
         shapes = [
                     {
                         'seshat_id': 'Test seshat_id 2',
-                        'name': 'Test shape 2',
-                        'polity': 'Testpolityname2',
+                        'name': 'Testpolityname2',
                         'start_year': 0,
                         'end_year': 1000,
                         'polity_start_year': 0,
