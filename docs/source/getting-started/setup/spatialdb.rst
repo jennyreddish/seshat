@@ -25,16 +25,22 @@ Cliopatria shape dataset
 -------------------------
 
 ..
-    TODO: Add a link here to the published Clipatria dataset
+    TODO: Add a link here to the published Cliopatria dataset
 
 1. Download and unzip the Cliopatria dataset.
-2. Populate ``core_videoshapefile`` table using the following command:
+2. Update the Cliopatria GeoJSON file with colours and other properties required by Seshat:
+   
+   .. code-block:: bash
+
+      $ python cliopatria/convert_data.py /path/to/cliopatria.geojson
+
+   Note: this will create a new file with the same name but with the suffix "_seshat_processed.geojson"
+3. Populate ``core_videoshapefile`` table using the following command:
 
    .. code-block:: bash
 
-      $ python manage.py populate_videodata /path/to/data
+      $ python manage.py populate_videodata /path/to/cliopatria_seshat_processed.geojson
 
-   Note: if you wish to further simplify the Cliopatria shape resolution used by the world map after loading it into the database, open ``seshat/apps/core/management/commands/populate_videodata.py`` and modify the SQL query under the comment: "Adjust the tolerance param of ST_Simplify as needed"
 
 GADM
 ----
@@ -42,6 +48,6 @@ GADM
 1. `Download <https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-gpkg.zip>`_ the whole world GeoPackage file from the `GADM website <https://gadm.org/download_world.html>`_.
 2. Populate the ``core_gadmshapefile``, ``core_gadmcountries`` and ``core_gadmprovinces`` tables using the following command:
 
-    .. code-block:: bash
+   .. code-block:: bash
 
-        $ python manage.py populate_gadm /path/to/gpkg_file
+      $ python manage.py populate_gadm /path/to/gpkg_file

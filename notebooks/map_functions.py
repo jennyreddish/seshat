@@ -1,107 +1,40 @@
-import geopandas as gpd
-import json
 import folium
 import folium
 import ipywidgets as widgets
 from IPython.display import display, clear_output
 
 
-def convert_name(gdf, i):
+def create_map(selected_year, gdf, map_output, components=False):
     """
-        Convert the polity name of a shape in the Cliopatria dataset to what we want to display on the Seshat world map.
-        Where gdf is the geodataframe, i is the index of the row/shape of interest.
-        Returns the name to display on the map.
-        Returns None if we don't want to display the shape (see comments below for details).
+    Create a map of the world with the shapes from the GeoDataFrame gdf that
+    overlap with the selected_year. If components is True, only shapes that
+    are components are displayed. If components is False, only shapes that are
+    not components (full polities) are displayed.
+
+    Args:
+        selected_year (int): The year to display shapes for.
+        gdf (GeoDataFrame): The GeoDataFrame containing the shapes.
+        map_output (Output): The Output widget to display the map in.
+        components (bool): Whether to display components or not.
+
+    Returns:
+        None
     """
-    polity_name = gdf.loc[i, 'Name'].replace('(', '').replace(')', '')  # Remove spaces and brackets from name
-    # If a shape has components (is a composite) we'll load the components instead
-    # ... unless the components have their own components, then load the top level shape
-    # ... or the shape is in a personal union, then load the personal union shape instead
-    try:
-        if gdf.loc[i, 'Components']:  # If the shape has components
-            if ';' not in gdf.loc[i, 'SeshatID']:  # If the shape is not a personal union
-                if len(gdf.loc[i, 'Components']) > 0 and '(' not in gdf.loc[i, 'Components']:  # If the components don't have components
-                    polity_name = None
-    except KeyError:  # If the shape has no components, don't modify the name
-        pass
-    return polity_name
-
-
-def cliopatria_gdf(cliopatria_geojson_path, cliopatria_json_path):
-    """
-        Load the Cliopatria shape dataset with GeoPandas and add the EndYear column to the geodataframe.
-    """
-    # Load the geojson and json files
-    gdf = gpd.read_file(cliopatria_geojson_path)
-    with open(cliopatria_json_path, 'r') as f:
-        name_years = json.load(f)
-
-    # Create new columns in the geodataframe
-    gdf['EndYear'] = None
-    gdf['DisplayName'] = None
-
-    # Loop through the geodataframe
-    for i in range(len(gdf)):
-
-        # Get the raw name of the current row and the name to display
-        polity_name_raw = gdf.loc[i, 'Name']
-        polity_name = convert_name(gdf, i)
-
-        if polity_name:  # convert_name returns None if we don't want to display the shape
-            if gdf.loc[i, 'Type'] != 'POLITY':  # Add the type to the name if it's not a polity
-                polity_name = gdf.loc[i, 'Type'] + ': ' + polity_name
-
-            # Get the start year of the current row
-            start_year = gdf.loc[i, 'Year']
-
-            # Get a sorted list of the years for that name from the geodataframe
-            this_polity_years = sorted(gdf[gdf['Name'] == polity_name_raw]['Year'].unique())
-
-            # Get the end year for a shape    
-            # Most of the time, the shape end year is the year of the next shape
-            # Some polities have a gap in their active years
-            # For a shape year at the start of a gap, set the end year to be the shape year, so it doesn't cover the inactive period
-            start_end_years = name_years[polity_name_raw]
-            end_years = [x[1] for x in start_end_years]
-
-            polity_start_year = start_end_years[0][0]
-            polity_end_year = end_years[-1]
-
-            # Raise an error if the shape year is not the start year of the polity
-            if this_polity_years[0] != polity_start_year:
-                raise ValueError(f'First shape year for {polity_name} is not the start year of the polity')
-            
-            # Find the closest higher value from end_years to the shape year
-            next_end_year = min(end_years, key=lambda x: x if x >= start_year else float('inf'))
-
-            if start_year in end_years:  # If the shape year is in the list of polity end years, the start year is the end year
-                end_year = start_year
-            else:
-                this_year_index = this_polity_years.index(start_year)  
-                try:  # Try to use the next shape year minus one as the end year if possible, unless it's higher than the next_end_year
-                    next_shape_year_minus_one = this_polity_years[this_year_index + 1] - 1
-                    end_year = next_shape_year_minus_one if next_shape_year_minus_one < next_end_year else next_end_year
-                except IndexError:  # Otherwise assume the end year of the shape is the end year of the polity
-                    end_year = polity_end_year
-
-            # Set the EndYear column to the end year
-            gdf.loc[i, 'EndYear'] = end_year
-
-            # Set the DisplayName column to the name to display
-            gdf.loc[i, 'DisplayName'] = polity_name
-
-    return gdf
-
-
-def create_map(selected_year, gdf, map_output):
     global m
     m = folium.Map(location=[0, 0], zoom_start=2, tiles='https://a.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png', attr='CartoDB')
 
     # Filter the gdf for shapes that overlap with the selected_year
-    filtered_gdf = gdf[(gdf['Year'] <= selected_year) & (gdf['EndYear'] >= selected_year)]
+    filtered_gdf = gdf[(gdf['FromYear'] <= selected_year) & (gdf['ToYear'] >= selected_year)]
 
-    # Remove '0x' and add '#' to the start of the color strings
-    filtered_gdf['Color'] = '#' + filtered_gdf['Color'].str.replace('0x', '')
+    # This logic is duplicated in shouldDisplayComponent() in map_functions.js
+    if components:
+        # Only shapes where the "Components" column is not populated (i.e., the shape doesn't have components, it is a lowest-level component itself)
+        filtered_gdf = filtered_gdf[(filtered_gdf['Components'].isnull()) | (filtered_gdf['Components'] == '')]
+    else:
+        # Only shapes where the "MemberOf" column is not populated (i.e., the shape is not a member of another shape, it is a top-level shape itself)
+        filtered_gdf = filtered_gdf[(filtered_gdf['MemberOf'].isnull()) | (filtered_gdf['MemberOf'] == '')]
+        # Also filter out "Personal Union" composites where the SeshatId includes a semicolon to avoid overlaps
+        filtered_gdf = filtered_gdf[~filtered_gdf['SeshatID'].str.contains(';')]
 
     # Transform the CRS of the GeoDataFrame to WGS84 (EPSG:4326)
     filtered_gdf = filtered_gdf.to_crs(epsg=4326)
@@ -117,6 +50,7 @@ def create_map(selected_year, gdf, map_output):
 
     # Add the polygons to the map
     for _, row in filtered_gdf.iterrows():
+
         # Convert the geometry to GeoJSON
         geojson = folium.GeoJson(
             row.geometry,
@@ -136,36 +70,91 @@ def create_map(selected_year, gdf, map_output):
 
 
 def display_map(gdf, display_year):
+    """
+    Display a map of the world with the shapes from the GeoDataFrame gdf that
+    overlap with the display_year. The user can change the year using a text box
+    or a slider, and can switch between displaying polities and components using
+    a radio button.
 
+    Args:
+        gdf (GeoDataFrame): The GeoDataFrame containing the shapes.
+        display_year (int): The year to display shapes for.
+
+    Returns:
+        None
+    """
     # Create a text box for input
     year_input = widgets.IntText(
         value=display_year,
         description='Year:',
     )
 
-    # Define a function to be called when the value of the text box changes
-    def on_value_change(change):
-        create_map(change['new'], gdf, map_output)
-
     # Create a slider for input
     year_slider = widgets.IntSlider(
         value=display_year,
-        min=gdf['Year'].min(),
-        max=gdf['EndYear'].max(),
+        min=gdf['FromYear'].min(),
+        max=gdf['ToYear'].max(),
         description='Year:',
     )
 
     # Link the text box and the slider
     widgets.jslink((year_input, 'value'), (year_slider, 'value'))
 
-    # Create an output widget
-    map_output = widgets.Output()
+    # Create a radio button to switch between "Polities" and "Components".
+    # The value should be a boolean indicating whether to display components or not.
+    components_radio = widgets.RadioButtons(
+        options=['Polities', 'Components'],
+        description='Display:',
+        disabled=False
+    )
+
+    # Define a function to be called when the value of the text box changes
+    def on_value_change(change):
+        """
+        This function is called when the value of the text box or slider changes.
+        It calls create_map with the newly selected year and the GeoDataFrame gdf.
+        It sets the components parameter based on the current value of the radio button.
+
+        Args:
+            change (dict): A dictionary containing information about the change.
+
+        Returns:
+            None
+        """
+        if components_radio.value == 'Polities':
+            create_map(change['new'], gdf, map_output)
+        elif components_radio.value == 'Components':
+            create_map(change['new'], gdf, map_output, components=True)
+
+    # Define a function to be called when the value of the radio button changes
+    def on_radio_change(change):
+        """
+        This function is called when the value of the radio button changes. It calls
+        create_map with the newly selected year of the text box and the GeoDataFrame gdf.
+        It sets the components parameter based on the current value of the radio button.
+
+        Args:
+            change (dict): A dictionary containing information about the change.
+
+        Returns:
+            None
+        """
+        if change['new'] == 'Polities':
+            create_map(year_input.value, gdf, map_output)
+        elif change['new'] == 'Components':
+            create_map(year_input.value, gdf, map_output, components=True)
 
     # Attach the function to the text box
     year_input.observe(on_value_change, names='value')
 
+    # Attach the function to the radio button
+    components_radio.observe(on_radio_change, names='value')
+
+    # Create an output widget
+    map_output = widgets.Output()
+
     # Display the widgets
-    display(year_input, year_slider, map_output)
+    display(year_input, year_slider, components_radio, map_output)
 
     # Call create_map initially to display the map
-    create_map(display_year, gdf, map_output)
+    create_map(display_year, gdf, map_output, )
