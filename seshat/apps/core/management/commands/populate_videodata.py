@@ -49,7 +49,6 @@ class Command(BaseCommand):
             VideoShapefile.objects.create(
                 geom=geom,
                 name=properties['DisplayName'],
-                polity=properties['DisplayName'],  # Deprecated field
                 wikipedia_name=properties['Wikipedia'],
                 seshat_id=properties['SeshatID'],
                 area=properties['Area'],

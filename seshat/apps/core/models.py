@@ -1129,7 +1129,6 @@ class VideoShapefile(models.Model):
     geom = models.MultiPolygonField()
     simplified_geom = models.MultiPolygonField(null=True)
     name=models.CharField(max_length=100)
-    polity=models.CharField(max_length=100)  # Deprecated field (always same as name)
     wikipedia_name=models.CharField(max_length=100, null=True)
     seshat_id=models.CharField(max_length=100)
     area=models.FloatField()
