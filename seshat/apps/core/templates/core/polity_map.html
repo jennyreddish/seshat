@@ -218,18 +218,10 @@
                                     var popupContent = `
                                                 <table>
                                                     <tr>
-                                                        <th>${shape.polity}</th>
+                                                        <th>${shape.name}</th>
                                                         <th></th>
                                                     </tr>
                                             `;
-                                    if (shape.polity != shape.name) {
-                                                popupContent = popupContent + `
-                                                <tr>
-                                                    <td>Component</td>
-                                                    <td>${shape.name}</td>
-                                                </tr>
-                                            `;
-                                    }
                                     popupContent = popupContent + `
                                                     <tr>
                                                         <td>Duration</td>
