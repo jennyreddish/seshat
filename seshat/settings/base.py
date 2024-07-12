@@ -13,8 +13,9 @@ import os
 
 import django_heroku
 
-import dj_database_url
-from decouple import Csv, config
+# import dj_database_url
+from decouple import config
+# from decouple import Csv
 import sys
 
 from django.contrib.messages import constants as messages
@@ -87,6 +88,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'leaflet',
     #'easyaudit',
+    'rest_framework.authtoken'
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -408,6 +410,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
 }
 """
 REST_FRAMEWORK defines the default settings for the Django REST framework.
