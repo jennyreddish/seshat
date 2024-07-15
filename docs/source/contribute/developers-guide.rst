@@ -1,6 +1,8 @@
 Developer's Guide
 =================
 
+The Seshat project is open source and welcomes contributions from developers. This guide is written for the core project maintainers working at the Complexity Science Hub in Vienna and The Alan Turing Institute in London.
+
 Getting started
 ---------------
 
@@ -68,6 +70,13 @@ Development workflow
 
     - **TODO:** *add link to unwritten production deployment guide*
     - Ensure any new migrations added in the pull request are applied to the database. **TODO:** *add link to another page with Django notes*
+
+
+GitHub workflow visualised
+---------------------------
+
+As described above, development on Seshat follows a basic GitHub workflow. The diagram below illustrates the steps involved in the process, from selecting an issue to merging a pull request. Note that the master branch is called `dev` in the Seshat repository. Feature branches should be named appropriately based on the issue they are addressing.
+
 
 .. image:: ../img/basic_github_workflow.webp
     :alt: Seshat development workflow
