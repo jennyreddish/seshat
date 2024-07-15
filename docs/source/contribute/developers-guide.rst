@@ -31,7 +31,10 @@ Getting started
 Development workflow
 --------------------
 
-1. Select an issue to work on from the Seshat development project board on `GitHub <https://github.com/orgs/Seshat-Global-History-Databank/projects/1/views/1>`_.
+1. Select an issue to work on from the Seshat development project board on `GitHub <https://github.com/orgs/Seshat-Global-History-Databank/projects/1/views/1>`_, or create a new issue as described above.
+
+    - Assign the issue to yourself.
+    - Move the issue to the "In progress" column on the project board.
 
 2. Create a new branch from the `dev` branch.
 
