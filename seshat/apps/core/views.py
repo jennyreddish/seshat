@@ -215,7 +215,7 @@ def seshatacknowledgements(request):
 class ReferenceListView(generic.ListView):
     model = Reference
     template_name = "core/references/reference_list.html"
-    paginate_by = 20
+    paginate_by = 100
 
     def get_absolute_url(self):
         return reverse('references')
@@ -2298,6 +2298,18 @@ def do_zotero(results):
                 pot_title = "NO_TITLE_PROVIDED_IN_ZOTERO"
             #print("Years: ", my_dic.get('year'))
             #print("****************")
+
+            try:
+                if item['data']['dateAdded']:
+                    full_date = item['data']['dateAdded']
+                    my_dic['created_date'] = full_date
+                    #print(f'Full Date caught is: {full_date}')
+                else:
+                    my_dic['created_date'] = None
+                    #pass #print("year is empty for index: ", i, item['data']['itemType'])
+                #pass #print(my_dic['year'])
+            except:
+                my_dic['created_date'] = None
             # item_type
             try:
                 if item['data']['itemType']:
@@ -2309,11 +2321,13 @@ def do_zotero(results):
                 #pass #print(my_dic['year'])
             except:
                 my_dic['item_type'] = 'No_Item_Type'
-            newref = Reference(title=pot_title, year=my_dic.get('year'), creator=my_dic.get('mainCreator'), zotero_link=my_dic.get('key'), item_type=my_dic.get('item_type'))
+            newref = Reference(title=pot_title, year=my_dic.get('year'), creator=my_dic.get('mainCreator'), zotero_link=my_dic.get('key'), item_type=my_dic.get('item_type'), created_date=my_dic.get('created_date'))
             #newref = Reference(title=my_dic['title'], year=my_dic['year'], creator=my_dic['mainCreator'], zotero_link=my_dic['key'])
 
             if my_dic.get('year') < 2040:
+                #print("Here we Goooooooooo:", newref.created_date)
                 newref.save()
+                #print("Here we Goooooooooo 2:", newref.created_date)
                 mother_ref_dic.append(my_dic)
 
     #print(len(mother_ref_dic))

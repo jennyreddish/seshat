@@ -449,7 +449,7 @@ class Reference(models.Model):
     long_name = models.CharField(max_length=500, blank=True, null=True)
     item_type = models.CharField(max_length=100, blank=True, null=True)
     url_link = models.TextField(max_length=500, validators=[URLValidator()], blank=True, null=True)
-    created_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField(blank=True, null=True)
     modified_date = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self) -> str:
