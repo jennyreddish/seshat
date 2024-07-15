@@ -45,10 +45,10 @@ Development workflow
 
 11. Pull the latest changes from the `dev` branch to any remote servers running the Seshat application.
 
-    - *TODO: add link to unwritten production deployment guide*
-    - Ensure any new migrations added in the pull request are applied to the database. *TODO: add link to another page with Django notes*
+    - **TODO:** *add link to unwritten production deployment guide*
+    - Ensure any new migrations added in the pull request are applied to the database. **TODO:** *add link to another page with Django notes*
 
 .. image:: ../img/basic_github_workflow.webp
     :alt: Seshat development workflow
 
-*Image taken from `The GitHub Flow <https://blog.devgenius.io/the-github-flow-7056b80c6356>`_ by Dev Genius*
+Image taken from `The GitHub Flow <https://guides.github.com/introduction/flow/>`_ by Dev Genius
