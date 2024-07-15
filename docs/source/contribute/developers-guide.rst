@@ -11,14 +11,27 @@ Getting started
 
 2. Follow the instructions in the `Setting up Seshat in a local environment <../getting-started/setup/local/index.rst>`_ guide to set up your local development environment.
 
-Development workflow
---------------------
+3. Review the Seshat development project board on `GitHub <https://github.com/orgs/Seshat-Global-History-Databank/projects/1/views/1>`_.
 
-1. Select an issue to work on from the `Seshat GitHub issues <https://github.com/Seshat-Global-History-Databank/seshat/issues>`_ to work on, or create a new issue. There are issue templates set up for:
+    - The project board is used to track the progress of issues and pull requests.
+    - The board is divided into columns for each stage of the development process, such as "To do", "In progress", and "Done".
+
+4. Assign yourself to issues you intend to work on.
+
+    - This helps to prevent multiple people working on the same issue at the same time.
+    - Place an issue in the "In progress" column if you are actively working on it.
+    - Otherwise order your assigned issues in the "To do" column by priority.
+
+5. Create new issues for upcoming development tasks `here <https://github.com/Seshat-Global-History-Databank/seshat/issues>`_ and add them to the project board. There are issue templates set up for:
 
     - Bug reports
     - Feature requests
     - Documentation improvements
+
+Development workflow
+--------------------
+
+1. Select an issue to work on from the Seshat development project board on `GitHub <https://github.com/orgs/Seshat-Global-History-Databank/projects/1/views/1>`_.
 
 2. Create a new branch from the `dev` branch.
 
@@ -35,6 +48,8 @@ Development workflow
     - Push your branch to the remote repository.
     - Open the pull request from the new branch to the `dev` branch.
     - Assign the pull request to maintainer(s) for review.
+    - Add a descriptive title and description to the pull request.
+    - You can include "Closes #<issue number>" in the pull request description if you want to automatically close the issue when the pull request is merged.
 
 9. Review and address any feedback on your pull request.
 
@@ -42,6 +57,9 @@ Development workflow
     - Once the feedback is addressed, request a review from the maintainer(s) again.
 
 10. Once your pull request is approved, it can be merged into the `dev` branch.
+
+    - Remember to close the issue associated with the pull request manually if it wasn't already closed by the merge.
+    - The closed issue will be automatically moved to the "Done" column on the project board.
 
 11. Pull the latest changes from the `dev` branch to any remote servers running the Seshat application.
 
