@@ -2,6 +2,8 @@
 
 Cliopatria is the shape dataset used by the Seshat Global History Databank website. It can also be explored in a local Jupyter notebook running on your local machine by following these instructions.
 
+<!-- TODO: Add download link for Cliopatria -->
+
 1. Ensure you have a working installation of Python 3 and Conda. If not, [download Anaconda](https://docs.anaconda.com/free/anaconda/install/index.html), which should give you both
     - Note: you can use a different tool for creating a Python virtual environment than conda (e.g. venv) if you prefer
 
