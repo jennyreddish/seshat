@@ -93,3 +93,6 @@ if 'test' in sys.argv:
 
     :noindex:
     """
+
+if not sys.platform.startswith('darwin'): # macOS
+    GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'  # Linux (this overrides the path in base.py used by the production environment)
