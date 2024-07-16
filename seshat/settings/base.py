@@ -169,7 +169,6 @@ WSGI_APPLICATION = "seshat.wsgi.application"
 # ==============================================================================
 
 MIDDLEWARE = [
-    "django.middleware.gzip.GZipMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     #"easyaudit.middleware.easyaudit.EasyAuditMiddleware",
@@ -180,8 +179,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    "seshat.apps.core.middleware.AutoLoginMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
 
 ]
 """MIDDLEWARE defines the list of middleware classes that Django will use."""

@@ -11,6 +11,33 @@ import os
 import sys
 
 
+# ==============================================================================
+# MIDDLEWARE SETTINGS
+# ==============================================================================
+
+# Override the default middleware settings in the base.py file to include the GZipMiddleware, AutoLoginMiddleware, and AuthenticationMiddleware.
+# This ensures that the environment looks as it would for a logged-in user.
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
+    "seshat.apps.core.middleware.AutoLoginMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+
+]
+"""MIDDLEWARE defines the list of middleware classes that Django will use."""
+
+# ==============================================================================
+# DATABASE SETTINGS
+# ==============================================================================
+
 # We use the local database for development and the GitHub Actions database for testing
 if os.getenv('GITHUB_ACTIONS') == 'true':
     DATABASES = {
