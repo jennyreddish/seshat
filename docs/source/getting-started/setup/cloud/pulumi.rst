@@ -294,8 +294,9 @@ In order to restore the database from the dump, run the following command:
 
     $ sudo psql -U postgres <seshat_db_name> < ~/seshat.dump
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [Optional] manual step 4.1: Update the database with the latest shape data
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you need to update the database with the latest shape datasets, you can do so by following the instructions in `spatialdb.rst <../spatialdb.rst>`_.
 
