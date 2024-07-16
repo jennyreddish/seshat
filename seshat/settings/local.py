@@ -10,10 +10,7 @@ import environ
 import os
 import sys
 
-#MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-#MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
-# Databases
 # We use the local database for development and the GitHub Actions database for testing
 if os.getenv('GITHUB_ACTIONS') == 'true':
     DATABASES = {
@@ -55,20 +52,10 @@ else:
 
 django_settings_module = os.environ.get('DJANGO_SETTINGS_MODULE')
 
-#print("###################",django_settings_module)
-#print(DATABASES)
-
 my_current_server = "127.0.0.1:8000"
-# ==============================================================================
-# EMAIL SETTINGS
-# ==============================================================================
-
-#EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-######EMAIL_CONFIRMATION_BRANCH is the keyword that needs to be searched
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 ALLOWED_HOSTS = ['127.0.0.1',
-                 '51.141.239.61',
+                 '51.141.239.61', # Azure VM @ ATI
                  'localhost']
 """Set ALLOWED_HOSTS to allow the server to run without a domain name for local testing."""
 
