@@ -1,5 +1,6 @@
 """
 Settings for local development of the Seshat project.
+These settings can also be used for cloud development environments.
 """
 
 # flake8: noqa
