@@ -272,10 +272,8 @@
             var categorical_variables = {{ categorical_variables | safe }};
         };
 
-        // If there's a variable stored in the local storage, set the variable selection to that
+        // If there's a categorical variable stored in the local storage, set the categorical variable selection to that
         if (localStorage.getItem('variable')) {
-            document.getElementById('chooseVariable').value = localStorage.getItem('variable');
-            // If it's a categorical variable, set the categorical variable selection to that
             if (localStorage.getItem('variable') in categorical_variables) {
                 updateCategoricalVariableSelection(localStorage.getItem('variable')); 
             };
@@ -404,15 +402,6 @@
                         populateVariableDropdown(data.variables);
                         categorical_variables = data.categorical_variables;
                         updateCategoricalVariableSelection('language');  // Set the default categorical variable selection
-
-                        // If there's a variable stored in the local storage, set the variable selection to that
-                        if (localStorage.getItem('variable')) {
-                            document.getElementById('chooseVariable').value = localStorage.getItem('variable');
-                            // If it's a categorical variable, set the categorical variable selection to that
-                            if (localStorage.getItem('variable') in categorical_variables) {
-                                updateCategoricalVariableSelection(localStorage.getItem('variable'));
-                            };
-                        }
                         plotPolities();
                         return fetch('/core/provinces_and_countries');
                     })
