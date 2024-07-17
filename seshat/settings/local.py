@@ -95,4 +95,5 @@ if 'test' in sys.argv:
     """
 
 if not sys.platform.startswith('darwin'): # macOS
-    GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'  # Linux (this overrides the path in base.py used by the production environment)
+    # Linux (note: this overrides the path in base.py used by the production environment and may be related to a difference in the way the GDAL library is installed on the ATI and CSH servers, rather than a general difference between local and production environments)
+    GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'  
