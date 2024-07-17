@@ -1,6 +1,7 @@
 """
 Settings for local development of the Seshat project.
-These settings can also be used for cloud development environments.
+Also be used for non-production cloud development environments.
+Also used for GitHub Actions testing.
 """
 
 # flake8: noqa
