@@ -415,6 +415,7 @@
                         });
 
                         shapesData = shapesDataWithVars;
+                        populateVariableDropdown(data.variables);
                         plotPolities();
                         return fetch('/core/provinces_and_countries');
                     })

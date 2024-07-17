@@ -412,3 +412,48 @@ function shouldDisplayComponent(displayComponent, shape) {
         return false;
     }
 }
+
+function populateVariableDropdown(variables) {
+    const chooseVariableDropdown = document.getElementById('chooseVariable');
+    chooseVariableDropdown.innerHTML = ''; // Clear existing options
+
+    // Add the static option
+    const staticOption = document.createElement('option');
+    staticOption.value = 'polity';
+    staticOption.textContent = 'Polity';
+    chooseVariableDropdown.appendChild(staticOption);
+
+    // Process 'General Variables' first
+    if (variables['General Variables']) {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = 'General Variables';
+        Object.entries(variables['General Variables']).forEach(([variable, details]) => {
+            const option = document.createElement('option');
+            option.value = details.formatted;
+            option.textContent = details.full_name;
+            optgroup.appendChild(option);
+        });
+        chooseVariableDropdown.appendChild(optgroup);
+    }
+
+    // Process other categories
+    Object.keys(variables).forEach(category => {
+        if (category !== 'General Variables') {
+            const optgroup = document.createElement('optgroup');
+            optgroup.label = category;
+            variables[category].forEach(variable => {
+                const option = document.createElement('option');
+                option.value = variable.formatted;
+                option.textContent = variable.full_name;
+                optgroup.appendChild(option);
+            });
+            Object.entries(variables[category]).forEach(([variable, details]) => {
+                const option = document.createElement('option');
+                option.value = details.formatted;
+                option.textContent = details.full_name;
+                optgroup.appendChild(option);
+            });
+            chooseVariableDropdown.appendChild(optgroup);
+        }
+    });
+}
