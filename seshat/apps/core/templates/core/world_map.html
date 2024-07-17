@@ -408,11 +408,11 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        let shapesDataWithVars = data.shapes
-                            .map(shape => {
-                                shape.weight = polityBorderWeight;
-                                return shape;
-                            });
+                        let shapesDataWithVars = data.shapes.map(shape => {
+                            let existingShape = shapesData.find(existing => existing.id === shape.id);
+                            shape.weight = existingShape ? existingShape.weight : polityBorderWeight;
+                            return shape;
+                        });
 
                         shapesData = shapesDataWithVars;
                         plotPolities();
