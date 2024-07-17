@@ -340,6 +340,7 @@
         var countryShapeData;
 
         var allPolitiesLoaded = false;  // Used in storeYear()
+        var allVariablesLoaded = false;  
 
         var tick_years = {{ tick_years }};
         setSliderTicks(tick_years);
@@ -403,6 +404,7 @@
                         document.getElementById('chooseVariable').disabled = false;
                         categorical_variables = data.categorical_variables;
                         updateCategoricalVariableSelection('language');  // Set the default categorical variable selection
+                        allVariablesLoaded = true;
                         plotPolities();
                         return fetch('/core/provinces_and_countries');
                     })
@@ -497,17 +499,9 @@
             if (localStorage.getItem('variable') != variable) {
                 // Update previously selected variable button
                 document.getElementById('previouslySelectedVariable').setAttribute('variableSelection', localStorage.getItem('variable'));
-
-                // Set the text of the previously selected variable button
-                // Note: we decided to not use the variabled name and instead keep the button text consistent
-                // if (localStorage.getItem('variable') in categorical_variables || localStorage.getItem('variable') == 'polity'){
-                //     // Categorical variables don't have a full name so we need to modify TODO: Make this more consistent
-                //     document.getElementById('previouslySelectedVariable').innerHTML = localStorage.getItem('variable').replace(/_/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-                // } else {
-                //     document.getElementById('previouslySelectedVariable').innerHTML = localStorage.getItem('variable')
-                // }
-
-                document.getElementById('previouslySelectedVariableFieldset').style.display = 'block';
+                if(allVariablesLoaded){
+                    document.getElementById('previouslySelectedVariableFieldset').style.display = 'block';
+                }
             }
 
             // If the variable is categorical, show the categorical variable selection dropdown
