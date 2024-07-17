@@ -4149,18 +4149,40 @@ def common_map_view_content(content):
     content['shapes'], content['variables'] = assign_variables_to_shapes(content['shapes'], app_map)
     # print(f"Time taken to assign absent/present variables to shapes: {time.time() - start_time} seconds")
 
+    # start_time = time.time()
     # Add in the categorical variables to view for the shapes
     content['shapes'], content['variables'] = assign_categorical_variables_to_shapes(content['shapes'], content['variables'])
+    # print(f"Time taken to assign categorical variables to shapes: {time.time() - start_time} seconds")
 
+    # start_time = time.time()
     # Load the capital cities for polities that have them
     content['all_capitals_info'] = get_all_polity_capitals()
-
+    # print(f"Time taken to load capital cities: {time.time() - start_time} seconds")
+    
     # Add categorical variable choices to content for dropdown selection
     content['categorical_variables'] = categorical_variables
 
     # Set the initial polity to highlight
     content['world_map_initial_polity'] = world_map_initial_polity
 
+    return content
+
+def dummy_map_view_content(content):
+    """
+    Dummy version of common_map_view_content that adds blank dicts.
+
+    Args:
+        content (dict): The content for the polity shapes.
+
+    Returns:
+        dict: The updated content for the polity shapes.
+    """
+    content['all_capitals_info'] = {}
+    content['categorical_variables'] = {}
+    content['variables'] = {}
+
+    # Set the initial polity to highlight
+    content['world_map_initial_polity'] = world_map_initial_polity
     return content
 
 # World map defalut settings
@@ -4193,7 +4215,7 @@ def map_view_initial(request):
 
     content = get_polity_shape_content(seshat_id=world_map_initial_polity)
 
-    content = common_map_view_content(content)
+    content = dummy_map_view_content(content)
 
     # For the initial view, set the displayed year to the polity's start year
     content['display_year'] = world_map_initial_displayed_year
@@ -4217,7 +4239,7 @@ def map_view_one_year(request):
     year = request.GET.get('year', world_map_initial_displayed_year)
     content = get_polity_shape_content(displayed_year=year)
 
-    content = common_map_view_content(content)
+    content = dummy_map_view_content(content)
 
     return JsonResponse(content)
 
@@ -4236,7 +4258,7 @@ def map_view_all(request):
     # Temporary restriction on the latest year for the whole map view
     content = get_polity_shape_content(override_latest_year=2014)
 
-    content = common_map_view_content(content)
+    content = dummy_map_view_content(content)
 
     return JsonResponse(content)
 

@@ -360,24 +360,26 @@ function updateCategoricalVariableSelection(variable){
     if (localStorage.getItem(variable)) {
         document.getElementById('chooseCategoricalVariableSelection').value = localStorage.getItem(variable);
     }
-    categorical_variables[variable].forEach(function (choice) {
-        var option = document.createElement('option');
-        option.value = choice;
-        option.text = choice;
+    if (categorical_variables[variable] && categorical_variables[variable].length > 0) {
+        categorical_variables[variable].forEach(function (choice) {
+            var option = document.createElement('option');
+            option.value = choice;
+            option.text = choice;
 
-        // Set some default selections if no selection has been made
-        if (localStorage.getItem(variable)) {
-            if (localStorage.getItem(variable) === choice) {
-                option.selected = true;
+            // Set some default selections if no selection has been made
+            if (localStorage.getItem(variable)) {
+                if (localStorage.getItem(variable) === choice) {
+                    option.selected = true;
+                }
+            } else {
+                if (choice === 'Greek' || choice === 'Indo-European') {
+                    option.selected = true;
+                }
             }
-        } else {
-            if (choice === 'Greek' || choice === 'Indo-European') {
-                option.selected = true;
-            }
-        }
 
-        dropdown.appendChild(option);
-    });
+            dropdown.appendChild(option);
+        });
+    }
     var varSelectElement = document.getElementById('chooseVariable');
     var varText = varSelectElement.options[varSelectElement.selectedIndex].text;
     document.querySelector('label[for="chooseCategoricalVariableSelection"]').textContent = varText + ': ';
