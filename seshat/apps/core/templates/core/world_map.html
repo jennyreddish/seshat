@@ -159,7 +159,7 @@
 
                 <div class="slidecontainer">
                     <label for="chooseVariable">Variable: </label>
-                    <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;">
+                    <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;" disabled>
                         <option value="polity">Polity</option>
                     </select><br>
                     <fieldset id="previouslySelectedVariableFieldset" style="display: none">
@@ -400,6 +400,7 @@
                         });
                         shapesData = shapesDataWithVars;
                         populateVariableDropdown(data.variables);
+                        document.getElementById('chooseVariable').disabled = false;
                         categorical_variables = data.categorical_variables;
                         updateCategoricalVariableSelection('language');  // Set the default categorical variable selection
                         plotPolities();
