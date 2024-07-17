@@ -37,7 +37,6 @@ function adjustSliderEndYear() {
 }
 
 function playRateValue() {
-    console.log('called')
     var increment = Number(document.getElementById('increment').value);
     var playRate = document.getElementById('playRate')
     playRate.textContent = increment + ' y/s';
@@ -437,17 +436,11 @@ function populateVariableDropdown(variables) {
     }
 
     // Process other categories
-    Object.keys(variables).forEach(category => {
+    Object.entries(variables).forEach(([category, vars]) => {
         if (category !== 'General Variables') {
             const optgroup = document.createElement('optgroup');
             optgroup.label = category;
-            variables[category].forEach(variable => {
-                const option = document.createElement('option');
-                option.value = variable.formatted;
-                option.textContent = variable.full_name;
-                optgroup.appendChild(option);
-            });
-            Object.entries(variables[category]).forEach(([variable, details]) => {
+            Object.entries(vars).forEach(([variable, details]) => {
                 const option = document.createElement('option');
                 option.value = details.formatted;
                 option.textContent = details.full_name;

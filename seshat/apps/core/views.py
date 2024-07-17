@@ -4277,7 +4277,7 @@ def map_view_all_with_vars(request):
     # Temporary restriction on the latest year for the whole map view
     content = get_polity_shape_content(override_latest_year=2014)
 
-    content = dummy_map_view_content(content)
+    content = common_map_view_content(content)
 
     return JsonResponse(content)
 

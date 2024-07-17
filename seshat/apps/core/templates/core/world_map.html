@@ -408,12 +408,13 @@
                     })
                     .then(response => response.json())
                     .then(data => {
+                        console.log(data);
+                        // Get data from world_map_all_with_vars
                         let shapesDataWithVars = data.shapes.map(shape => {
                             let existingShape = shapesData.find(existing => existing.id === shape.id);
                             shape.weight = existingShape ? existingShape.weight : polityBorderWeight;
                             return shape;
                         });
-
                         shapesData = shapesDataWithVars;
                         populateVariableDropdown(data.variables);
                         plotPolities();
