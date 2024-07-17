@@ -1,6 +1,6 @@
 """
 Settings for local development of the Seshat project.
-Also be used for non-production cloud development environments.
+Also used for non-production cloud development environments.
 Also used for GitHub Actions testing.
 """
 
