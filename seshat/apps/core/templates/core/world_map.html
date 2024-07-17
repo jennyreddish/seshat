@@ -265,9 +265,12 @@
 
             sliderDiv.scrollLeft = newScrollLeft;
         }
-
-        var categorical_variables = {{ categorical_variables | safe }};
-        updateCategoricalVariableSelection('language');  // Set the default categorical variable selection
+        
+        if (localStorage.getItem('categorical_variables')) {
+            var categorical_variables = JSON.parse(localStorage.getItem('categorical_variables'));
+        } else {
+            var categorical_variables = {{ categorical_variables | safe }};
+        };
 
         // If there's a variable stored in the local storage, set the variable selection to that
         if (localStorage.getItem('variable')) {
@@ -399,6 +402,17 @@
                         });
                         shapesData = shapesDataWithVars;
                         populateVariableDropdown(data.variables);
+                        categorical_variables = data.categorical_variables;
+                        updateCategoricalVariableSelection('language');  // Set the default categorical variable selection
+
+                        // If there's a variable stored in the local storage, set the variable selection to that
+                        if (localStorage.getItem('variable')) {
+                            document.getElementById('chooseVariable').value = localStorage.getItem('variable');
+                            // If it's a categorical variable, set the categorical variable selection to that
+                            if (localStorage.getItem('variable') in categorical_variables) {
+                                updateCategoricalVariableSelection(localStorage.getItem('variable'));
+                            };
+                        }
                         plotPolities();
                         return fetch('/core/provinces_and_countries');
                     })
@@ -982,6 +996,8 @@
             if (variable in categorical_variables) {
                 localStorage.setItem(variable, document.getElementById('chooseCategoricalVariableSelection').value);
             };
+            // Store the categorical variables
+            localStorage.setItem('categorical_variables', JSON.stringify(categorical_variables));
 
             adjustScroll();
 
