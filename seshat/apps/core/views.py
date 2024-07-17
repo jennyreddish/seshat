@@ -4262,6 +4262,25 @@ def map_view_all(request):
 
     return JsonResponse(content)
 
+def map_view_all_with_vars(request):
+    """
+    This view is used to display a map with polities plotted on it. The view
+    loads all polities for the range of years with added variables for each polity shape.
+
+    Args:
+        request: The request object.
+
+    Returns:
+        JsonResponse: The HTTP response with serialized JSON.
+    """
+
+    # Temporary restriction on the latest year for the whole map view
+    content = get_polity_shape_content(override_latest_year=2014)
+
+    content = dummy_map_view_content(content)
+
+    return JsonResponse(content)
+
 def provinces_and_countries_view(request):
     """
     This view is used to get the provinces and countries for the map.

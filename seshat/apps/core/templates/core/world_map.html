@@ -404,6 +404,18 @@
                         allPolitiesLoaded = true;
                         document.getElementById('loadingIndicator').style.display = 'none';
 
+                        return fetch('/core/world_map_all_with_vars');
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        let shapesDataWithVars = data.shapes
+                            .map(shape => {
+                                shape.weight = polityBorderWeight;
+                                return shape;
+                            });
+
+                        shapesData = shapesDataWithVars;
+                        plotPolities();
                         return fetch('/core/provinces_and_countries');
                     })
                     .then(response => response.json())
