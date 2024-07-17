@@ -161,24 +161,6 @@
                     <label for="chooseVariable">Variable: </label>
                     <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;">
                         <option value="polity">Polity</option>
-                        {% for category, variables in variables.items %}
-                            {% if category == 'General Variables' %}
-                                <optgroup label="{{ category }}">
-                                    {% for variable, details in variables.items %}
-                                        <option value="{{ details.formatted }}">{{ details.full_name }}</option>
-                                    {% endfor %}
-                                </optgroup>
-                            {% endif %}
-                        {% endfor %}
-                        {% for category, variables in variables.items %}
-                            {% if category != 'General Variables' %}
-                                <optgroup label="{{ category }}">
-                                    {% for variable, details in variables.items %}
-                                        <option value="{{ details.formatted }}">{{ details.full_name }}</option>
-                                    {% endfor %}
-                                </optgroup>
-                            {% endif %}
-                        {% endfor %}
                     </select><br>
                     <fieldset id="previouslySelectedVariableFieldset" style="display: none">
                         <label for="previouslySelectedVariable">Variable: </label>
