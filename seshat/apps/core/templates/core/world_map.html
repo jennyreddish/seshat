@@ -170,7 +170,10 @@
                         <label for="chooseCategoricalVariableSelection"></label>
                         <select name="chooseCategoricalVariableSelection" id="chooseCategoricalVariableSelection" onchange="plotPolities()" style="width: 150px; text-overflow: ellipsis;">            
                         </select>
-                    </fieldset><br>
+                    </fieldset>
+                    <div id="variablesLoadingIndicator">
+                        <p>Loading Seshat variables...</p>
+                    </div>
                     <fieldset id="switchPolitiesComponentsFieldset" style="display: block">
                         <label for="switchPolitiesComponents">Display:</label>
                         <select name="switchPolitiesComponents" id="switchPolitiesComponents" onchange="plotPolities()">
@@ -197,10 +200,8 @@
                         onclick="switchBaseMapWorldMap()">OpenStreetMap</label><br>
                 <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMapWorldMap()"
                         disabled>Current borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
-                <!-- Add a loading indicator for Current borders -->
                 <div id="baseMapCurrentLoadingIndicator">
                     <p>Loading current borders...</p>
-                    <!-- <div class="spinner"></div> -->
                 </div><br>
             </fieldset>
             <fieldset id="baseMapGADMFieldset">
@@ -406,6 +407,7 @@
                         updateCategoricalVariableSelection('language');  // Set the default categorical variable selection
                         allVariablesLoaded = true;
                         plotPolities();
+                        document.getElementById('variablesLoadingIndicator').style.display = 'none';
                         return fetch('/core/provinces_and_countries');
                     })
                     .then(response => response.json())
