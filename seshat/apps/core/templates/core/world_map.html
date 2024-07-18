@@ -253,6 +253,8 @@
     <script src="{% static 'core/js/map_functions.js' %}"></script>
     <script>
 
+        var startTime = performance.now()
+
         function adjustScroll() {
             const slider = document.getElementById('dateSlide');
             const sliderDiv = document.getElementById('sliderdiv');
@@ -345,6 +347,8 @@
         var tick_years = {{ tick_years }};
         setSliderTicks(tick_years);
 
+        console.log('Initial time: ' + (performance.now() - startTime) + 'ms');
+
         // Load all polity shapes and modern province/country shapes in background
         window.addEventListener('load', function () {
             function fetchData(url, displayYear) {
@@ -363,6 +367,7 @@
                         plotPolities();
                         document.getElementById('loadingIndicator').style.display = 'none';
                         let enteredYear = document.getElementById('enterYear').value;
+                        console.log('One year time: ' + (performance.now() - startTime) + 'ms');
                         if (displayYear != enteredYear) {
                             return fetchData('/core/world_map_one_year/', enteredYear);
                         } else {
@@ -388,11 +393,12 @@
                         allPolitiesLoaded = true;
                         document.getElementById('loadingIndicator').style.display = 'none';
 
+                        console.log('All years time: ' + (performance.now() - startTime) + 'ms');
+
                         return fetch('/core/world_map_all_with_vars');
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
                         // Get data from world_map_all_with_vars
                         let shapesDataWithVars = data.shapes.map(shape => {
                             let existingShape = shapesData.find(existing => existing.id === shape.id);
@@ -407,6 +413,9 @@
                         allVariablesLoaded = true;
                         plotPolities();
                         document.getElementById('variablesLoadingIndicator').style.display = 'none';
+
+                        console.log('All vars time: ' + (performance.now() - startTime) + 'ms');
+
                         return fetch('/core/provinces_and_countries');
                     })
                     .then(response => response.json())
@@ -429,6 +438,9 @@
 
                         document.getElementById('baseMapCurrentLoadingIndicator').style.display = 'none';
                         document.getElementById('baseMapCurrent').disabled = false;
+
+                        console.log('Base map time: ' + (performance.now() - startTime) + 'ms');
+
                     });
             }
 
