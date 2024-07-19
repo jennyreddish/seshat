@@ -4262,6 +4262,8 @@ def map_view_one_year(request):
 
     content = dummy_map_view_content(content)
 
+    print(len(content['shapes']))
+
     return JsonResponse(content)
 
 def map_view_all(request):

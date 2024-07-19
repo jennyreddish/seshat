@@ -1000,6 +1000,7 @@
             if (!atLeastOnePolityHighlighted){
                 document.getElementById('popup').innerHTML = '';
             }
+            console.log('Total number of shapes: ' + shapesData.length);
             // Console log the number of shapes in shapesData that conform to the logic "if ((parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt)" and console log the number of geoJSONLayers
             console.log('Number of shapes plotted: ' + shapesData.filter(shape => (parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt) && shouldDisplayComponent(displayComponent, shape)).length);
             let geoJSONLayerCount = 0;
