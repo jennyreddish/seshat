@@ -4241,10 +4241,12 @@ def dummy_map_view_content(content):
     content['last_history_year'] = last_history_year
     return content
 
-# World map defalut settings
+# World map default settings
 world_map_initial_displayed_year = 117
 world_map_initial_polity = 'it_roman_principate'
 last_history_year = 2014
+# Store the initial year in the cache
+cache.set('world_map_initial_displayed_year', world_map_initial_displayed_year)
 
 def map_view_initial(request):
     global world_map_initial_displayed_year, world_map_initial_polity
@@ -4268,6 +4270,7 @@ def map_view_initial(request):
         # Select a random polity for the initial view
         if 'test' not in sys.argv:
             world_map_initial_displayed_year, world_map_initial_polity = random_polity_shape()
+            cache.set('world_map_initial_displayed_year', world_map_initial_displayed_year)
         return redirect('{}?year={}'.format(request.path, world_map_initial_displayed_year))
 
     content = get_polity_shape_content(seshat_id=world_map_initial_polity)
@@ -4293,7 +4296,7 @@ def map_view_one_year(request):
     Returns:
         JsonResponse: The HTTP response with serialized JSON.
     """
-    year = request.GET.get('year', world_map_initial_displayed_year)
+    year = cache.get('world_map_initial_displayed_year')
     print("Year from the URL:", year)
     content = get_polity_shape_content(displayed_year=year)
 
