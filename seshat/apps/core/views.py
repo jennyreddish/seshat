@@ -4186,6 +4186,9 @@ def common_map_view_content(content):
     # Set the initial polity to highlight
     content['world_map_initial_polity'] = world_map_initial_polity
 
+    # Set the last year in history we ever want to display, which will be used to determine when we should say "present"
+    content['last_history_year'] = last_history_year
+
     return content
 
 def dummy_map_view_content(content):
@@ -4204,11 +4207,15 @@ def dummy_map_view_content(content):
 
     # Set the initial polity to highlight
     content['world_map_initial_polity'] = world_map_initial_polity
+
+    # Set the last year in history we ever want to display, which will be used to determine when we should say "present"
+    content['last_history_year'] = last_history_year
     return content
 
 # World map defalut settings
 world_map_initial_displayed_year = 117
 world_map_initial_polity = 'it_roman_principate'
+last_history_year = 2014
 
 def map_view_initial(request):
     global world_map_initial_displayed_year, world_map_initial_polity
@@ -4279,7 +4286,7 @@ def map_view_all(request):
     """
 
     # Temporary restriction on the latest year for the whole map view
-    content = get_polity_shape_content(override_latest_year=2014)
+    content = get_polity_shape_content(override_latest_year=last_history_year)
 
     content = dummy_map_view_content(content)
 
@@ -4298,7 +4305,7 @@ def map_view_all_with_vars(request):
     """
 
     # Temporary restriction on the latest year for the whole map view
-    content = get_polity_shape_content(override_latest_year=2014)
+    content = get_polity_shape_content(override_latest_year=last_history_year)
 
     content = common_map_view_content(content)
 
