@@ -4297,7 +4297,7 @@ def map_view_one_year(request):
         JsonResponse: The HTTP response with serialized JSON.
     """
     year = cache.get('world_map_initial_displayed_year')
-    print("Year from the URL:", year)
+    print("Year from the cache:", year)
     content = get_polity_shape_content(displayed_year=year)
 
     content = dummy_map_view_content(content)
