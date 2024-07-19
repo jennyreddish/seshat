@@ -4262,7 +4262,7 @@ def map_view_one_year(request):
 
     content = dummy_map_view_content(content)
 
-    print(len(content['shapes']))
+    print("Total number of shapes", len(content['shapes']))
 
     return JsonResponse(content)
 
