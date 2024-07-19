@@ -3837,6 +3837,7 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         rows = []
         for result in query_results:
             rows.append(VideoShapefile.objects.get(id=result.id))
+        print("Total rows:", len(rows))
     elif seshat_id != "all":
         rows = VideoShapefile.objects.filter(seshat_id=seshat_id)
     else:
@@ -3865,6 +3866,7 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
                 'components': row.components,
                 'member_of': row.member_of
             })
+        print("Total shapes:", len(shapes))
 
     seshat_ids = [shape['seshat_id'] for shape in shapes if shape['seshat_id']]
 
