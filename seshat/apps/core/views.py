@@ -4127,20 +4127,20 @@ def random_polity_shape(from_selection=True):
     if from_selection:  # These are polities where loading all the shapes for their start year is fast
         selected_polities = [
             'sy_umayyad_cal',
-            'it_roman_principate',
-            'de_empire_3',
-            'tr_east_roman_emp',
-            'ir_seleucid_emp',
-            'iq_abbasid_cal_1',
-            'ir_seljuk_sultanate',
-            'cn_five_dyn',
-            'fr_carolingian_emp_1',
-            'cn_tang_dyn_1',
-            'ir_sassanid_emp_2',
-            'ch_chile_rep_1',
-            'us_antebellum',
-            'mx_mexico_1',
-            'ru_soviet_union'
+            # 'it_roman_principate',
+            # 'de_empire_3',
+            # 'tr_east_roman_emp',
+            # 'ir_seleucid_emp',
+            # 'iq_abbasid_cal_1',
+            # 'ir_seljuk_sultanate',
+            # 'cn_five_dyn',
+            # 'fr_carolingian_emp_1',
+            # 'cn_tang_dyn_1',
+            # 'ir_sassanid_emp_2',
+            # 'ch_chile_rep_1',
+            # 'us_antebellum',
+            # 'mx_mexico_1',
+            # 'ru_soviet_union'
         ]
         # Select a random polity from the list
         seshat_id = random.choice(selected_polities)

@@ -364,7 +364,7 @@
 
                         seshat_id_page_id = data.seshat_id_page_id;
                         allCapitalsInfo = data.all_capitals_info;
-                        plotPolities();
+                        plotPolities(printShapeNum=true);
                         let enteredYear = document.getElementById('enterYear').value;
                         console.log('One year time: ' + (performance.now() - startTime) + 'ms');
                         if (displayYear != enteredYear) {
@@ -500,7 +500,7 @@
             plotPolities();
         }
 
-        function plotPolities() {  // This function is defined differently in the polity_map template
+        function plotPolities(printShapeNum=false) {  // This function is defined differently in the polity_map template
 
             var variable = document.getElementById('chooseVariable').value;
             var selectedYear = document.getElementById('dateSlide').value;
@@ -1000,16 +1000,18 @@
             if (!atLeastOnePolityHighlighted){
                 document.getElementById('popup').innerHTML = '';
             }
-            console.log('Total number of shapes: ' + shapesData.length);
-            // Console log the number of shapes in shapesData that conform to the logic "if ((parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt)" and console log the number of geoJSONLayers
-            console.log('Number of shapes plotted: ' + shapesData.filter(shape => (parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt) && shouldDisplayComponent(displayComponent, shape)).length);
-            let geoJSONLayerCount = 0;
-            map.eachLayer(function(layer) {
-                if (layer instanceof L.GeoJSON) {
-                    geoJSONLayerCount++;
-                }
-            });
-            console.log('Number of GeoJSON Layers: ' + geoJSONLayerCount);
+            if (printShapeNum) {
+                console.log('Total number of shapes: ' + shapesData.length);
+                // Console log the number of shapes in shapesData that conform to the logic "if ((parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt)" and console log the number of geoJSONLayers
+                console.log('Number of shapes plotted: ' + shapesData.filter(shape => (parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt) && shouldDisplayComponent(displayComponent, shape)).length);
+                let geoJSONLayerCount = 0;
+                map.eachLayer(function(layer) {
+                    if (layer instanceof L.GeoJSON) {
+                        geoJSONLayerCount++;
+                    }
+                });
+                console.log('Number of GeoJSON Layers: ' + geoJSONLayerCount);
+            };
         }
 
         // Initial plot on page load
