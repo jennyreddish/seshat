@@ -3827,20 +3827,44 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         raise ValueError("Only one of displayed_year or seshat_id should be set not both.")
 
     if displayed_year != "all":
-        rows = VideoShapefile.objects.filter(polity_start_year__lte=displayed_year, polity_end_year__gte=displayed_year)
-        print("Total number of rows: ", len(rows))
+        # rows = VideoShapefile.objects.filter(polity_start_year__lte=displayed_year, polity_end_year__gte=displayed_year)
+        query = '''
+        SELECT id, polity_start_year, polity_end_year
+        FROM core_videoshapefile
+        WHERE polity_start_year <= %s AND polity_end_year >= %s
+        '''
+        query_results = list(VideoShapefile.objects.raw(query, [displayed_year, displayed_year]))
+        rows = []
+        for result in query_results:
+            rows.append(VideoShapefile.objects.get(id=result.id))
     elif seshat_id != "all":
         rows = VideoShapefile.objects.filter(seshat_id=seshat_id)
     else:
         rows = VideoShapefile.objects.all()
 
-
-    # Convert 'geom' to GeoJSON in the database query
-    rows = rows.annotate(geom_json=AsGeoJSON('geom'))
-    # Filter the rows to return
-    rows = rows.values('id', 'seshat_id', 'name', 'start_year', 'end_year', 'polity_start_year', 'polity_end_year', 'colour', 'area', 'geom_json', 'components', 'member_of')
-
-    shapes = list(rows)
+    if type(rows) != list:
+        # Convert 'geom' to GeoJSON in the database query
+        rows = rows.annotate(geom_json=AsGeoJSON('geom'))
+        # Filter the rows to return
+        rows = rows.values('id', 'seshat_id', 'name', 'start_year', 'end_year', 'polity_start_year', 'polity_end_year', 'colour', 'area', 'geom_json', 'components', 'member_of')
+        shapes = list(rows)
+    else:
+        shapes = []
+        for row in rows:
+            shapes.append({
+                'id': row.id,
+                'seshat_id': row.seshat_id,
+                'name': row.name,
+                'start_year': row.start_year,
+                'end_year': row.end_year,
+                'polity_start_year': row.polity_start_year,
+                'polity_end_year': row.polity_end_year,
+                'colour': row.colour,
+                'area': row.area,
+                'geom_json': row.geom.json,
+                'components': row.components,
+                'member_of': row.member_of
+            })
 
     seshat_ids = [shape['seshat_id'] for shape in shapes if shape['seshat_id']]
 
