@@ -654,6 +654,10 @@
 
                         if (parseInt(shape.polity_end_year) == {{ latest_year }}){
                             displayend_year = 'Present';
+                            if (shape.seshat_id == 'ir_seleucid_emp'){
+                                console.log({{ latest_year }})
+                                console.log(shape.polity_end_year)
+                            }
                         } else {
                             if (parseInt(shape.polity_end_year) < 0) {
                                 displayend_year = Math.abs(parseInt(shape.polity_end_year)) + ' BCE';
