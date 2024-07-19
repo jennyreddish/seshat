@@ -3835,6 +3835,7 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         '''
         query_results = list(VideoShapefile.objects.raw(query, [displayed_year, displayed_year]))
         print("Total query results:", len(query_results))
+        print("Display year:", displayed_year)
         rows = []
         for result in query_results:
             rows.append(VideoShapefile.objects.get(id=result.id))
