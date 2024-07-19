@@ -4113,25 +4113,46 @@ categorical_variables = {
     'language': sorted([x[0] for x in POLITY_LANGUAGE_CHOICES])
 }
 
-def random_polity_shape():
+def random_polity_shape(from_selection=True):
     """
-    This function is used to get a random polity for the world map initial view.
-    It selects a polity with a seshat_id and a start year.
+    This function is used to get a pseudo-random polity for the map_view_initial and map_view_one_year views to display.
+    It selects a polity with a large area and which has a seshat_id.
 
-    Use the VideoShapefile model to get the polity shapes.
-    Choose one that has a seshat_id.
-    Return the seshat_id and start year.
+    If from_selection is true, choose a polity from a pre-approved list.
+    TODO: if the loading time of map_view_one_year becomes sufficiently fast, we could set from_selection to False.
 
     Returns:
         tuple: A tuple containing the start year and seshat_id.
     """
-    max_id = VideoShapefile.objects.filter(seshat_id__isnull=False).aggregate(max_id=Max("id"))['max_id']
-    while True:
-        pk = random.randint(1, max_id)
-        shape = VideoShapefile.objects.filter(seshat_id__isnull=False, id=pk).first()
-        if shape:
-            if shape.seshat_id and shape.area > 600000:  # Big empires only
-                break
+    if from_selection:  # These are polities where loading all the shapes for their start year is fast
+        selected_polities = [
+            'sy_umayyad_cal',
+            'it_roman_principate',
+            'de_empire_3',
+            'tr_east_roman_emp',
+            'ir_seleucid_emp',
+            'iq_abbasid_cal_1',
+            'ir_seljuk_sultanate',
+            'cn_five_dyn',
+            'fr_carolingian_emp_1',
+            'cn_tang_dyn_1',
+            'ir_sassanid_emp_2',
+            'ch_chile_rep_1',
+            'us_antebellum',
+            'mx_mexico_1',
+            'ru_soviet_union'
+        ]
+        # Select a random polity from the list
+        seshat_id = random.choice(selected_polities)
+        shape = VideoShapefile.objects.filter(seshat_id=seshat_id).first()
+    else:
+        max_id = VideoShapefile.objects.filter(seshat_id__isnull=False).aggregate(max_id=Max("id"))['max_id']
+        while True:
+            pk = random.randint(1, max_id)
+            shape = VideoShapefile.objects.filter(seshat_id__isnull=False, id=pk).first()
+            if shape:
+                if shape.seshat_id and shape.area > 600000:  # Big empires only
+                    break
     return shape.start_year, shape.seshat_id
 
 def common_map_view_content(content):
