@@ -4270,6 +4270,7 @@ def map_view_initial(request):
         # Select a random polity for the initial view
         if 'test' not in sys.argv:
             world_map_initial_displayed_year, world_map_initial_polity = random_polity_shape()
+            print("Setting the initial year in the cache to:", world_map_initial_displayed_year)
             cache.set('world_map_initial_displayed_year', world_map_initial_displayed_year)
         return redirect('{}?year={}'.format(request.path, world_map_initial_displayed_year))
 
