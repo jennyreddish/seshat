@@ -3828,6 +3828,7 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
 
     if displayed_year != "all":
         rows = VideoShapefile.objects.filter(polity_start_year__lte=displayed_year, polity_end_year__gte=displayed_year)
+        print("Total number of rows: ", len(rows))
     elif seshat_id != "all":
         rows = VideoShapefile.objects.filter(seshat_id=seshat_id)
     else:
