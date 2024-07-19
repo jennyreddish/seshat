@@ -1,5 +1,7 @@
 """
 Settings for local development of the Seshat project.
+Also used for non-production cloud development environments.
+Also used for GitHub Actions testing.
 """
 
 # flake8: noqa
@@ -9,10 +11,34 @@ import environ
 import os
 import sys
 
-#MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-#MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
-# Databases
+# ==============================================================================
+# MIDDLEWARE SETTINGS
+# ==============================================================================
+
+# Override the default middleware settings in the base.py file to include the GZipMiddleware, AutoLoginMiddleware, and AuthenticationMiddleware.
+# This ensures that the environment looks as it would for a logged-in user.
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
+    "seshat.apps.core.middleware.AutoLoginMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+
+]
+"""MIDDLEWARE defines the list of middleware classes that Django will use."""
+
+# ==============================================================================
+# DATABASE SETTINGS
+# ==============================================================================
+
 # We use the local database for development and the GitHub Actions database for testing
 if os.getenv('GITHUB_ACTIONS') == 'true':
     DATABASES = {
@@ -54,19 +80,10 @@ else:
 
 django_settings_module = os.environ.get('DJANGO_SETTINGS_MODULE')
 
-#print("###################",django_settings_module)
-#print(DATABASES)
-
 my_current_server = "127.0.0.1:8000"
-# ==============================================================================
-# EMAIL SETTINGS
-# ==============================================================================
-
-#EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-######EMAIL_CONFIRMATION_BRANCH is the keyword that needs to be searched
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 ALLOWED_HOSTS = ['127.0.0.1',
+                 '51.141.239.61', # Azure VM @ ATI
                  'localhost']
 """Set ALLOWED_HOSTS to allow the server to run without a domain name for local testing."""
 
@@ -77,3 +94,7 @@ if 'test' in sys.argv:
 
     :noindex:
     """
+
+if not sys.platform.startswith('darwin'): # macOS
+    # Linux (note: this overrides the path in base.py used by the production environment and may be related to a difference in the way the GDAL library is installed on the ATI and CSH servers, rather than a general difference between local and production environments)
+    GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'  
