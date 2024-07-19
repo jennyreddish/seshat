@@ -294,6 +294,18 @@ In order to restore the database from the dump, run the following command:
 
     $ sudo psql -U postgres <seshat_db_name> < ~/seshat.dump
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[Optional] manual step 4.1: Update the database with the latest shape data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you need to update the database with the latest shape datasets, you can do so by following the instructions in `spatialdb.rst <../spatialdb.rst>`_.
+
+You can first upload the data files required to the VM using ``scp``:
+
+.. code-block:: bash
+
+    $ scp -i ~/.ssh/id_rsa path/to/datafile webadmin@<VM IP adress>:location_on_vm/datafile
+
 Manual step 5: Run the Django app
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
