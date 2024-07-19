@@ -3861,6 +3861,11 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         earliest_year, latest_year = 2014, 2014
         initial_displayed_year = -3400
 
+    if override_earliest_year is not None:
+        earliest_year = override_earliest_year
+    if override_latest_year is not None:
+        latest_year = override_latest_year
+
     if displayed_year == "all":
         displayed_year = initial_displayed_year 
 
@@ -3868,11 +3873,6 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         earliest_year = min([shape['start_year'] for shape in shapes])
         displayed_year = earliest_year
         latest_year = max([shape['end_year'] for shape in shapes])
-
-    if override_earliest_year is not None:
-        earliest_year = override_earliest_year
-    if override_latest_year is not None:
-        latest_year = override_latest_year
 
     # Get the years for the tick marks on the year slider
     tick_years = [round(year) for year in np.linspace(earliest_year, latest_year, num=tick_number)]
@@ -4206,10 +4206,9 @@ def dummy_map_view_content(content):
     content['world_map_initial_polity'] = world_map_initial_polity
     return content
 
-# World map default settings
+# World map defalut settings
 world_map_initial_displayed_year = 117
 world_map_initial_polity = 'it_roman_principate'
-latest_displayed_year = 2014
 
 def map_view_initial(request):
     global world_map_initial_displayed_year, world_map_initial_polity
@@ -4235,7 +4234,7 @@ def map_view_initial(request):
             world_map_initial_displayed_year, world_map_initial_polity = random_polity_shape()
         return redirect('{}?year={}'.format(request.path, world_map_initial_displayed_year))
 
-    content = get_polity_shape_content(seshat_id=world_map_initial_polity, override_latest_year=latest_displayed_year)
+    content = get_polity_shape_content(seshat_id=world_map_initial_polity)
 
     content = dummy_map_view_content(content)
 
@@ -4259,7 +4258,7 @@ def map_view_one_year(request):
         JsonResponse: The HTTP response with serialized JSON.
     """
     year = request.GET.get('year', world_map_initial_displayed_year)
-    content = get_polity_shape_content(displayed_year=year, override_latest_year=latest_displayed_year)
+    content = get_polity_shape_content(displayed_year=year)
 
     content = dummy_map_view_content(content)
 
@@ -4280,7 +4279,7 @@ def map_view_all(request):
     """
 
     # Temporary restriction on the latest year for the whole map view
-    content = get_polity_shape_content(override_latest_year=latest_displayed_year)
+    content = get_polity_shape_content(override_latest_year=2014)
 
     content = dummy_map_view_content(content)
 
@@ -4299,7 +4298,7 @@ def map_view_all_with_vars(request):
     """
 
     # Temporary restriction on the latest year for the whole map view
-    content = get_polity_shape_content(override_latest_year=latest_displayed_year)
+    content = get_polity_shape_content(override_latest_year=2014)
 
     content = common_map_view_content(content)
 
