@@ -4245,8 +4245,6 @@ def dummy_map_view_content(content):
 world_map_initial_displayed_year = 117
 world_map_initial_polity = 'it_roman_principate'
 last_history_year = 2014
-# Store the initial year in the cache
-cache.set('world_map_initial_displayed_year', world_map_initial_displayed_year)
 
 def map_view_initial(request):
     global world_map_initial_displayed_year, world_map_initial_polity
