@@ -4162,10 +4162,6 @@ def random_polity_shape(from_selection=True):
             'fr_carolingian_emp_1',
             'cn_tang_dyn_1',
             'ir_sassanid_emp_2',
-            'ch_chile_rep_1',
-            'us_antebellum',
-            'mx_mexico_1',
-            'ru_soviet_union'
         ]
         # Select a random polity from the list
         seshat_id = random.choice(selected_polities)
