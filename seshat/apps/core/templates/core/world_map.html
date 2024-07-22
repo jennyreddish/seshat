@@ -347,8 +347,6 @@
         var tick_years = {{ tick_years }};
         setSliderTicks(tick_years);
 
-        console.log('Initial time: ' + (performance.now() - startTime) + 'ms');
-
         // Load all polity shapes and modern province/country shapes in background
         window.addEventListener('load', function () {
             function fetchData(url, displayYear) {
@@ -364,9 +362,8 @@
 
                         seshat_id_page_id = data.seshat_id_page_id;
                         allCapitalsInfo = data.all_capitals_info;
-                        plotPolities(printShapeNum=true);
+                        plotPolities();
                         let enteredYear = document.getElementById('enterYear').value;
-                        console.log('One year time: ' + (performance.now() - startTime) + 'ms');
                         if (displayYear != enteredYear) {
                             return fetchData('/core/world_map_one_year/', enteredYear);
                         } else {
@@ -392,8 +389,6 @@
                         allPolitiesLoaded = true;
                         document.getElementById('loadingIndicator').style.display = 'none';
 
-                        console.log('All years time: ' + (performance.now() - startTime) + 'ms');
-
                         return fetch('/core/world_map_all_with_vars');
                     })
                     .then(response => response.json())
@@ -412,8 +407,6 @@
                         allVariablesLoaded = true;
                         plotPolities();
                         document.getElementById('variablesLoadingIndicator').style.display = 'none';
-
-                        console.log('All vars time: ' + (performance.now() - startTime) + 'ms');
 
                         return fetch('/core/provinces_and_countries');
                     })
@@ -437,8 +430,6 @@
 
                         document.getElementById('baseMapCurrentLoadingIndicator').style.display = 'none';
                         document.getElementById('baseMapCurrent').disabled = false;
-
-                        console.log('Base map time: ' + (performance.now() - startTime) + 'ms');
 
                     });
             }
@@ -500,7 +491,7 @@
             plotPolities();
         }
 
-        function plotPolities(printShapeNum=false) {  // This function is defined differently in the polity_map template
+        function plotPolities() {  // This function is defined differently in the polity_map template
 
             var variable = document.getElementById('chooseVariable').value;
             var selectedYear = document.getElementById('dateSlide').value;
@@ -1000,18 +991,7 @@
             if (!atLeastOnePolityHighlighted){
                 document.getElementById('popup').innerHTML = '';
             }
-            if (printShapeNum) {
-                console.log('Total number of shapes: ' + shapesData.length);
-                // Console log the number of shapes in shapesData that conform to the logic "if ((parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt)" and console log the number of geoJSONLayers
-                console.log('Number of shapes plotted: ' + shapesData.filter(shape => (parseInt(shape.start_year) <= selectedYearInt && parseInt(shape.end_year) >= selectedYearInt) && shouldDisplayComponent(displayComponent, shape)).length);
-                let geoJSONLayerCount = 0;
-                map.eachLayer(function(layer) {
-                    if (layer instanceof L.GeoJSON) {
-                        geoJSONLayerCount++;
-                    }
-                });
-                console.log('Number of GeoJSON Layers: ' + geoJSONLayerCount);
-            };
+
         }
 
         // Initial plot on page load

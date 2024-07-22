@@ -3834,12 +3834,9 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         WHERE polity_start_year <= %s AND polity_end_year >= %s
         '''
         query_results = list(VideoShapefile.objects.raw(query, [displayed_year, displayed_year]))
-        print("Total query results:", len(query_results))
-        print("Display year:", displayed_year)
         rows = []
         for result in query_results:
             rows.append(VideoShapefile.objects.get(id=result.id))
-        print("Total rows:", len(rows))
     elif seshat_id != "all":
         rows = VideoShapefile.objects.filter(seshat_id=seshat_id)
     else:
@@ -3868,7 +3865,6 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
                 'components': row.components,
                 'member_of': row.member_of
             })
-        print("Total shapes:", len(shapes))
 
     seshat_ids = [shape['seshat_id'] for shape in shapes if shape['seshat_id']]
 
@@ -4194,20 +4190,15 @@ def common_map_view_content(content):
     Returns:
         dict: The updated content for the polity shapes.
     """
-    # start_time = time.time()
+
     # Add in the present/absent variables to view for the shapes
     content['shapes'], content['variables'] = assign_variables_to_shapes(content['shapes'], app_map)
-    # print(f"Time taken to assign absent/present variables to shapes: {time.time() - start_time} seconds")
 
-    # start_time = time.time()
     # Add in the categorical variables to view for the shapes
     content['shapes'], content['variables'] = assign_categorical_variables_to_shapes(content['shapes'], content['variables'])
-    # print(f"Time taken to assign categorical variables to shapes: {time.time() - start_time} seconds")
 
-    # start_time = time.time()
     # Load the capital cities for polities that have them
     content['all_capitals_info'] = get_all_polity_capitals()
-    # print(f"Time taken to load capital cities: {time.time() - start_time} seconds")
     
     # Add categorical variable choices to content for dropdown selection
     content['categorical_variables'] = categorical_variables
@@ -4268,7 +4259,6 @@ def map_view_initial(request):
         # Select a random polity for the initial view
         if 'test' not in sys.argv:
             world_map_initial_displayed_year, world_map_initial_polity = random_polity_shape()
-            print("Setting the initial year in the cache to:", world_map_initial_displayed_year)
             cache.set('world_map_initial_displayed_year', world_map_initial_displayed_year)
         return redirect('{}?year={}'.format(request.path, world_map_initial_displayed_year))
 
@@ -4296,12 +4286,10 @@ def map_view_one_year(request):
         JsonResponse: The HTTP response with serialized JSON.
     """
     year = cache.get('world_map_initial_displayed_year')
-    print("Year from the cache:", year)
+
     content = get_polity_shape_content(displayed_year=year)
 
     content = dummy_map_view_content(content)
-
-    print("Total number of shapes", len(content['shapes']))
 
     return JsonResponse(content)
 
