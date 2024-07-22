@@ -479,6 +479,14 @@
             var opacity = document.getElementById('opacitySlide').value;
             var atLeastOnePolityHighlighted = false;
 
+            // If not all polities loaded and the url year does not match the selected year, restore the loading indicator
+            if (!allPolitiesLoaded) {
+                var initialDisplayYear = {{ display_year }};
+                if (selectedYear != initialDisplayYear) {
+                    document.getElementById('loadingIndicator').style.display = 'block';
+                }
+            }
+
             // If variable has changed from the previous selection
             if (localStorage.getItem('variable') != variable) {
                 // Update previously selected variable button
@@ -977,7 +985,10 @@
 
         // Initial plot on page load
         switchBaseMapWorldMap()
+        allPolitiesLoaded = true;
         plotPolities()
+        document.getElementById('loadingIndicator').style.display = 'none';
+        allPolitiesLoaded = false;
 
         // Display slider value
         var slider = document.getElementById("dateSlide");
