@@ -686,6 +686,25 @@
                                             <td><a href="/core/polity/${polityId}" target="_blank">${longName} (${shape.seshat_id})</a></td>
                                         </tr>
                                     `;
+                                } else if (shape.seshat_id.includes(';')) {
+                                    var polityIds = shape.seshat_id.split(';');
+                                    var polityLinks = '';
+                                    for (var i = 0; i < polityIds.length; i++) {
+                                        if (polityIds[i] in seshat_id_page_id) {
+                                            var polityId = seshat_id_page_id[polityIds[i]]['id'];
+                                            longName = seshat_id_page_id[polityIds[i]]['long_name'];
+                                            if (longName == ''){
+                                                longName = '[Page empty]'
+                                            }
+                                            polityLinks = polityLinks + `<a href="/core/polity/${polityId}" target="_blank">${longName} (${polityIds[i]})</a><br>`;
+                                        }
+                                    }
+                                    popupContent = popupContent + `
+                                        <tr>
+                                            <td>Seshat Pages</td>
+                                            <td>${polityLinks}</td>
+                                        </tr>
+                                    `;
                                 }
                                 popupContent = popupContent + `
                                         <tr>
