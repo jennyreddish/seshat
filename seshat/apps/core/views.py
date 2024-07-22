@@ -4140,11 +4140,11 @@ categorical_variables = {
 
 def random_polity_shape(from_selection=True):
     """
-    This function is used to get a pseudo-random polity for the map_view_initial and map_view_one_year views to display.
+    This function is used to get a pseudo-random polity for the map_view_initial and map_view_initial views to display.
     It selects a polity with a large area and which has a seshat_id.
 
     If from_selection is true, choose a polity from a pre-approved list.
-    TODO: if the loading time of map_view_one_year becomes sufficiently fast, we could set from_selection to False.
+    TODO: if the loading time of map_view_initial becomes sufficiently fast, we could set from_selection to False.
 
     Returns:
         tuple: A tuple containing the start year and seshat_id.
