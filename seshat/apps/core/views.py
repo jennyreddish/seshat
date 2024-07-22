@@ -4259,39 +4259,16 @@ def map_view_initial(request):
         # Select a random polity for the initial view
         if 'test' not in sys.argv:
             world_map_initial_displayed_year, world_map_initial_polity = random_polity_shape()
-            cache.set('world_map_initial_displayed_year', world_map_initial_displayed_year)
         return redirect('{}?year={}'.format(request.path, world_map_initial_displayed_year))
 
-    content = get_polity_shape_content(seshat_id=world_map_initial_polity)
+    content = get_polity_shape_content(displayed_year=world_map_initial_displayed_year)
 
     content = dummy_map_view_content(content)
-
-    # For the initial view, set the displayed year to the polity's start year
-    content['display_year'] = world_map_initial_displayed_year
 
     return render(request,
                   'core/world_map.html',
                   content
                   )
-
-def map_view_one_year(request):
-    """
-    This view is used to display a map with polities plotted on it. The view
-    loads all polities present in the year in the url.
-
-    Args:
-        request: The request object.
-
-    Returns:
-        JsonResponse: The HTTP response with serialized JSON.
-    """
-    year = cache.get('world_map_initial_displayed_year')
-
-    content = get_polity_shape_content(displayed_year=year)
-
-    content = dummy_map_view_content(content)
-
-    return JsonResponse(content)
 
 def map_view_all(request):
     """

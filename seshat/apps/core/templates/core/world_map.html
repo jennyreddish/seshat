@@ -362,25 +362,6 @@
 
                         seshat_id_page_id = data.seshat_id_page_id;
                         allCapitalsInfo = data.all_capitals_info;
-                        plotPolities();
-                        let enteredYear = document.getElementById('enterYear').value;
-                        if (displayYear != enteredYear) {
-                            return fetchData('/core/world_map_one_year/', enteredYear);
-                        } else {
-                            return fetch('/core/world_map_all/');
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        data.shapes
-                            .filter(shape => !shapesData.some(existingShape => existingShape.id === shape.id))
-                            .forEach(shape => {
-                                shape.weight = polityBorderWeight;
-                                shapesData.push(shape);
-                            });
-
-                        seshat_id_page_id = data.seshat_id_page_id;
-                        allCapitalsInfo = data.all_capitals_info;
                         document.getElementById('dateSlide').min = data.earliest_year;
                         document.getElementById('dateSlide').max = data.latest_year;
                         tick_years = JSON.parse(data.tick_years);
@@ -435,7 +416,7 @@
             }
 
             var displayYear = {{ display_year }};
-            fetchData('/core/world_map_one_year/', displayYear);
+            fetchData('/core/world_map_all/', displayYear);
         });
 
         var southWest = L.latLng(-89.98155760646617, -180),
