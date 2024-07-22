@@ -153,32 +153,13 @@
                     <h1 class="text-teal federicka-big">Seshat World Map</h1>
                 </legend>
                 <div id="loadingIndicator">
-                    <p id="loadingText" style="font-size: 16px;">Loading all polities for all years...</p>
                     <div class="spinner"></div>                   
                 </div>
 
                 <div class="slidecontainer">
                     <label for="chooseVariable">Variable: </label>
-                    <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;">
+                    <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;" disabled>
                         <option value="polity">Polity</option>
-                        {% for category, variables in variables.items %}
-                            {% if category == 'General Variables' %}
-                                <optgroup label="{{ category }}">
-                                    {% for variable, details in variables.items %}
-                                        <option value="{{ details.formatted }}">{{ details.full_name }}</option>
-                                    {% endfor %}
-                                </optgroup>
-                            {% endif %}
-                        {% endfor %}
-                        {% for category, variables in variables.items %}
-                            {% if category != 'General Variables' %}
-                                <optgroup label="{{ category }}">
-                                    {% for variable, details in variables.items %}
-                                        <option value="{{ details.formatted }}">{{ details.full_name }}</option>
-                                    {% endfor %}
-                                </optgroup>
-                            {% endif %}
-                        {% endfor %}
                     </select><br>
                     <fieldset id="previouslySelectedVariableFieldset" style="display: none">
                         <label for="previouslySelectedVariable">Variable: </label>
@@ -188,7 +169,10 @@
                         <label for="chooseCategoricalVariableSelection"></label>
                         <select name="chooseCategoricalVariableSelection" id="chooseCategoricalVariableSelection" onchange="plotPolities()" style="width: 150px; text-overflow: ellipsis;">            
                         </select>
-                    </fieldset><br>
+                    </fieldset>
+                    <div id="variablesLoadingIndicator">
+                        <p>Loading Seshat variables...</p>
+                    </div>
                     <fieldset id="switchPolitiesComponentsFieldset" style="display: block">
                         <label for="switchPolitiesComponents">Display:</label>
                         <select name="switchPolitiesComponents" id="switchPolitiesComponents" onchange="plotPolities()">
@@ -215,10 +199,8 @@
                         onclick="switchBaseMapWorldMap()">OpenStreetMap</label><br>
                 <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMapWorldMap()"
                         disabled>Current borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
-                <!-- Add a loading indicator for Current borders -->
                 <div id="baseMapCurrentLoadingIndicator">
                     <p>Loading current borders...</p>
-                    <!-- <div class="spinner"></div> -->
                 </div><br>
             </fieldset>
             <fieldset id="baseMapGADMFieldset">
@@ -271,6 +253,8 @@
     <script src="{% static 'core/js/map_functions.js' %}"></script>
     <script>
 
+        var startTime = performance.now()
+
         function adjustScroll() {
             const slider = document.getElementById('dateSlide');
             const sliderDiv = document.getElementById('sliderdiv');
@@ -283,14 +267,15 @@
 
             sliderDiv.scrollLeft = newScrollLeft;
         }
+        
+        if (localStorage.getItem('categorical_variables')) {
+            var categorical_variables = JSON.parse(localStorage.getItem('categorical_variables'));
+        } else {
+            var categorical_variables = {{ categorical_variables | safe }};
+        };
 
-        var categorical_variables = {{ categorical_variables | safe }};
-        updateCategoricalVariableSelection('language');  // Set the default categorical variable selection
-
-        // If there's a variable stored in the local storage, set the variable selection to that
+        // If there's a categorical variable stored in the local storage, set the categorical variable selection to that
         if (localStorage.getItem('variable')) {
-            document.getElementById('chooseVariable').value = localStorage.getItem('variable');
-            // If it's a categorical variable, set the categorical variable selection to that
             if (localStorage.getItem('variable') in categorical_variables) {
                 updateCategoricalVariableSelection(localStorage.getItem('variable')); 
             };
@@ -357,6 +342,7 @@
         var countryShapeData;
 
         var allPolitiesLoaded = false;  // Used in storeYear()
+        var allVariablesLoaded = false;  
 
         var tick_years = {{ tick_years }};
         setSliderTicks(tick_years);
@@ -376,26 +362,6 @@
 
                         seshat_id_page_id = data.seshat_id_page_id;
                         allCapitalsInfo = data.all_capitals_info;
-                        plotPolities();
-                        document.getElementById('loadingIndicator').style.display = 'none';
-                        let enteredYear = document.getElementById('enterYear').value;
-                        if (displayYear != enteredYear) {
-                            return fetchData('/core/world_map_one_year/', enteredYear);
-                        } else {
-                            return fetch('/core/world_map_all/');
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        data.shapes
-                            .filter(shape => !shapesData.some(existingShape => existingShape.id === shape.id))
-                            .forEach(shape => {
-                                shape.weight = polityBorderWeight;
-                                shapesData.push(shape);
-                            });
-
-                        seshat_id_page_id = data.seshat_id_page_id;
-                        allCapitalsInfo = data.all_capitals_info;
                         document.getElementById('dateSlide').min = data.earliest_year;
                         document.getElementById('dateSlide').max = data.latest_year;
                         tick_years = JSON.parse(data.tick_years);
@@ -403,6 +369,25 @@
                         plotPolities();
                         allPolitiesLoaded = true;
                         document.getElementById('loadingIndicator').style.display = 'none';
+
+                        return fetch('/core/world_map_all_with_vars');
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Get data from world_map_all_with_vars
+                        let shapesDataWithVars = data.shapes.map(shape => {
+                            let existingShape = shapesData.find(existing => existing.id === shape.id);
+                            shape.weight = existingShape ? existingShape.weight : polityBorderWeight;
+                            return shape;
+                        });
+                        shapesData = shapesDataWithVars;
+                        populateVariableDropdown(data.variables);
+                        document.getElementById('chooseVariable').disabled = false;
+                        categorical_variables = data.categorical_variables;
+                        updateCategoricalVariableSelection('language');  // Set the default categorical variable selection
+                        allVariablesLoaded = true;
+                        plotPolities();
+                        document.getElementById('variablesLoadingIndicator').style.display = 'none';
 
                         return fetch('/core/provinces_and_countries');
                     })
@@ -426,11 +411,12 @@
 
                         document.getElementById('baseMapCurrentLoadingIndicator').style.display = 'none';
                         document.getElementById('baseMapCurrent').disabled = false;
+
                     });
             }
 
             var displayYear = {{ display_year }};
-            fetchData('/core/world_map_one_year/', displayYear);
+            fetchData('/core/world_map_all/', displayYear);
         });
 
         var southWest = L.latLng(-89.98155760646617, -180),
@@ -493,21 +479,21 @@
             var opacity = document.getElementById('opacitySlide').value;
             var atLeastOnePolityHighlighted = false;
 
+            // If not all polities loaded and the url year does not match the selected year, restore the loading indicator
+            if (!allPolitiesLoaded) {
+                var initialDisplayYear = {{ display_year }};
+                if (selectedYear != initialDisplayYear) {
+                    document.getElementById('loadingIndicator').style.display = 'block';
+                }
+            }
+
             // If variable has changed from the previous selection
             if (localStorage.getItem('variable') != variable) {
                 // Update previously selected variable button
                 document.getElementById('previouslySelectedVariable').setAttribute('variableSelection', localStorage.getItem('variable'));
-
-                // Set the text of the previously selected variable button
-                // Note: we decided to not use the variabled name and instead keep the button text consistent
-                // if (localStorage.getItem('variable') in categorical_variables || localStorage.getItem('variable') == 'polity'){
-                //     // Categorical variables don't have a full name so we need to modify TODO: Make this more consistent
-                //     document.getElementById('previouslySelectedVariable').innerHTML = localStorage.getItem('variable').replace(/_/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-                // } else {
-                //     document.getElementById('previouslySelectedVariable').innerHTML = localStorage.getItem('variable')
-                // }
-
-                document.getElementById('previouslySelectedVariableFieldset').style.display = 'block';
+                if(allVariablesLoaded){
+                    document.getElementById('previouslySelectedVariableFieldset').style.display = 'block';
+                }
             }
 
             // If the variable is categorical, show the categorical variable selection dropdown
@@ -646,7 +632,7 @@
                             displaystart_year = shape.polity_start_year + ' CE';
                         }
 
-                        if (parseInt(shape.polity_end_year) == {{ latest_year }}){
+                        if (parseInt(shape.polity_end_year) == {{ last_history_year }}){
                             displayend_year = 'Present';
                         } else {
                             if (parseInt(shape.polity_end_year) < 0) {
@@ -734,7 +720,7 @@
                                             if (variableEndYear == 'None' || variableEndYear == null) {
                                                 variableEndYear = displayend_year;
                                             } else {
-                                                if (variableEndYear == {{ latest_year }}){
+                                                if (variableEndYear == {{ last_history_year }}){
                                                     variableEndYear = 'Present';
                                                 } else {
                                                     if (variableEndYear < 0) {
@@ -986,17 +972,23 @@
             if (variable in categorical_variables) {
                 localStorage.setItem(variable, document.getElementById('chooseCategoricalVariableSelection').value);
             };
+            // Store the categorical variables
+            localStorage.setItem('categorical_variables', JSON.stringify(categorical_variables));
 
             adjustScroll();
 
             if (!atLeastOnePolityHighlighted){
                 document.getElementById('popup').innerHTML = '';
             }
+
         }
 
         // Initial plot on page load
         switchBaseMapWorldMap()
+        allPolitiesLoaded = true;
         plotPolities()
+        document.getElementById('loadingIndicator').style.display = 'none';
+        allPolitiesLoaded = false;
 
         // Display slider value
         var slider = document.getElementById("dateSlide");
