@@ -3768,10 +3768,6 @@ def seshatcommentpart_create_view(request):
     return render(request, 'core/seshatcomments/seshatcommentpart_create.html', {'form': form})
 
 
-
-# Shapefile views
-import time # TODO: delete
-
 def get_provinces(selected_base_map_gadm='province'):
     """
     Get all the province or country shapes for the map base layer.
@@ -4257,7 +4253,7 @@ def map_view_initial(request):
             world_map_initial_displayed_year, world_map_initial_polity = random_polity_shape()
         return redirect('{}?year={}'.format(request.path, world_map_initial_displayed_year))
 
-    content = get_polity_shape_content(displayed_year=world_map_initial_displayed_year)
+    content = get_polity_shape_content(displayed_year=world_map_initial_displayed_year, override_latest_year=last_history_year)
 
     content = dummy_map_view_content(content)
 
@@ -4278,7 +4274,6 @@ def map_view_all(request):
         JsonResponse: The HTTP response with serialized JSON.
     """
 
-    # Temporary restriction on the latest year for the whole map view
     content = get_polity_shape_content(override_latest_year=last_history_year)
 
     content = dummy_map_view_content(content)
@@ -4297,7 +4292,6 @@ def map_view_all_with_vars(request):
         JsonResponse: The HTTP response with serialized JSON.
     """
 
-    # Temporary restriction on the latest year for the whole map view
     content = get_polity_shape_content(override_latest_year=last_history_year)
 
     content = common_map_view_content(content)
