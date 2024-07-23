@@ -26,13 +26,13 @@ class ShapesTest(TestCase):
             name='TestPolity',
             id=self.pk,
             long_name='TestPolity',
-            new_name='Test seshat_id'
+            new_name='IqAbbs1'
         )
         Polity.objects.create(
             name='TestPolity2',
             id=2,
             long_name='TestPolity2',
-            new_name='Test seshat_id 2',
+            new_name='Cn5Dyna',
             start_year=-100,
             end_year=1100
         )
@@ -40,7 +40,7 @@ class ShapesTest(TestCase):
             name='TestPolity3',
             id=3,
             long_name='TestPolity3',
-            new_name='Test seshat_id 3',
+            new_name='at_habsburg_1',
             start_year=-100,
             end_year=1100
         )
@@ -49,7 +49,7 @@ class ShapesTest(TestCase):
             geom=self.square,
             simplified_geom=self.square,
             name="Testpolityname",
-            seshat_id="Test seshat_id",
+            seshat_id="IqAbbs1",
             area=100.0,
             start_year=2000,
             end_year=2020,
@@ -64,7 +64,7 @@ class ShapesTest(TestCase):
             geom=self.square,
             simplified_geom=self.square,
             name="Testpolityname2",
-            seshat_id="Test seshat_id 2",
+            seshat_id="Cn5Dyna",
             area=100.0,
             start_year=0,
             end_year=1000,
@@ -201,7 +201,7 @@ class ShapesTest(TestCase):
         expected_result = {
             'shapes': [
                 {
-                    'seshat_id': 'Test seshat_id',
+                    'seshat_id': 'IqAbbs1',
                     'name': 'Testpolityname',
                     'start_year': 2000,
                     'end_year': 2020,
@@ -215,7 +215,7 @@ class ShapesTest(TestCase):
                     'member_of': 'Test member_of',
                 },
                 {
-                    'seshat_id': 'Test seshat_id 2',
+                    'seshat_id': 'Cn5Dyna',
                     'name': 'Testpolityname2',
                     'start_year': 0,
                     'end_year': 1000,
@@ -234,8 +234,8 @@ class ShapesTest(TestCase):
             'tick_years': json.dumps([0, 1010, 2020]),
             'latest_year': 2020,
             'seshat_id_page_id': {
-                'Test seshat_id': {'id': 1, 'long_name': 'TestPolity'},
-                'Test seshat_id 2': {'id': 2, 'long_name': 'TestPolity2'}
+                'IqAbbs1': {'id': 1, 'long_name': 'TestPolity'},
+                'Cn5Dyna': {'id': 2, 'long_name': 'TestPolity2'}
             }
         }
         result = get_polity_shape_content(tick_number=3)
@@ -250,7 +250,7 @@ class ShapesTest(TestCase):
         expected_result = {
             'shapes': [
                 {
-                    'seshat_id': 'Test seshat_id',
+                    'seshat_id': 'IqAbbs1',
                     'name': 'Testpolityname',
                     'start_year': 2000,
                     'end_year': 2020,
@@ -269,7 +269,7 @@ class ShapesTest(TestCase):
             'tick_years': json.dumps([0, 1010, 2020]),
             'latest_year': 2020,
             'seshat_id_page_id': {
-                'Test seshat_id': {'id': 1, 'long_name': 'TestPolity'}
+                'IqAbbs1': {'id': 1, 'long_name': 'TestPolity'}
             }
         }
         result = get_polity_shape_content(displayed_year=2000, tick_number=3)
@@ -284,7 +284,7 @@ class ShapesTest(TestCase):
         expected_result = {
             'shapes': [
                 {
-                    'seshat_id': 'Test seshat_id',
+                    'seshat_id': 'IqAbbs1',
                     'name': 'Testpolityname',
                     'start_year': 2000,
                     'end_year': 2020,
@@ -303,16 +303,16 @@ class ShapesTest(TestCase):
             'tick_years': json.dumps([2000, 2010, 2020]),
             'latest_year': 2020,
             'seshat_id_page_id': {
-                'Test seshat_id': {'id': 1, 'long_name': 'TestPolity'}
+                'IqAbbs1': {'id': 1, 'long_name': 'TestPolity'}
             }
         }
-        result = get_polity_shape_content(seshat_id='Test seshat_id', tick_number=3)
+        result = get_polity_shape_content(seshat_id='IqAbbs1', tick_number=3)
 
         self.assertEqual(result, expected_result)
 
     def test_get_polity_shape_content_displayed_year_and_seshat_id_both_set(self):
         """Test that a ValueError is raised if both displayed_year and seshat_id are set."""
-        self.assertRaises(ValueError, get_polity_shape_content, displayed_year=2000, seshat_id='Test seshat_id', tick_number=3)
+        self.assertRaises(ValueError, get_polity_shape_content, displayed_year=2000, seshat_id='IqAbbs1', tick_number=3)
 
     def test_get_polity_capitals(self):
         """Test the get_polity_capitals function."""
@@ -325,10 +325,10 @@ class ShapesTest(TestCase):
         """Test the get_all_polity_capitals function."""
         result = get_all_polity_capitals()
         self.assertEqual(result,
-                        {'Test seshat_id': [
+                        {'IqAbbs1': [
                                 {'capital': 'Test Capital', 'latitude': 51.567522, 'longitude': -0.1294531, 'year_from': 2000, 'year_to': 2020}
                             ],
-                        'Test seshat_id 2': [
+                        'Cn5Dyna': [
                                 {'capital': 'Test Capital 2A', 'latitude': 51.567523, 'longitude': -0.1294532, 'year_from': 0, 'year_to': 100},
                                 {'capital': 'Test Capital 2', 'latitude': 51.567523, 'longitude': -0.1294532, 'year_from': -100, 'year_to': 1100}
                             ]
@@ -341,7 +341,7 @@ class ShapesTest(TestCase):
             'content': {
                 'shapes': [
                     {
-                        'seshat_id': 'Test seshat_id',
+                        'seshat_id': 'IqAbbs1',
                         'name': 'Testpolityname',
                         'start_year': 2000,
                         'end_year': 2020,
@@ -360,7 +360,7 @@ class ShapesTest(TestCase):
                 'latest_year': 2020,
                 'tick_years': json.dumps([2000, 2010, 2020]),
                 'seshat_id_page_id': {
-                    'Test seshat_id': {'id': 1, 'long_name': 'TestPolity'}
+                    'IqAbbs1': {'id': 1, 'long_name': 'TestPolity'}
                 },
                 'include_polity_map': True,
                 'capitals_info': [
@@ -378,7 +378,7 @@ class ShapesTest(TestCase):
             'content': {
                 'shapes': [
                     {
-                        'seshat_id': 'Test seshat_id 2',
+                        'seshat_id': 'Cn5Dyna',
                         'name': 'Testpolityname2',
                         'start_year': 0,
                         'end_year': 1000,
@@ -397,7 +397,7 @@ class ShapesTest(TestCase):
                 'latest_year': 1000,
                 'tick_years': json.dumps([0, 500, 1000]),
                 'seshat_id_page_id': {
-                    'Test seshat_id 2': {'id': 2, 'long_name': 'TestPolity2'}
+                    'Cn5Dyna': {'id': 2, 'long_name': 'TestPolity2'}
                 },
                 'include_polity_map': True,
                 'capitals_info': [
@@ -440,7 +440,7 @@ class ShapesTest(TestCase):
         """Test the assign_variables_to_shapes function."""
         shapes = [
                     {
-                        'seshat_id': 'Test seshat_id 2',
+                        'seshat_id': 'Cn5Dyna',
                         'name': 'Testpolityname2',
                         'start_year': 0,
                         'end_year': 1000,
@@ -481,7 +481,7 @@ class ShapesTest(TestCase):
         """Test the assign_categorical_variables_to_shapes function."""
         shapes = [
                     {
-                        'seshat_id': 'Test seshat_id 2',
+                        'seshat_id': 'Cn5Dyna',
                         'name': 'Testpolityname2',
                         'start_year': 0,
                         'end_year': 1000,
