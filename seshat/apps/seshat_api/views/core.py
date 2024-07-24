@@ -1,7 +1,6 @@
 from rest_framework import viewsets
 
 from ._permissions import ONLY_ADMIN_PERMISSIONS
-from ..renderers import GeoJSONRenderer, renderers
 
 from ._mixins import (
     FilterBackends,
@@ -151,18 +150,6 @@ class PolityViewSet(
     pagination_class = SeshatAPIPagination
     filterset_class = PolityFilter
     search_fields = ["@long_name", "@new_name"]
-    renderer_classes = [
-        renderers.JSONRenderer,
-        renderers.BrowsableAPIRenderer,
-        renderers.AdminRenderer,
-        GeoJSONRenderer,
-    ]
-    geo_fields = {
-        "point": [
-            "home_nga__longitude",
-            "home_nga__latitude",
-        ]
-    }
 
 
 class CapitalViewSet(
