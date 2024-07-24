@@ -1,4 +1,4 @@
-from ....sc.models import (
+from ...models import (
     Ra,
     Polity_territory,
     Polity_population,

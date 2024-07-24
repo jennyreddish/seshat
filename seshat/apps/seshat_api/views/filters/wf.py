@@ -1,4 +1,4 @@
-from ....wf.models import (
+from ...models import (
     Long_wall,
     Copper,
     Bronze,

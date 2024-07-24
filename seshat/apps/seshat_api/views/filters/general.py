@@ -1,4 +1,4 @@
-from ....general.models import (
+from ...models import (
     Polity_research_assistant,
     Polity_original_name,
     Polity_alternative_name,

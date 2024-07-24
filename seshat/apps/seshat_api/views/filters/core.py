@@ -1,4 +1,4 @@
-from ....core.models import (
+from ...models import (
     SeshatPrivateComment,
     SeshatPrivateCommentPart,
     Macro_region,
