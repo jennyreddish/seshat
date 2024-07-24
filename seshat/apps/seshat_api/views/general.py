@@ -8,7 +8,7 @@ from ._mixins import (
     SeshatAPIPagination,
 )
 
-from .filters.general import (
+from ..filters.general import (
     PolityResearchAssistantFilter,
     PolityOriginalNameFilter,
     PolityAlternativeNameFilter,
@@ -37,7 +37,7 @@ from .filters.general import (
     PolityReligiousTraditionFilter,
 )
 
-from ...general.models import (
+from ..models import (
     Polity_research_assistant,
     Polity_original_name,
     Polity_alternative_name,

@@ -7,7 +7,7 @@ from ._mixins import (
     SeshatAPIPagination,
 )
 
-from .filters.rt import (
+from ..filters.rt import (
     WidespreadReligionFilter,
     OfficialReligionFilter,
     ElitesReligionFilter,
@@ -31,7 +31,7 @@ from .filters.rt import (
     GovPressConvForAgaFilter,
 )
 
-from ...rt.models import (
+from ..models import (
     Widespread_religion,
     Official_religion,
     Elites_religion,

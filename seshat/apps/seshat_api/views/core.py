@@ -9,7 +9,7 @@ from ._mixins import (
     MixinSeshatAPISerializer,
     SeshatAPIPagination,
 )
-from .filters.core import (
+from ..filters.core import (
     PrivateCommentFilter,
     PrivateCommentsPartFilter,
     MacroRegionFilter,
@@ -34,7 +34,7 @@ from .filters.core import (
     GADMProvincesFilter,
 )
 
-from ...core.models import (
+from ..models import (
     SeshatPrivateComment,
     SeshatPrivateCommentPart,
     Macro_region,

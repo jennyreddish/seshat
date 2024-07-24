@@ -1,4 +1,4 @@
-from ...models import (
+from ..models import (
     Widespread_religion,
     Official_religion,
     Elites_religion,

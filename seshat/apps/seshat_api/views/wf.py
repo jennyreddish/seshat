@@ -7,7 +7,7 @@ from ._mixins import (
     SeshatAPIPagination,
 )
 
-from .filters.wf import (
+from ..filters.wf import (
     LongWallFilter,
     CopperFilter,
     BronzeFilter,
@@ -59,7 +59,7 @@ from .filters.wf import (
     ChainmailFilter,
 )
 
-from ...wf.models import (
+from ..models import (
     Long_wall,
     Copper,
     Bronze,

@@ -1,4 +1,4 @@
-from ..core.models import (  # flake8: noqa
+from ..core.models import (
     SeshatPrivateComment,
     SeshatPrivateCommentPart,
     Macro_region,

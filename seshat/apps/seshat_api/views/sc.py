@@ -9,7 +9,7 @@ from ._mixins import (
     SeshatAPIPagination,
 )
 
-from .filters.sc import (
+from ..filters.sc import (
     RAFilter,
     PolityTerritoryFilter,
     PolityPopulationFilter,
@@ -90,7 +90,7 @@ from .filters.sc import (
     FastestIndividualCommunicationFilter,
 )
 
-from ...sc.models import (
+from ..models import (
     Ra,
     Polity_territory,
     Polity_population,

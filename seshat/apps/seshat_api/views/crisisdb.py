@@ -6,7 +6,7 @@ from ._mixins import (
     MixinSeshatAPISerializer,
     SeshatAPIPagination,
 )
-from .filters.crisisdb import (
+from ..filters.crisisdb import (
     USLocationFilter,
     USViolenceSubtypeFilter,
     USViolenceDataSourceFilter,
@@ -36,7 +36,7 @@ from .filters.crisisdb import (
     DiseaseOutbreakFilter,
 )
 
-from ...crisisdb.models import (
+from ..models import (
     Us_location,
     Us_violence_subtype,
     Us_violence_data_source,

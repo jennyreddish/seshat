@@ -1,4 +1,4 @@
-from ...models import (
+from ..models import (
     Us_location,
     Us_violence_subtype,
     Us_violence_data_source,
