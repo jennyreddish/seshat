@@ -27,6 +27,16 @@ class SeshatAPIPagination(PageNumberPagination):
     max_page_size = 100
 
 
+class SeshatAPIRestrictedPagination(PageNumberPagination):
+    """
+    Custom pagination class for the API.
+    """
+
+    page_size = 1
+    page_size_query_param = "page_size"
+    max_page_size = 1
+
+
 class MixinSeshatAPIAuth:
     """
     Mixin class to set the authentication classes for the API.

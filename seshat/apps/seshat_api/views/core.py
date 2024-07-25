@@ -7,6 +7,7 @@ from ._mixins import (
     MixinSeshatAPIAuth,
     MixinSeshatAPISerializer,
     SeshatAPIPagination,
+    SeshatAPIRestrictedPagination
 )
 from ..filters.core import (
     PrivateCommentFilter,
@@ -347,7 +348,7 @@ class VideoShapefileViewSet(
     """
 
     model = VideoShapefile
-    pagination_class = SeshatAPIPagination
+    pagination_class = SeshatAPIRestrictedPagination
     filterset_class = VideoShapefileFilter
 
 
@@ -362,7 +363,7 @@ class GADMShapefileViewSet(
     """
 
     model = GADMShapefile
-    pagination_class = SeshatAPIPagination
+    pagination_class = SeshatAPIRestrictedPagination
     filterset_class = GADMShapefileFilter
 
 
@@ -377,9 +378,11 @@ class GADMCountriesViewSet(
     """
 
     model = GADMCountries
-    pagination_class = SeshatAPIPagination
+    pagination_class = SeshatAPIRestrictedPagination
     filterset_class = GADMCountriesFilter
 
+
+from rest_framework.renderers import TemplateHTMLRenderer
 
 class GADMProvincesViewSet(
     FilterBackends,
@@ -392,5 +395,5 @@ class GADMProvincesViewSet(
     """
 
     model = GADMProvinces
-    pagination_class = SeshatAPIPagination
+    pagination_class = SeshatAPIRestrictedPagination
     filterset_class = GADMProvincesFilter
