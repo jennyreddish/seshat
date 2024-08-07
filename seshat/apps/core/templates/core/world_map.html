@@ -813,8 +813,12 @@
                                         </tr>
                                     `;
                                 }
-                                if (variable == 'religion' || variable == 'religion_family' || variable == 'religion_genus' || variable == 'alternate_religion' || variable == 'alternate_religion_family' || variable == 'alternate_religion_genus') {
+                                if (variable == 'religious_tradition' || variable == 'religion' || variable == 'religion_family' || variable == 'religion_genus' || variable == 'alternate_religion' || variable == 'alternate_religion_family' || variable == 'alternate_religion_genus') {
                                     popupContent = popupContent + `
+                                        <tr>
+                                            <td>Religious Tradition</td>
+                                            <td><span style="text-transform: capitalize;">${shape.religous_tradition}</span></td>
+                                        </tr>
                                         <tr>
                                             <td>Religions</td>
                                             <td><span style="text-transform: capitalize;">${shape.religion.join(', ')}</span></td>
