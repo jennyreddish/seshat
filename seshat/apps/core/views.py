@@ -4271,7 +4271,7 @@ app_map = {
 }
 
 # Get sorted lists of choices for each categorical variable
-POLITY_RELIGIOUS_TRADITION_CHOICES = Polity_religious_tradition.objects.values_list('religious_tradition', flat=True).distinct()
+POLITY_RELIGIOUS_TRADITION_CHOICES = list(set(Polity_religious_tradition.objects.values_list('religious_tradition', flat=True).distinct()))
 categorical_variables = {
     'linguistic_family': sorted([x[0] for x in POLITY_LINGUISTIC_FAMILY_CHOICES]),
     'language_genus': sorted([x[0] for x in POLITY_LANGUAGE_GENUS_CHOICES]),
