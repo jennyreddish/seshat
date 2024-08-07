@@ -4278,6 +4278,9 @@ categorical_variables = {
     'religion_genus': sorted([x[0] for x in POLITY_RELIGION_GENUS_CHOICES]),
     'religion_family': sorted([x[0] for x in POLITY_RELIGION_FAMILY_CHOICES]),
     'religion': sorted([x[0] for x in POLITY_RELIGION_CHOICES]),
+    'alternate_religion_genus': sorted([x[0] for x in POLITY_RELIGION_GENUS_CHOICES]),
+    'alternate_religion_family': sorted([x[0] for x in POLITY_RELIGION_FAMILY_CHOICES]),
+    'alternate_religion': sorted([x[0] for x in POLITY_RELIGION_CHOICES]),
 }
 
 def random_polity_shape(from_selection=True):
