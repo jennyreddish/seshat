@@ -4093,7 +4093,7 @@ def assign_categorical_variables_to_shapes(shapes, variables):
         'polity_linguistic_family': {'formatted': 'linguistic_family', 'full_name': 'Linguistic Family'},
         'polity_language_genus': {'formatted': 'language_genus', 'full_name': 'Language Genus'},
         'polity_language': {'formatted': 'language', 'full_name': 'Language'},
-        # 'polity_religious_tradition': {'formatted': 'religious_tradition', 'full_name': 'Religious Tradition'},
+        'polity_religious_tradition': {'formatted': 'religious_tradition', 'full_name': 'Religious Tradition'},
         'polity_religion_genus': {'formatted': 'religion_genus', 'full_name': 'Religion Genus'},
         'polity_religion_family': {'formatted': 'religion_family', 'full_name': 'Religion Family'},
         'polity_religion': {'formatted': 'religion', 'full_name': 'Religion'},
@@ -4124,11 +4124,11 @@ def assign_categorical_variables_to_shapes(shapes, variables):
             languages[l.polity_id] = []
         languages[l.polity_id].append(l)
 
-    # religious_traditions = {}
-    # for rt in Polity_religious_tradition.objects.all():
-    #     if rt.polity_id not in religious_traditions:
-    #         religious_traditions[rt.polity_id] = []
-    #     religious_traditions[rt.polity_id].append(rt)
+    religious_traditions = {}
+    for rt in Polity_religious_tradition.objects.all():
+        if rt.polity_id not in religious_traditions:
+            religious_traditions[rt.polity_id] = []
+        religious_traditions[rt.polity_id].append(rt)
 
     religion_genuses = {}
     for rg in Polity_religion_genus.objects.all():
@@ -4174,8 +4174,8 @@ def assign_categorical_variables_to_shapes(shapes, variables):
         shape['language_genus_dict'] = {}
         shape['language'] = []
         shape['language_dict'] = {}
-        # shape['religious_tradition'] = []
-        # shape['religious_tradition_dict'] = {}
+        shape['religious_tradition'] = []
+        shape['religious_tradition_dict'] = {}
         shape['religion_genus'] = []
         shape['religion_genus_dict'] = {}
         shape['religion_family'] = []
@@ -4195,7 +4195,7 @@ def assign_categorical_variables_to_shapes(shapes, variables):
                 shape['linguistic_family'].extend([lf.linguistic_family for lf in linguistic_families.get(polity.id, [])])
                 shape['language_genus'].extend([lg.language_genus for lg in language_genuses.get(polity.id, [])])
                 shape['language'].extend([l.language for l in languages.get(polity.id, [])])
-                # shape['religious_tradition'].extend([rt.religious_tradition for rt in religious_traditions.get(polity.id, [])])
+                shape['religious_tradition'].extend([rt.religious_tradition for rt in religious_traditions.get(polity.id, [])])
                 shape['religion_genus'].extend([rg.religion_genus for rg in religion_genuses.get(polity.id, [])])
                 shape['religion_family'].extend([rf.religion_family for rf in religion_families.get(polity.id, [])])
                 shape['religion'].extend([r.religion for r in religions.get(polity.id, [])])
@@ -4207,7 +4207,7 @@ def assign_categorical_variables_to_shapes(shapes, variables):
                 shape['linguistic_family_dict'].update({lf.linguistic_family: [lf.year_from, lf.year_to] for lf in linguistic_families.get(polity.id, [])})
                 shape['language_genus_dict'].update({lg.language_genus: [lg.year_from, lg.year_to] for lg in language_genuses.get(polity.id, [])})
                 shape['language_dict'].update({l.language: [l.year_from, l.year_to] for l in languages.get(polity.id, [])})
-                # shape['religious_tradition_dict'].update({rt.religious_tradition: [rt.year_from, rt.year_to] for rt in religious_traditions.get(polity.id, [])})
+                shape['religious_tradition_dict'].update({rt.religious_tradition: [rt.year_from, rt.year_to] for rt in religious_traditions.get(polity.id, [])})
                 shape['religion_genus_dict'].update({rg.religion_genus: [rg.year_from, rg.year_to] for rg in religion_genuses.get(polity.id, [])})
                 shape['religion_family_dict'].update({rf.religion_family: [rf.year_from, rf.year_to] for rf in religion_families.get(polity.id, [])})
                 shape['religion_dict'].update({r.religion: [r.year_from, r.year_to] for r in religions.get(polity.id, [])})
@@ -4224,8 +4224,8 @@ def assign_categorical_variables_to_shapes(shapes, variables):
                 shape['language_genus'].append('Uncoded')
             if not shape['language']:
                 shape['language'].append('Uncoded')
-            # if not shape['religious_tradition']:
-            #     shape['religious_tradition'].append('Uncoded')
+            if not shape['religious_tradition']:
+                shape['religious_tradition'].append('Uncoded')
             if not shape['religion_genus']:
                 shape['religion_genus'].append('Uncoded')
             if not shape['religion_family']:
@@ -4245,8 +4245,8 @@ def assign_categorical_variables_to_shapes(shapes, variables):
                 shape['language_genus'].append('No Seshat page')
             if not shape['language']:
                 shape['language'].append('No Seshat page') 
-            # if not shape['religious_tradition']:
-            #     shape['religious_tradition'].append('No Seshat page')
+            if not shape['religious_tradition']:
+                shape['religious_tradition'].append('No Seshat page')
             if not shape['religion_genus']:
                 shape['religion_genus'].append('No Seshat page')
             if not shape['religion_family']:
@@ -4271,10 +4271,12 @@ app_map = {
 }
 
 # Get sorted lists of choices for each categorical variable
+POLITY_RELIGIOUS_TRADITION_CHOICES = Polity_religious_tradition.objects.values_list('religious_tradition', flat=True).distinct()
 categorical_variables = {
     'linguistic_family': sorted([x[0] for x in POLITY_LINGUISTIC_FAMILY_CHOICES]),
     'language_genus': sorted([x[0] for x in POLITY_LANGUAGE_GENUS_CHOICES]),
     'language': sorted([x[0] for x in POLITY_LANGUAGE_CHOICES]),
+    'religious_tradition': sorted([x for x in POLITY_RELIGIOUS_TRADITION_CHOICES]),
     'religion_genus': sorted([x[0] for x in POLITY_RELIGION_GENUS_CHOICES]),
     'religion_family': sorted([x[0] for x in POLITY_RELIGION_FAMILY_CHOICES]),
     'religion': sorted([x[0] for x in POLITY_RELIGION_CHOICES]),
