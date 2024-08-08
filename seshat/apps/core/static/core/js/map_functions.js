@@ -151,6 +151,8 @@ function switchBaseMap() {
         currentLayer = baseLayers.carto.addTo(map);
     } else if (selectedMap === 'arcgis') {
         currentLayer = baseLayers.arcgis.addTo(map);
+    } else if (selectedMap === 'gadm') {
+        currentLayer = baseLayers.carto.addTo(map);
     }
 
     if (selectedMap === 'gadm') {
