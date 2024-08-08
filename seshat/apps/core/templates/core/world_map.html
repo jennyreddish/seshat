@@ -417,15 +417,7 @@
             fetchData('/core/world_map_all/', displayYear);
         });
 
-        var southWest = L.latLng(-89.98155760646617, -180),
-            northEast = L.latLng(89.99346179538875, 180),
-            bounds = L.latLngBounds(southWest, northEast);
-
-        var map = L.map('map', {
-            minZoom: 2,
-            maxBounds: bounds,
-            maxBoundsViscosity: 1.0
-        }).setView([0, 0], 2);
+        var map = createMap();
 
         var baseLayers = {
             "arcgis": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
