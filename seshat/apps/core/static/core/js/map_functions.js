@@ -1,13 +1,19 @@
 function createMap() {
-    southWest = L.latLng(-89.98155760646617, -180),
-        northEast = L.latLng(89.99346179538875, 180),
-        bounds = L.latLngBounds(southWest, northEast);
+    // Use the standard CRS for global maps
+    var crs = L.CRS.EPSG3857;
 
+    // Create the map with the defined CRS
     var map = L.map('map', {
-        minZoom: 2,
-        maxBounds: bounds,
-        maxBoundsViscosity: 1.0
-    }).setView([0, 0], 2);
+        center: [0, 0], // Center at the equator and prime meridian
+        zoom: 2, // Initial zoom level to show the entire world
+        crs: crs,
+        continuousWorld: true,
+        worldCopyJump: true, // Enables the seamless panning around the world
+        maxBounds: [[-85.06, -180], [85.06, 180]], // Web Mercator bounds
+        maxZoom: 18,
+        minZoom: 1
+    });
+
     return map;
 }
 
