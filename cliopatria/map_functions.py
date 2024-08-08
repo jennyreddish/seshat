@@ -1,15 +1,63 @@
 import folium
-import folium
 import ipywidgets as widgets
 from IPython.display import display, clear_output
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
 
-
-def create_map(selected_year, gdf, map_output, components=False):
+def create_carto_map(selected_year, gdf, map_output, components=False):
     """
     Create a map of the world with the shapes from the GeoDataFrame gdf that
     overlap with the selected_year. If components is True, only shapes that
     are components are displayed. If components is False, only shapes that are
-    not components (full polities) are displayed.
+    not components (full polities) are displayed. Uses Cartopy for the map.
+
+    Args:
+        selected_year (int): The year to display shapes for.
+        gdf (GeoDataFrame): The GeoDataFrame containing the shapes.
+        map_output (Output): The Output widget to display the map in.
+        components (bool): Whether to display components or not.
+
+    Returns:
+        None
+    """
+    # Filter the gdf for shapes that overlap with the selected_year
+    filtered_gdf = gdf[(gdf['FromYear'] <= selected_year) & (gdf['ToYear'] >= selected_year)]
+
+    # This logic is duplicated in shouldDisplayComponent() in map_functions.js
+    if components:
+        # Only shapes where the "Components" column is not populated (i.e., the shape doesn't have components, it is a lowest-level component itself)
+        filtered_gdf = filtered_gdf[(filtered_gdf['Components'].isnull()) | (filtered_gdf['Components'] == '')]
+    else:
+        # Only shapes where the "MemberOf" column is not populated (i.e., the shape is not a member of another shape, it is a top-level shape itself)
+        filtered_gdf = filtered_gdf[(filtered_gdf['MemberOf'].isnull()) | (filtered_gdf['MemberOf'] == '')]
+
+    # Transform the CRS of the GeoDataFrame to WGS84 (EPSG:4326)
+    filtered_gdf = filtered_gdf.to_crs(epsg=4326)
+
+    # Set up the plot with a Robinson projection using cartopy
+    fig, ax = plt.subplots(1, 1, figsize=(15, 10), subplot_kw={'projection': ccrs.Robinson()})
+    ax.set_global()
+    ax.coastlines()
+
+    # Plot the filtered geometries
+    filtered_gdf.plot(ax=ax, transform=ccrs.PlateCarree(), edgecolor='black', facecolor='none')
+
+    # Add the polygons with colors
+    for _, row in filtered_gdf.iterrows():
+        ax.add_geometries([row.geometry], crs=ccrs.PlateCarree(), facecolor=row['Color'], edgecolor='black', alpha=0.5)
+
+    # Display the map
+    with map_output:
+        clear_output(wait=True)
+        display(fig)
+
+
+def create_folium_map(selected_year, gdf, map_output, components=False):
+    """
+    Create a map of the world with the shapes from the GeoDataFrame gdf that
+    overlap with the selected_year. If components is True, only shapes that
+    are components are displayed. If components is False, only shapes that are
+    not components (full polities) are displayed. Uses Folium for the map.
 
     Args:
         selected_year (int): The year to display shapes for.
@@ -67,7 +115,7 @@ def create_map(selected_year, gdf, map_output, components=False):
         display(m)
 
 
-def display_map(gdf, display_year):
+def display_map(gdf, display_year, map_function='folium'):
     """
     Display a map of the world with the shapes from the GeoDataFrame gdf that
     overlap with the display_year. The user can change the year using a text box
@@ -81,6 +129,10 @@ def display_map(gdf, display_year):
     Returns:
         None
     """
+    if map_function == 'folium':
+        create_map = create_folium_map
+    elif map_function == 'cartopy':
+        create_map = create_carto_map
     # Create a text box for input
     year_input = widgets.IntText(
         value=display_year,
