@@ -44,7 +44,7 @@ def create_carto_map(selected_year, gdf, map_output, components=False, projectio
 
     # Add the polygons with colors
     for _, row in filtered_gdf.iterrows():
-        ax.add_geometries([row.geometry], crs=ccrs.PlateCarree(), facecolor=row['Color'], edgecolor='black', alpha=0.5)
+        ax.add_geometries([row.geometry], crs=ccrs.PlateCarree(), facecolor=row['Color'], edgecolor=row['Color'], alpha=0.5)
 
     # Display the map
     with map_output:
