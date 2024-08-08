@@ -147,8 +147,10 @@ function switchBaseMap() {
 
     if (selectedMap === 'osm') {
         currentLayer = baseLayers.osm.addTo(map);
-    } else {
+    } else if (selectedMap === 'carto') {
         currentLayer = baseLayers.carto.addTo(map);
+    } else if (selectedMap === 'arcgis') {
+        currentLayer = baseLayers.arcgis.addTo(map);
     }
 
     if (selectedMap === 'gadm') {
