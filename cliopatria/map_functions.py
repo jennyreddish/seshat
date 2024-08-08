@@ -4,7 +4,7 @@ from IPython.display import display, clear_output
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 
-def create_carto_map(selected_year, gdf, map_output, components=False):
+def create_carto_map(selected_year, gdf, map_output, components=False, projection=ccrs.Robinson()):
     """
     Create a map of the world with the shapes from the GeoDataFrame gdf that
     overlap with the selected_year. If components is True, only shapes that
@@ -35,7 +35,7 @@ def create_carto_map(selected_year, gdf, map_output, components=False):
     filtered_gdf = filtered_gdf.to_crs(epsg=4326)
 
     # Set up the plot with a Robinson projection using cartopy
-    fig, ax = plt.subplots(1, 1, figsize=(15, 10), subplot_kw={'projection': ccrs.Robinson()})
+    fig, ax = plt.subplots(1, 1, figsize=(15, 10), subplot_kw={'projection': projection})
     ax.set_global()
     ax.coastlines()
 
@@ -115,7 +115,7 @@ def create_folium_map(selected_year, gdf, map_output, components=False):
         display(m)
 
 
-def display_map(gdf, display_year, map_function='folium'):
+def display_map(gdf, display_year, map_function='folium', projection=ccrs.Robinson()):
     """
     Display a map of the world with the shapes from the GeoDataFrame gdf that
     overlap with the display_year. The user can change the year using a text box
@@ -132,7 +132,8 @@ def display_map(gdf, display_year, map_function='folium'):
     if map_function == 'folium':
         create_map = create_folium_map
     elif map_function == 'cartopy':
-        create_map = create_carto_map
+        def create_map(selected_year, gdf, map_output, components=False):
+            return create_carto_map(selected_year, gdf, map_output, components, projection=projection)
     # Create a text box for input
     year_input = widgets.IntText(
         value=display_year,
