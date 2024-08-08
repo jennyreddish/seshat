@@ -11,6 +11,15 @@ function createMap() {
     return map;
 }
 
+function createBaseLayers() {
+    var baseLayers = {
+        "arcgis": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
+        "carto": L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png'),
+        "osm": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+    };
+    return baseLayers;
+}
+
 function updateSliderOutput() {
     if (slider.value < 0) {
         output.innerHTML = Math.abs(slider.value) + ' BCE';
