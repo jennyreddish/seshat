@@ -11,7 +11,7 @@ function createMap() {
         worldCopyJump: true, // Enables the seamless panning around the world
         maxBounds: [[-85.06, -180], [85.06, 180]], // Web Mercator bounds
         maxZoom: 18,
-        minZoom: 1
+        minZoom: 2
     });
 
     return map;
