@@ -179,16 +179,6 @@ function switchBaseMap() {
     var selectedMap = document.querySelector('input[name="baseMap"]:checked').value;
     var base = document.getElementById("baseMapGADM").value
 
-    // Delete the current map and viewer
-    document.getElementById('map').innerHTML = '';
-    // Check if the map already exists and remove it
-    if (map) {
-        map.remove();
-    }
-    map = createMap();
-    // Check if the viewer already exists and remove it
-    viewer = createGlobe();
-
     if (base == 'province') {
         var baseShapeData = provinceShapeData;
     } else if (base == 'country') {
