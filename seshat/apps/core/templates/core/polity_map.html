@@ -249,6 +249,11 @@
                                 
                                         entity.description = new Cesium.ConstantProperty(popupContent);
                                     });
+
+                                    // Update the displayedShapes array
+                                    if (displayedShapes.indexOf(shape.name) === -1) {
+                                        displayedShapes.push(shape.name);
+                                    }
                                 
                                     // Adjust the viewer view to cover the geoJSON layer
                                     // but not if there is > 1 shape dataset polity on this polity page
