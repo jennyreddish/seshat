@@ -175,6 +175,9 @@
                 //     }
                 // });
 
+                // Remove all existing data sources from the viewer
+                viewer.dataSources.removeAll();
+
                 // Convert to int, because for some reason JS converts it to a string
                 var selectedYearInt = parseInt(selectedYear);
 
