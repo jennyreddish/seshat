@@ -17,6 +17,37 @@ function createMap() {
     return map;
 }
 
+function createGlobe() {
+    // Ensure Cesium is loaded
+    if (typeof Cesium === 'undefined') {
+        throw new Error('Cesium library is not loaded.');
+    }
+
+    // Create the Cesium viewer with the defined container
+    var viewer = new Cesium.Viewer('map', {
+        imageryProvider: new Cesium.IonImageryProvider({ assetId: 2 }), // Default imagery provider
+        baseLayerPicker: false, // Disable base layer picker
+        geocoder: false, // Disable geocoder
+        homeButton: true, // Enable home button
+        sceneModePicker: true, // Enable scene mode picker
+        timeline: false, // Disable timeline
+        animation: false, // Disable animation controls
+        fullscreenButton: true, // Enable fullscreen button
+        vrButton: false, // Disable VR button
+        navigationHelpButton: true, // Enable navigation help button
+        infoBox: true, // Enable info box
+        selectionIndicator: true, // Enable selection indicator
+        scene3DOnly: true // Enable 3D only mode
+    });
+
+    // Set the initial view to show the entire globe
+    viewer.scene.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(0, 0, 20000000) // Center at the equator and prime meridian
+    });
+
+    return viewer;
+}
+
 function createBaseLayers() {
     var baseLayers = {
         "arcgis": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),

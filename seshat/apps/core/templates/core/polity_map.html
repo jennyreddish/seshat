@@ -7,11 +7,26 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
 </head>
 
 <style>
     input {
         accent-color: teal;
+    }
+    #map {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    body, html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
     }
 </style>
 
@@ -136,7 +151,10 @@
                     });
             });
 
-            var map = createMap();
+            // var map = createMap();
+            var viewerLoaded = false;
+            var viewer = createGlobe();
+            viewerLoaded = true;
 
             var baseLayers = createBaseLayers();
 
@@ -151,11 +169,11 @@
                 var opacity = document.getElementById('opacitySlide').value;
 
                 // Remove all existing layers from the map
-                map.eachLayer(function (layer) {
-                    if (layer instanceof L.GeoJSON || layer instanceof L.MarkerClusterGroup || layer instanceof L.CircleMarker) {
-                        map.removeLayer(layer);
-                    }
-                });
+                // map.eachLayer(function (layer) {
+                //     if (layer instanceof L.GeoJSON || layer instanceof L.MarkerClusterGroup || layer instanceof L.CircleMarker) {
+                //         map.removeLayer(layer);
+                //     }
+                // });
 
                 // Convert to int, because for some reason JS converts it to a string
                 var selectedYearInt = parseInt(selectedYear);
@@ -191,82 +209,122 @@
                                 displayend_year = shape.polity_end_year + ' CE';
                             }
 
-                            // Add shape
-                            var geoJSONLayer = L.geoJSON(JSON.parse(shape.geom_json), {
-                                style: function (feature) {
-                                    return {
-                                        fillColor: shape.colour,  // Set the fill color based on the "colour" field
-                                        color: shape.colour,     // Set the border color
-                                        weight: 2,              // Set the border weight
-                                        fillOpacity: opacity   // Set the fill opacity
-                                    };
-                                },
-                                onEachFeature: function (feature, layer) {
+                            // Parse the GeoJSON data
+                            var geoJsonData = JSON.parse(shape.geom_json);
+
+                            // Load the GeoJSON data
+                            Cesium.GeoJsonDataSource.load(geoJsonData, {
+                                stroke: Cesium.Color.fromCssColorString(shape.colour),
+                                fill: Cesium.Color.fromCssColorString(shape.colour).withAlpha(opacity),
+                                strokeWidth: 2
+                            }).then(function (dataSource) {
+                                // Add the data source to the viewer
+                                viewer.dataSources.add(dataSource);
+                            
+                                // Zoom to the data source
+                                viewer.zoomTo(dataSource);
+                            
+                                // Bind popups to the features
+                                dataSource.entities.values.forEach(function (entity) {
                                     var popupContent = `
-                                                <table>
-                                                    <tr>
-                                                        <th>${shape.name}</th>
-                                                        <th></th>
-                                                    </tr>
-                                            `;
-                                    popupContent = popupContent + `
-                                                    <tr>
-                                                        <td>Duration</td>
-                                                        <td>${displaystart_year} to ${displayend_year}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Area (est.)</td>
-                                                        <td>${formattedArea} Km<sup>2</sup></td>
-                                                    </tr>
-                                                </table>
-                                            `;
-                                    layer.bindPopup(popupContent);
-                                }
-                            }).addTo(map);
+                                        <table>
+                                            <tr>
+                                                <th>${shape.name}</th>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Duration</td>
+                                                <td>${displaystart_year} to ${displayend_year}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Area (est.)</td>
+                                                <td>${formattedArea} Km<sup>2</sup></td>
+                                            </tr>
+                                        </table>
+                                    `;
+                            
+                                    entity.description = new Cesium.ConstantProperty(popupContent);
+                                });
+                            }).catch(function (error) {
+                                console.error('Error loading GeoJSON data: ', error);
+                            });
+
+                            // // Add shape
+                            // var geoJSONLayer = L.geoJSON(JSON.parse(shape.geom_json), {
+                            //     style: function (feature) {
+                            //         return {
+                            //             fillColor: shape.colour,  // Set the fill color based on the "colour" field
+                            //             color: shape.colour,     // Set the border color
+                            //             weight: 2,              // Set the border weight
+                            //             fillOpacity: opacity   // Set the fill opacity
+                            //         };
+                            //     },
+                            //     onEachFeature: function (feature, layer) {
+                            //         var popupContent = `
+                            //                     <table>
+                            //                         <tr>
+                            //                             <th>${shape.name}</th>
+                            //                             <th></th>
+                            //                         </tr>
+                            //                 `;
+                            //         popupContent = popupContent + `
+                            //                         <tr>
+                            //                             <td>Duration</td>
+                            //                             <td>${displaystart_year} to ${displayend_year}</td>
+                            //                         </tr>
+                            //                         <tr>
+                            //                             <td>Area (est.)</td>
+                            //                             <td>${formattedArea} Km<sup>2</sup></td>
+                            //                         </tr>
+                            //                     </table>
+                            //                 `;
+                            //         layer.bindPopup(popupContent);
+                            //     }
+                            // }).addTo(map);
 
                             // Plot capital markers       
-                            var markers = L.markerClusterGroup({
-                                iconCreateFunction: function(cluster) {
-                                    return L.divIcon({
-                                        html: '<div style="background-color:' + shape.colour + '; color: #fff; border-radius: 50%; text-align: center; line-height: 40px;"><b>' + cluster.getChildCount() + '</b></div>',
-                                        className: 'myClusterIcon',
-                                        iconSize: L.point(40, 40)
-                                    });
-                                }
-                            });
-                            capitalsInfo.forEach(function (capital) {
-                                // If the capital existed in the selected year (or years not specified)
-                                if ((capital['year_from'] <= selectedYearInt && capital['year_to'] >= selectedYearInt)) {
-                                    var marker = L.circleMarker([capital.latitude, capital.longitude], {
-                                        color: 'black', // Set the border color
-                                        fillColor: shape.colour,  // Set the fill color based on the "colour" field
-                                        weight: 2,  // Set the border weight
-                                        fillOpacity: 0.5,  // Set the fill opacity
-                                        radius: 5
-                                    });
-                                    marker.bindTooltip(capital.capital, {
-                                        permanent: true,
-                                        direction: "top",
-                                        offset: L.point({ x: 0, y: 0 })
-                                    });
+                            // var markers = L.markerClusterGroup({
+                            //     iconCreateFunction: function(cluster) {
+                            //         return L.divIcon({
+                            //             html: '<div style="background-color:' + shape.colour + '; color: #fff; border-radius: 50%; text-align: center; line-height: 40px;"><b>' + cluster.getChildCount() + '</b></div>',
+                            //             className: 'myClusterIcon',
+                            //             iconSize: L.point(40, 40)
+                            //         });
+                            //     }
+                            // });
+                            // capitalsInfo.forEach(function (capital) {
+                            //     // If the capital existed in the selected year (or years not specified)
+                            //     if ((capital['year_from'] <= selectedYearInt && capital['year_to'] >= selectedYearInt)) {
+                            //         var marker = L.circleMarker([capital.latitude, capital.longitude], {
+                            //             color: 'black', // Set the border color
+                            //             fillColor: shape.colour,  // Set the fill color based on the "colour" field
+                            //             weight: 2,  // Set the border weight
+                            //             fillOpacity: 0.5,  // Set the fill opacity
+                            //             radius: 5
+                            //         });
+                            //         marker.bindTooltip(capital.capital, {
+                            //             permanent: true,
+                            //             direction: "top",
+                            //             offset: L.point({ x: 0, y: 0 })
+                            //         });
 
-                                    marker.bindPopup(capital.capital);
-                                    markers.addLayer(marker); // add each marker to the MarkerClusterGroup
-                                };
-                            });
+                            //         marker.bindPopup(capital.capital);
+                            //         markers.addLayer(marker); // add each marker to the MarkerClusterGroup
+                            //     };
+                            // });
 
-                            map.addLayer(markers); // add the MarkerClusterGroup to the map
+                            // map.addLayer(markers); // add the MarkerClusterGroup to the map
 
-                            // Update the displayedShapes array
-                            if (displayedShapes.indexOf(shape.name) === -1) {
-                                displayedShapes.push(shape.name);
-                            }
+                            // // Update the displayedShapes array
+                            // if (displayedShapes.indexOf(shape.name) === -1) {
+                            //     displayedShapes.push(shape.name);
+                            // }
 
-                            // adjust the map view to cover the geoJSON layer
-                            // but not if there is > 1 shape dataset polity on this polity page
-                            if (displayedShapes.length == 1) {
-                                map.fitBounds(geoJSONLayer.getBounds());
-                            }
+                            // // adjust the map view to cover the geoJSON layer
+                            // // but not if there is > 1 shape dataset polity on this polity page
+                            // if (displayedShapes.length == 1) {
+                            //     map.fitBounds(geoJSONLayer.getBounds());
+                            // }
                         }
                     });
                 };
