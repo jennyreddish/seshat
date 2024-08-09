@@ -925,11 +925,6 @@
                                 }
                             }).addTo(map);
 
-                            // Ensure that shapes with multiple seshat_ids are behind their components
-                            if (shape['seshat_id'].includes(';')) {
-                                geoJSONLayer.bringToBack();
-                            }
-
                             // Open the corresponding Seshat page in a new browser tab when a shape is double-clicked
                             geoJSONLayer.on('dblclick', function (event) {
                                 // Check if the shape has a corresponding seshat_id
