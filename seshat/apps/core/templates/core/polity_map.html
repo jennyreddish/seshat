@@ -224,9 +224,6 @@
                                 // Add the data source to the viewer
                                 viewer.dataSources.add(dataSource);
                             
-                                // Zoom to the data source
-                                viewer.zoomTo(dataSource);
-                            
                                 // Bind popups to the features
                                 dataSource.entities.values.forEach(function (entity) {
                                     var popupContent = `
