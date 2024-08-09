@@ -269,6 +269,7 @@ function switchBaseMap() {
             }
         });
     }
+    plotPolities();
 }
 
 function updateLegend() {
