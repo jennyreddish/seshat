@@ -211,9 +211,6 @@ function switchBaseMap() {
         currentLayer = baseLayers.arcgis.addTo(map);
     } else if (selectedMap === 'gadm') {
         currentLayer = baseLayers.carto.addTo(map);
-    }
-
-    if (selectedMap === 'gadm') {
         // Add countries or provinces to the base map
         baseShapeData.forEach(function (shape) {
             // Ensure the geometry is not empty
