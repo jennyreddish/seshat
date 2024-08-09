@@ -249,6 +249,14 @@
                                 
                                         entity.description = new Cesium.ConstantProperty(popupContent);
                                     });
+                                
+                                    // Adjust the viewer view to cover the geoJSON layer
+                                    // but not if there is > 1 shape dataset polity on this polity page
+                                    if (displayedShapes.length == 1) {
+                                        viewer.flyTo(dataSource, {
+                                            offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-90), 0)
+                                        });
+                                    }
                                 }).catch(function (error) {
                                     console.error('Error loading GeoJSON data: ', error);
                                 });
