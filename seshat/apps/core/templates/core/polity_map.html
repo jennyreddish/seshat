@@ -157,10 +157,12 @@
 
             var baseLayers = createBaseLayers();
 
-            // Select arcgis as the default base layer
+            // Select arcgis (Esri) as the default base layer
             var currentLayer = baseLayers.arcgis.addTo(map);
             var provinceLayers = []; // Keep track of province layers to remove them later
-            switchBaseMap()
+
+            // Set the default base map to Esri World Imagery
+            switchBaseMap();
 
             function plotPolities() {  // This function is defined differently in the world_map template
 
