@@ -26,7 +26,6 @@ function createGlobe() {
     // Create the Cesium viewer with the defined container
     var viewer = new Cesium.Viewer('map', {
         imageryProvider: new Cesium.IonImageryProvider({ assetId: 2 }), // Default imagery provider
-        baseLayerPicker: false, // Disable base layer picker
         geocoder: false, // Disable geocoder
         homeButton: true, // Enable home button
         sceneModePicker: true, // Enable scene mode picker
