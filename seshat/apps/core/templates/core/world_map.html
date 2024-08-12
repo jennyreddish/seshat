@@ -785,6 +785,10 @@
                         popupContent = popupContent + `</table>`;
 
                         if (selectedMap === 'cesium') {
+
+                            document.getElementById('popup').innerHTML = '';
+                            document.getElementById('popup').style.borderWidth = '0px';
+                            document.getElementById('variableLegend').innerHTML = '';
                         
                             // Parse the GeoJSON data
                             var geoJsonData = JSON.parse(shape.geom_json);
