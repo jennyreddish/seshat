@@ -179,6 +179,16 @@ function switchBaseMap() {
     var selectedMap = document.querySelector('input[name="baseMap"]:checked').value;
     var base = document.getElementById("baseMapGADM").value
 
+    if (selectedMap === 'cesium') {
+        // Disable the play button and stop button when switching to the globe view
+        document.getElementById('playButton').disabled = true;
+        document.getElementById('stopButton').disabled = true;
+    } else {
+        // Enable the play button and stop button when switching to the map view
+        document.getElementById('playButton').disabled = false;
+        document.getElementById('stopButton').disabled = false;
+    }
+
     if (base == 'province') {
         var baseShapeData = provinceShapeData;
     } else if (base == 'country') {
