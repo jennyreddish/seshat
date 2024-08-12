@@ -785,10 +785,10 @@
                         popupContent = popupContent + `</table>`;
 
                         if (selectedMap === 'cesium') {
-
+                        
                             // Parse the GeoJSON data
                             var geoJsonData = JSON.parse(shape.geom_json);
-
+                        
                             // Load the GeoJSON data
                             Cesium.GeoJsonDataSource.load(geoJsonData, {
                                 stroke: Cesium.Color.fromCssColorString(shape.colour),
@@ -800,44 +800,25 @@
 
                                 // Bind popups to the features
                                 dataSource.entities.values.forEach(function (entity) {
-                                    var popupContent = `
-                                                    <table>
-                                                        <tr>
-                                                            <th>${shape.name}</th>
-                                                            <th></th>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Duration</td>
-                                                            <td>${displaystart_year} to ${displayend_year}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Area (est.)</td>
-                                                            <td>${formattedArea} Km<sup>2</sup></td>
-                                                        </tr>
-                                                    </table>
-                                                `;
-
                                     entity.description = new Cesium.ConstantProperty(popupContent);
                                 });
-
+                        
                                 // Update the displayedShapes array
                                 if (displayedShapes.indexOf(shape.name) === -1) {
                                     displayedShapes.push(shape.name);
                                 }
-
+                        
                                 // Adjust the viewer view to cover the geoJSON layer
-                                // but not if there is > 1 shape dataset polity on this polity page
-                                if (displayedShapes.length == 1) {
-                                    viewer.flyTo(dataSource, {
-                                        offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-90), 0)
-                                    });
-                                }
+                                // viewer.flyTo(dataSource, {
+                                //     offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-90), 0)
+                                // });
+                        
                             }).catch(function (error) {
                                 console.error('Error loading GeoJSON data: ', error);
                             });
-
+                        
                         } else {
-
+                        
                             // Add shape
                             var geoJSONLayer = L.geoJSON(JSON.parse(shape.geom_json), {
                                 style: function (feature) {
@@ -862,7 +843,7 @@
                                     layer.feature.properties.name = shape.name;
                                     // Add the colour to the layer
                                     layer.feature.properties.colour = shapeColour;
-
+                        
                                     // Add the popup for the initially selected polity
                                     if (shape.weight > 0) {
                                         // Add the popup to the popup div
@@ -872,10 +853,10 @@
                                         // Increase the border width of the popup div
                                         document.getElementById('popup').style.borderWidth = '4px';
                                     };
-
+                        
                                     // Listen for the click event on the layer
                                     layer.on('click', function (e) {        
-
+                        
                                         if (variable == 'polity'){
                                             if (shape.weight === 0) {
                                                 // Increase the weight of the clicked layer
@@ -924,7 +905,7 @@
                                     });
                                 }
                             }).addTo(map);
-
+                        
                             // Open the corresponding Seshat page in a new browser tab when a shape is double-clicked
                             geoJSONLayer.on('dblclick', function (event) {
                                 // Check if the shape has a corresponding seshat_id
@@ -934,7 +915,7 @@
                                     window.open('/core/polity/' + polityId, '_blank');
                                 }
                             });
-
+                        
                             // Update the displayedShapes array
                             if (displayedShapes.indexOf(shape.name) === -1) {
                                 displayedShapes.push(shape.name);
