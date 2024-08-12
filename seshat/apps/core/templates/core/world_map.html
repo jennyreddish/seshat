@@ -788,15 +788,18 @@
 
                             document.getElementById('popup').innerHTML = '';
                             document.getElementById('popup').style.borderWidth = '0px';
-                            document.getElementById('variableLegend').innerHTML = '';
+
+                            if (variable == 'polity') {
+                                document.getElementById('variableLegend').innerHTML = '';
+                            };
                         
                             // Parse the GeoJSON data
                             var geoJsonData = JSON.parse(shape.geom_json);
                         
                             // Load the GeoJSON data
                             Cesium.GeoJsonDataSource.load(geoJsonData, {
-                                stroke: Cesium.Color.fromCssColorString(shape.colour),
-                                fill: Cesium.Color.fromCssColorString(shape.colour).withAlpha(opacity),
+                                stroke: Cesium.Color.fromCssColorString(shapeColour),
+                                fill: Cesium.Color.fromCssColorString(shapeColour).withAlpha(opacity),
                                 strokeWidth: 2
                             }).then(function (dataSource) {
                                 // Add the data source to the viewer
