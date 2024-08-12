@@ -651,12 +651,21 @@
                             if (longName == '') {
                                 longName = '[Page empty]'
                             }
-                            popupContent = popupContent + `
+                            if (selectedMap == 'cesium'){
+                                popupContent = popupContent + `
                                     <tr>
                                         <td>Seshat Page</td>
-                                        <td><a href="/core/polity/${polityId}" target="_blank">${longName} (${shape.seshat_id})</a></td>
+                                        <td>${longName} (${shape.seshat_id})</td>
                                     </tr>
                                 `;
+                            } else {
+                                popupContent = popupContent + `
+                                        <tr>
+                                            <td>Seshat Page</td>
+                                            <td><a href="/core/polity/${polityId}" target="_blank">${longName} (${shape.seshat_id})</a></td>
+                                        </tr>
+                                    `;
+                            }
                         } else if (shape.seshat_id.includes(';')) {
                             var polityIds = shape.seshat_id.split(';');
                             var polityLinks = '';
@@ -667,7 +676,11 @@
                                     if (longName == '') {
                                         longName = '[Page empty]'
                                     }
-                                    polityLinks = polityLinks + `<a href="/core/polity/${polityId}" target="_blank">${longName} (${polityIds[i]})</a><br>`;
+                                    if (selectedMap == 'cesium') {
+                                        polityLinks = polityLinks + `${longName} (${polityIds[i]})<br>`;
+                                    } else {
+                                        polityLinks = polityLinks + `<a href="/core/polity/${polityId}" target="_blank">${longName} (${polityIds[i]})</a><br>`;
+                                    }
                                 }
                             }
                             popupContent = popupContent + `
