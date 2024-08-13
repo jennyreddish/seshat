@@ -28,6 +28,16 @@
         margin: 0;
         padding: 0;
     }
+    #componentLegend {
+        position: absolute;
+        bottom: 90;
+        right: 0;
+        background-color: rgba(255, 253, 242, 0.8);
+        padding: 10px;
+        border-radius: 5px;
+        max-width: 200px;
+        z-index: 999;
+    }
 </style>
 
 <body>
@@ -52,7 +62,7 @@
                         <label for="switchPolitiesComponents">Display:</label>
                         <select name="switchPolitiesComponents" id="switchPolitiesComponents" onchange="plotPolities()">
                             <option value="components">Polity components</option>
-                            <option value="polities">Full polities</option>
+                            <option value="polities">Full polity</option>
                         </select><br>
                         <label for="opacitySlide">Opacity:</label>
                         <input type="range" name="opacitySlide" id="opacitySlide" min="0.1" max="1" step="0.1" value="0.7" class="slider"
@@ -83,7 +93,7 @@
                 </fieldset>
             </div>
             <div style="display: flex; flex-direction: column; width: 80%; height: 60vh;">
-                <div id="map" style="flex: 1; width: 100%"></div>
+                <div id="map" style="flex: 1; width: 100%"><div id="componentLegend"></div></div>
                 <div style="display: block; width: 100%">
                     <fieldset>
                         <div class="slider-container" style="position: relative;">
@@ -331,6 +341,7 @@
                         }
                     });
                 };
+                updateComponentLegend();
             }
 
             // Initial plot on page load
