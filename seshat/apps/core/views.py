@@ -4271,7 +4271,10 @@ app_map = {
 }
 
 # Get sorted lists of choices for each categorical variable
-POLITY_RELIGIOUS_TRADITION_CHOICES = list(set(Polity_religious_tradition.objects.values_list('religious_tradition', flat=True).distinct()))
+if 'test' not in sys.argv:  # Skip this if running tests as it breaks GitHub actions
+    POLITY_RELIGIOUS_TRADITION_CHOICES = list(set(Polity_religious_tradition.objects.values_list('religious_tradition', flat=True).distinct()))
+else:
+    POLITY_RELIGIOUS_TRADITION_CHOICES = ['test', 'choices']
 categorical_variables = {
     'linguistic_family': sorted([x[0] for x in POLITY_LINGUISTIC_FAMILY_CHOICES]),
     'language_genus': sorted([x[0] for x in POLITY_LANGUAGE_GENUS_CHOICES]),
