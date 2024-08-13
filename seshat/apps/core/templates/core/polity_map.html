@@ -13,6 +13,16 @@
     input {
         accent-color: teal;
     }
+    #componentLegend {
+        position: absolute;
+        bottom: 90;
+        right: 10;
+        background-color: rgba(255, 253, 242, 0.8);
+        padding: 10px;
+        border-radius: 5px;
+        max-width: 200px;
+        z-index: 999;
+    }
 </style>
 
 <body>
@@ -69,6 +79,7 @@
                 </fieldset>
             </div>
             <div style="display: flex; flex-direction: column; width: 80%; height: 60vh;">
+                <div id="componentLegend"></div>
                 <div id="map" style="flex: 1; width: 100%"></div>
                 <div style="display: block; width: 100%">
                     <fieldset>
@@ -283,6 +294,7 @@
                         }
                     });
                 };
+                updateComponentLegend();
             }
 
             // Initial plot on page load

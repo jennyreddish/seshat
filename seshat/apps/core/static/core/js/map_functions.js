@@ -345,6 +345,52 @@ function updateLegend() {
     }
 }
 
+function updateComponentLegend() {
+
+    var legendDiv = document.getElementById('componentLegend');
+    var displayComponent = document.getElementById('switchPolitiesComponents').value;
+
+    // Clear the current legend
+    legendDiv.innerHTML = '';
+
+    var addedPolities = [];
+    var addedPolityNames = [];
+    polityMapShapesData.forEach(function (shape) {
+        shape_name_col_dict = {};
+        shape_name_col_dict['polity'] = shape.name;
+        shape_name_col_dict['colour'] = shape.colour;
+        if (!addedPolityNames.includes(shape_name_col_dict['polity'])) {
+            addedPolities.push(shape_name_col_dict);
+            addedPolityNames.push(shape_name_col_dict['polity']);
+        };
+    });
+
+    // Sort the polities by name
+    addedPolities.sort(function (a, b) {
+        return a.polity.localeCompare(b.polity);
+    });
+
+    // Add a legend for polity components if the displayComponent is set to 'components' and there is more than one
+    if (addedPolities.length > 0 && displayComponent == 'components') {
+        var legendTitle = document.createElement('h3');
+        legendTitle.textContent = 'Components';
+        legendDiv.appendChild(legendTitle);
+        for (var i = 0; i < addedPolities.length; i++) {
+            var legendItem = document.createElement('p');
+            var colorBox = document.createElement('span');
+            colorBox.style.display = 'inline-block';
+            colorBox.style.width = '20px';
+            colorBox.style.height = '20px';
+            colorBox.style.backgroundColor = addedPolities[i].colour;
+            colorBox.style.border = '1px solid black';
+            colorBox.style.marginRight = '10px';
+            legendItem.appendChild(colorBox);
+            legendItem.appendChild(document.createTextNode(addedPolities[i].polity));
+            legendDiv.appendChild(legendItem);
+        }
+    };
+}
+
 function clearSelection() {
     document.getElementById('popup').innerHTML = '';
     shapesData.forEach(function (shape) {
