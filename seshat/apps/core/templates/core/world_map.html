@@ -310,6 +310,27 @@
             if (shape.linguistic_family) {
                 shape.linguistic_family = JSON.parse(shape.linguistic_family.replace(/'/g, '"'));
             }
+            if (shape.religious_tradition) {
+                shape.religious_tradition = JSON.parse(shape.religious_tradition.replace(/'/g, '"'));
+            }
+            if (shape.religion_genus) {
+                shape.religion_genus = JSON.parse(shape.religion_genus.replace(/'/g, '"'));
+            }
+            if (shape.religion_family) {
+                shape.religion_family = JSON.parse(shape.religion_family.replace(/'/g, '"'));
+            }
+            if (shape.religion) {
+                shape.religion = JSON.parse(shape.religion.replace(/'/g, '"'));
+            }
+            if (shape.alternate_religion_genus) {
+                shape.alternate_religion_genus = JSON.parse(shape.alternate_religion_genus.replace(/'/g, '"'));
+            }
+            if (shape.alternate_religion_family) {
+                shape.alternate_religion_family = JSON.parse(shape.alternate_religion_family.replace(/'/g, '"'));
+            }
+            if (shape.alternate_religion) {
+                shape.alternate_religion = JSON.parse(shape.alternate_religion.replace(/'/g, '"'));
+            }
             // Any fields that end _dict should be converted to a dictionary from a string
             for (const [key, value] of Object.entries(shape)) {
                 if (key.endsWith('_dict')) {
@@ -777,10 +798,42 @@
                                             <td><span style="text-transform: capitalize;">${shape.linguistic_family.join(', ')}</span></td>
                                         </tr>
                                     `;
-                        }
-                        if (allCapitalsInfo[shape.seshat_id]) {
-                            if (allCapitalsInfo[shape.seshat_id]['year_from'] <= selectedYearInt && allCapitalsInfo[shape.seshat_id]['year_to'] >= selectedYearInt) {
-                                popupContent = popupContent + `
+                                }
+                                if (variable == 'religious_tradition' || variable == 'religion' || variable == 'religion_family' || variable == 'religion_genus' || variable == 'alternate_religion' || variable == 'alternate_religion_family' || variable == 'alternate_religion_genus') {
+                                    popupContent = popupContent + `
+                                        <tr>
+                                            <td>Religious Traditions</td>
+                                            <td><span style="text-transform: capitalize;">${shape.religious_tradition}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Religions</td>
+                                            <td><span style="text-transform: capitalize;">${shape.religion.join(', ')}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Religion Genus</td>
+                                            <td><span style="text-transform: capitalize;">${shape.religion_genus.join(', ')}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Religion Family</td>
+                                            <td><span style="text-transform: capitalize;">${shape.religion_family.join(', ')}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alternate Religions</td>
+                                            <td><span style="text-transform: capitalize;">${shape.alternate_religion.join(', ')}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alternate Religion Genus</td>
+                                            <td><span style="text-transform: capitalize;">${shape.alternate_religion_genus.join(', ')}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alternate Religion Family</td>
+                                            <td><span style="text-transform: capitalize;">${shape.alternate_religion_family.join(', ')}</span></td>
+                                        </tr>
+                                    `;
+                                }
+                                if (allCapitalsInfo[shape.seshat_id]) {
+                                    if (allCapitalsInfo[shape.seshat_id]['year_from'] <= selectedYearInt && allCapitalsInfo[shape.seshat_id]['year_to'] >= selectedYearInt) {
+                                        popupContent = popupContent + `
                                             <tr>
                                                 <td>Capital: </td>
                                                 <td>${allCapitalsInfo[shape.seshat_id].map(capital => capital.capital).join(', ')}</td>
