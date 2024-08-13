@@ -360,7 +360,9 @@ function updateComponentLegend() {
         shape_name_col_dict['polity'] = shape.name;
         shape_name_col_dict['colour'] = shape.colour;
         if (!addedPolityNames.includes(shape_name_col_dict['polity'])) {
-            if ((parseInt(shape.start_year) <= selectedYearInteger && parseInt(shape.end_year) >= selectedYearInteger)) {
+            if ((parseInt(shape.start_year) <= selectedYearInteger && parseInt(shape.end_year) >= selectedYearInteger)
+                && shouldDisplayComponent(displayComponent, shape)
+            ) {
                 addedPolities.push(shape_name_col_dict);
                 addedPolityNames.push(shape_name_col_dict['polity']);
             };
