@@ -3,8 +3,7 @@ from django.contrib.gis.geos import MultiPolygon, Polygon, GEOSGeometry
 from django.test import TestCase, Client
 from django.urls import reverse
 from ..models import VideoShapefile, GADMShapefile, GADMCountries, GADMProvinces, Polity, Capital
-from ...general.models import Polity_capital, Polity_peak_years, Polity_language
-# from ...general.models import Polity_capital, Polity_peak_years, Polity_language, Polity_religious_tradition
+from ...general.models import Polity_capital, Polity_peak_years, Polity_language, Polity_religious_tradition
 from ...sc.models import Judge
 from ...rt.models import Gov_res_pub_pros
 from ..views import get_provinces, get_polity_shape_content, get_all_polity_capitals, assign_variables_to_shapes, assign_categorical_variables_to_shapes
@@ -157,16 +156,16 @@ class ShapesTest(TestCase):
             year_to=2007,
             polity_id=2
         )
-        # Polity_religious_tradition.objects.create(
-        #     name='religious_tradition',
-        #     religious_tradition='Christianity',
-        #     polity_id=2
-        # )
-        # Polity_religious_tradition.objects.create(
-        #     name='religious_tradition',
-        #     religious_tradition='Islam',
-        #     polity_id=2
-        # )
+        Polity_religious_tradition.objects.create(
+            name='religious_tradition',
+            religious_tradition='Christianity',
+            polity_id=2
+        )
+        Polity_religious_tradition.objects.create(
+            name='religious_tradition',
+            religious_tradition='Islam',
+            polity_id=2
+        )
 
     # Model tests
 
@@ -515,4 +514,4 @@ class ShapesTest(TestCase):
         self.assertEqual(result_shapes[0]['language'], ['English', 'French'])
         self.assertEqual(result_shapes[0]['language_dict']['English'], [1998, 2000])
         self.assertEqual(result_shapes[0]['language_dict']['French'], [1999, 2007])
-        # self.assertEqual(result_shapes[0]['religious_tradition'], ['Christianity', 'Islam'])
+        self.assertEqual(result_shapes[0]['religious_tradition'], ['Christianity', 'Islam'])
