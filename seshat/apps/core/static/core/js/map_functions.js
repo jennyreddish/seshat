@@ -215,8 +215,7 @@ function switchBaseMap() {
 function updateLegend() {
     var variable = document.getElementById('chooseVariable').value;
     var legendDiv = document.getElementById('variableLegend');
-    var selectedYear1 = document.getElementById('dateSlide').value;  // Giving it the same name as a var used in the templated JS caused an error
-    var selectedYearInt1 = parseInt(selectedYear1);
+    var selectedYearInteger = parseInt(document.getElementById('dateSlide').value);
     var displayComponent = document.getElementById('switchPolitiesComponents').value;
 
     // Clear the current legend
@@ -231,7 +230,7 @@ function updateLegend() {
             shape_name_col_dict['colour'] = shape.colour;
             if (shape.weight > 0 && !addedPolityNames.includes(shape_name_col_dict['polity'])) {
                 // If the shape spans the selected year and should be displayed according to the shouldDisplayComponent() function
-                if ((parseInt(shape.start_year) <= selectedYearInt1 && parseInt(shape.end_year) >= selectedYearInt1)
+                if ((parseInt(shape.start_year) <= selectedYearInteger && parseInt(shape.end_year) >= selectedYearInteger)
                     && shouldDisplayComponent(displayComponent, shape)
                 ) {
                     // Add the polity to the list of added polities
@@ -343,6 +342,57 @@ function updateLegend() {
 
         legendDiv.appendChild(legendItem);
     }
+}
+
+function updateComponentLegend() {
+
+    var legendDiv = document.getElementById('componentLegend');
+    var displayComponent = document.getElementById('switchPolitiesComponents').value;
+    var selectedYearInteger = parseInt(document.getElementById('dateSlide').value);
+
+    // Clear the current legend
+    legendDiv.innerHTML = '';
+
+    var addedPolities = [];
+    var addedPolityNames = [];
+    polityMapShapesData.forEach(function (shape) {
+        shape_name_col_dict = {};
+        shape_name_col_dict['polity'] = shape.name;
+        shape_name_col_dict['colour'] = shape.colour;
+        if (!addedPolityNames.includes(shape_name_col_dict['polity'])) {
+            if ((parseInt(shape.start_year) <= selectedYearInteger && parseInt(shape.end_year) >= selectedYearInteger)
+                && shouldDisplayComponent(displayComponent, shape)
+            ) {
+                addedPolities.push(shape_name_col_dict);
+                addedPolityNames.push(shape_name_col_dict['polity']);
+            };
+        };
+    });
+
+    // Sort the polities by name
+    addedPolities.sort(function (a, b) {
+        return a.polity.localeCompare(b.polity);
+    });
+
+    // Add a legend for polity components if the displayComponent is set to 'components' and there is more than one
+    if (addedPolities.length > 0 && displayComponent == 'components') {
+        var legendTitle = document.createElement('h3');
+        legendTitle.textContent = 'Components';
+        legendDiv.appendChild(legendTitle);
+        for (var i = 0; i < addedPolities.length; i++) {
+            var legendItem = document.createElement('p');
+            var colorBox = document.createElement('span');
+            colorBox.style.display = 'inline-block';
+            colorBox.style.width = '20px';
+            colorBox.style.height = '20px';
+            colorBox.style.backgroundColor = addedPolities[i].colour;
+            colorBox.style.border = '1px solid black';
+            colorBox.style.marginRight = '10px';
+            legendItem.appendChild(colorBox);
+            legendItem.appendChild(document.createTextNode(addedPolities[i].polity));
+            legendDiv.appendChild(legendItem);
+        }
+    };
 }
 
 function clearSelection() {
