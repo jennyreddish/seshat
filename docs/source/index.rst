@@ -9,6 +9,7 @@ Seshat: Global History Databank brings together the most current and comprehensi
    getting-started/index
    contribute/index
    api/index
+   websites/index
 
 
 
