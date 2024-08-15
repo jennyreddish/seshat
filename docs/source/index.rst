@@ -15,10 +15,11 @@ The documentation is divided into sections based on the role of the reader, whic
 .. toctree::
    :maxdepth: 5
 
-   getting-started/index
-   contribute/index
-   api/index
-   websites/index
+   admin/index
+   research_assistant/index
+   expert/index
+   public_user/index
+   code-of-conduct
 
 
 
