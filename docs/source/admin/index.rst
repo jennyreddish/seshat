@@ -4,7 +4,7 @@ Seshat Admin
 .. toctree::
    :maxdepth: 5
 
-   getting-started/index
+   setup/index
    developers-guide
    testing
    api/index
