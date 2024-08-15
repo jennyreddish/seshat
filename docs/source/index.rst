@@ -1,6 +1,9 @@
 Seshat: Global History Databank
 ===============================
 
+Project Documentation
+---------------------
+
 The Seshat Global History Databank website can be found at `Seshat DB <https://seshat-db.com/>`_. Seshat has a user login system, with different levels of access depending on the user's role.
 
 On this site you will find documentation for the Seshat project, such as how-to guides and technical guidance applicable to those working on, or contributing to Seshat.
