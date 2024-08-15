@@ -2,7 +2,7 @@ Seshat Admin
 ============
 
 .. toctree::
-   :maxdepth: 5
+   :maxdepth: 3
 
    setup/index
    developers-guide
