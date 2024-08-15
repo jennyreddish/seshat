@@ -43,6 +43,7 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx_togglebutton",
     "sphinx_tabs.tabs",
+    "sphinx_rtd_theme"
 ]
 
 templates_path = ["_templates"]
