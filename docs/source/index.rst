@@ -19,8 +19,9 @@ The documentation is divided into sections based on the role of the reader, whic
    research_assistant/index
    expert/index
    public_user/index
-   code-of-conduct
    api/index
+   code-of-conduct
+   contact
 
 
 
