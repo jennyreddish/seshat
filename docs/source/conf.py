@@ -23,8 +23,8 @@ import seshat
 # -- Project information -----------------------------------------------------
 
 project = 'Seshat'
-copyright = '2024, Majid Benam'
-author = 'Majid Benam'
+copyright = '2024, Ed Chalstrey, Kalle Westerling, Majid Benam'
+author = 'Ed Chalstrey, Kalle Westerling, Majid Benam'
 
 release = seshat.__version__
 
