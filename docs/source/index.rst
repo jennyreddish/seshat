@@ -20,6 +20,7 @@ The documentation is divided into sections based on the role of the reader, whic
    expert/index
    public_user/index
    code-of-conduct
+   api/index
 
 
 
