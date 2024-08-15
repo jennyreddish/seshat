@@ -79,7 +79,7 @@ GitHub workflow visualised
 As described above, development on Seshat follows a basic GitHub workflow. The diagram below illustrates the steps involved in the process, from selecting an issue to merging a pull request. Note that the master branch is called `dev` in the Seshat repository. Feature branches should be named appropriately based on the issue they are addressing.
 
 
-.. image:: ../img/basic_github_workflow.webp
+.. image:: ../img/basic_github_workflow.png
     :alt: Seshat development workflow
 
 Image taken from `The GitHub Flow <https://guides.github.com/introduction/flow/>`_ by Dev Genius
