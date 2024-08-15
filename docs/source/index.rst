@@ -13,7 +13,7 @@ The documentation is divided into sections based on the role of the reader, whic
 4. Public User: A historian or other interested party who has created an account on the Seshat website to suggest data edits.
 
 .. toctree::
-   :maxdepth: 5
+   :maxdepth: 2
 
    admin/index
    research_assistant/index
