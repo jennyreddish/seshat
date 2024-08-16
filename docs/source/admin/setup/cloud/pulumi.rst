@@ -269,7 +269,7 @@ Update postgres to use md5:
 
     $ sudo nano /etc/postgresql/16/main/pg_hba.conf
 
-.. image:: ../../../figures/pg_hba.conf.png
+.. image:: ../../../img/pg_hba.conf.png
 
 In order for the changes to take effect, reload postgres:
 
