@@ -1,3 +1,61 @@
+function createMap() {
+    // Use the standard CRS for global maps
+    var crs = L.CRS.EPSG3857;
+
+    // Create the map with the defined CRS
+    var map = L.map('map', {
+        center: [0, 0], // Center at the equator and prime meridian
+        zoom: 2, // Initial zoom level to show the entire world
+        crs: crs,
+        continuousWorld: true,
+        worldCopyJump: true, // Enables the seamless panning around the world
+        maxBounds: [[-85.06, -180], [85.06, 180]], // Web Mercator bounds
+        maxZoom: 18,
+        minZoom: 2
+    });
+
+    return map;
+}
+
+function createGlobe() {
+    // Ensure Cesium is loaded
+    if (typeof Cesium === 'undefined') {
+        throw new Error('Cesium library is not loaded.');
+    }
+
+    // Create the Cesium viewer with the defined container
+    var viewer = new Cesium.Viewer('map', {
+        imageryProvider: new Cesium.IonImageryProvider({ assetId: 2 }), // Default imagery provider
+        geocoder: false, // Disable geocoder
+        homeButton: true, // Enable home button
+        sceneModePicker: true, // Enable scene mode picker
+        timeline: false, // Disable timeline
+        animation: false, // Disable animation controls
+        fullscreenButton: true, // Enable fullscreen button
+        vrButton: false, // Disable VR button
+        navigationHelpButton: true, // Enable navigation help button
+        infoBox: true, // Enable info box
+        selectionIndicator: true, // Enable selection indicator
+        scene3DOnly: true // Enable 3D only mode
+    });
+
+    // Set the initial view to show the entire globe
+    viewer.scene.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(0, 0, 20000000) // Center at the equator and prime meridian
+    });
+
+    return viewer;
+}
+
+function createBaseLayers() {
+    var baseLayers = {
+        "arcgis": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
+        "carto": L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png'),
+        "osm": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+    };
+    return baseLayers;
+}
+
 function updateSliderOutput() {
     if (slider.value < 0) {
         output.innerHTML = Math.abs(slider.value) + ' BCE';
@@ -121,6 +179,16 @@ function switchBaseMap() {
     var selectedMap = document.querySelector('input[name="baseMap"]:checked').value;
     var base = document.getElementById("baseMapGADM").value
 
+    if (selectedMap === 'cesium') {
+        // Disable the play button and stop button when switching to the globe view
+        document.getElementById('playButton').disabled = true;
+        document.getElementById('stopButton').disabled = true;
+    } else {
+        // Enable the play button and stop button when switching to the map view
+        document.getElementById('playButton').disabled = false;
+        document.getElementById('stopButton').disabled = false;
+    }
+
     if (base == 'province') {
         var baseShapeData = provinceShapeData;
     } else if (base == 'country') {
@@ -147,11 +215,12 @@ function switchBaseMap() {
 
     if (selectedMap === 'osm') {
         currentLayer = baseLayers.osm.addTo(map);
-    } else {
+    } else if (selectedMap === 'carto') {
         currentLayer = baseLayers.carto.addTo(map);
-    }
-
-    if (selectedMap === 'gadm') {
+    } else if (selectedMap === 'arcgis') {
+        currentLayer = baseLayers.arcgis.addTo(map);
+    } else if (selectedMap === 'gadm') {
+        currentLayer = baseLayers.carto.addTo(map);
         // Add countries or provinces to the base map
         baseShapeData.forEach(function (shape) {
             // Ensure the geometry is not empty
@@ -210,6 +279,7 @@ function switchBaseMap() {
             }
         });
     }
+    plotPolities();
 }
 
 function updateLegend() {
@@ -250,6 +320,8 @@ function updateLegend() {
             var legendTitle = document.createElement('h3');
             legendTitle.textContent = 'Selected Polities';
             legendDiv.appendChild(legendTitle);
+            // Create a container for polity items
+            var polityContainer = document.createElement('div');
             for (var i = 0; i < addedPolities.length; i++) {
                 var legendItem = document.createElement('p');
                 var colorBox = document.createElement('span');
@@ -261,9 +333,22 @@ function updateLegend() {
                 colorBox.style.marginRight = '10px';
                 legendItem.appendChild(colorBox);
                 legendItem.appendChild(document.createTextNode(addedPolities[i].polity));
-                legendDiv.appendChild(legendItem);
+                polityContainer.appendChild(legendItem); // Append to the container
             }
-        };
+
+            // Append the container to the legendDiv
+            legendDiv.appendChild(polityContainer);
+
+            // Make the polityContainer scrollable if there are more than 7 polities
+            if (addedPolities.length > 7) {
+                polityContainer.style.maxHeight = '420px'; // Adjust based on actual item height
+                polityContainer.style.overflowY = 'scroll';
+            } else {
+                // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
+                polityContainer.style.maxHeight = '';
+                polityContainer.style.overflowY = '';
+            }
+        }
 
     } else if (variable in categorical_variables) {
         
