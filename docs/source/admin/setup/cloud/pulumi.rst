@@ -306,22 +306,164 @@ You can first upload the data files required to the VM using ``scp``:
 
     $ scp -i ~/.ssh/id_rsa path/to/datafile webadmin@<VM IP adress>:location_on_vm/datafile
 
-Manual step 5: Run the Django app
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In order to run the Django app, we need to configure and run it.
-
-First, open ``seshat/settings/local.py`` and add the created IP address to ``ALLOWED_HOSTS``.
-
-Then, configure and run the Django app:
+Manual step 5: Collect static files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    $ sudo ufw allow 8000
     $ cd seshat
     $ source venv/bin/activate
-    $ export DJANGO_SETTINGS_MODULE=seshat.settings.local
     $ python manage.py collectstatic
+
+Manual step 6: Add the IP address to the allowed hosts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First, open ``seshat/settings/local.py`` and add the created IP address to ``ALLOWED_HOSTS``.
+
+.. code-block:: python
+
+    ALLOWED_HOSTS = ['<public IP>']
+
+Then, ensure local (test site) settings are set:
+
+.. code-block:: bash
+
+    $ export DJANGO_SETTINGS_MODULE=seshat.settings.local
+
+Manual step 7: Set up Gunicorn and Nginx
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can test the app by running it with Gunicorn:
+
+.. code-block:: bash
+
     $ gunicorn seshat.wsgi:application --config gunicorn.conf.py
 
-Now, you should be able to go to the publicly' exposed IP on port 8000: ``http://<public IP>:8000/``.
+Visiting the public IP address in your browser should now show the Seshat app on the port 8000: ``http://<public IP>:8000/``.
+
+Kill the Gunicorn process with ``Ctrl+C``.
+
+Create a systemd service for Gunicorn:
+
+.. code-block:: bash
+
+    $ sudo nano /etc/systemd/system/gunicorn.socket
+
+Inside the file, add the following:
+
+.. code-block:: bash
+
+    [Unit]
+    Description=gunicorn socket
+
+    [Socket]
+    ListenStream=/run/gunicorn.sock
+
+    [Install]
+    WantedBy=sockets.target
+
+Next, create a systemd service file for Gunicorn. The service filename should match the socket filename with the exception of the extension:
+
+.. code-block:: bash
+
+    $ sudo nano /etc/systemd/system/gunicorn.service
+
+Inside the file, add the following:
+
+.. code-block:: bash
+
+    [Unit]
+    Description=gunicorn daemon
+    Requires=gunicorn.socket
+    After=network.target
+
+    [Service]
+    User=webadmin
+    Group=webadmin
+    WorkingDirectory=/home/webadmin/seshat
+    ExecStart=/home/webadmin/seshat/venv/bin/gunicorn \
+              --access-logfile - \
+              --workers 3 \
+              --bind unix:/run/gunicorn.sock \
+              seshat.wsgi:application --config gunicorn.conf.py
+
+    [Install]
+    WantedBy=multi-user.target
+
+
+You can now start and enable the Gunicorn socket.
+This will create the socket file at `/run/gunicorn.sock`` now and at boot.
+When a connection is made to that socket, systemd will automatically start the gunicorn.service to handle it:
+
+.. code-block:: bash
+
+    $ sudo systemctl start gunicorn.socket
+    $ sudo systemctl enable gunicorn.socket
+
+You can check the status of the Gunicorn socket and Gunicorn with:
+
+.. code-block:: bash
+
+    $ sudo systemctl status gunicorn.socket
+    $ sudo systemctl status gunicorn
+
+
+Next, we need to set up Nginx to pass web requests to the socket file:
+
+.. code-block:: bash
+
+    $ sudo nano /etc/nginx/sites-available/seshat
+
+Add the following configuration:
+
+.. code-block:: bash
+
+    server {
+        listen 80;
+        server_name <public IP>;
+
+        location = /favicon.ico { access_log off; log_not_found off; }
+
+        location / {
+            include proxy_params;
+            proxy_pass http://unix:/run/gunicorn.sock;
+        }
+
+        location /static/ {
+            autoindex on;
+            alias /home/webadmin/seshat/seshat/staticfiles/;
+        }
+
+    }
+
+Change the content of nginx config to make sure that it can access all the files in our project:
+
+.. code-block:: bash
+
+    $ sudo nano /etc/nginx/nginx.conf
+
+On the top of the file, the user should be changed from www-data to root:
+
+.. code-block:: bash
+
+    user root;
+
+Then, link the file to the sites-enabled directory:
+
+.. code-block:: bash
+
+    $ sudo ln -s /etc/nginx/sites-available/seshat /etc/nginx/sites-enabled
+
+Check the Nginx configuration:
+
+.. code-block:: bash
+
+    $ sudo nginx -t
+
+If the test is successful, restart Nginx:
+
+.. code-block:: bash
+
+    $ sudo systemctl restart nginx
+
+You should now be able to access the Seshat app on the public IP address ``http://<public IP>/``.
