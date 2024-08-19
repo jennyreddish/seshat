@@ -5,7 +5,7 @@ Azure cloud setup with Pulumi
 
     This guide on how to run a full setup of the Seshat django app on Azure with Pulumi based on `this guide <https://www.pulumi.com/docs/clouds/azure/get-started/begin/>`_.
 
-    It assumes that you have access to a Seshat database dump, including all the spatial data. You can access it through the project's `Google Drive <https://drive.google.com/drive/folders/1hRJ6HvHWqSjS7bUCGdXuabc4kD0H7q3_?usp=sharing>`_ if you have access to it.
+    It assumes that you have access to a Seshat database dump, including all the spatial data. You can access it through the project's `Google Drive <https://drive.google.com/drive/folders/1c5djM48ve91t84Ug4a8JksSC0p4J-eav?usp=sharing>`_ if you have access to it.
 
     It assumes that you are located in the UK and have access to the Azure subscription that the Seshat project is under.
 
@@ -286,7 +286,7 @@ Manual step 4: Restore the database from the dump
 
     This step assumes that you have access to the Seshat database dump.
 
-    You can access it through the project's `Google Drive <https://drive.google.com/drive/folders/1hRJ6HvHWqSjS7bUCGdXuabc4kD0H7q3_?usp=sharing>`_.
+    You can access it through the project's `Google Drive <https://drive.google.com/drive/folders/1c5djM48ve91t84Ug4a8JksSC0p4J-eav?usp=sharing>`_.
 
 In order to restore the database from the dump, run the following command:
 
