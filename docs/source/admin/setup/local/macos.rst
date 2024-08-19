@@ -235,14 +235,21 @@ Ensure that all Django database migrations have run:
 
     $ python manage.py migrate
 
+Step 11: Collect static files
+-----------------------------
 
-Step 11: Load the shape data
+.. code-block:: bash
+
+    $ python manage.py collectstatic
+
+
+Step 12: Load the shape data
 ----------------------------
 
 If the shape data tables are not yet populated in your copy of the Seshat core database and you have access to source data, populate one or more of them with the instructions `here <../spatialdb.rst>`_.
 
 
-Step 12: Run Django
+Step 13: Run Django
 -------------------
 
 .. code-block:: bash

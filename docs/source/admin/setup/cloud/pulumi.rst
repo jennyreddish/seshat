@@ -321,6 +321,7 @@ Then, configure and run the Django app:
     $ cd seshat
     $ source venv/bin/activate
     $ export DJANGO_SETTINGS_MODULE=seshat.settings.local
+    $ python manage.py collectstatic
     $ gunicorn seshat.wsgi:application --config gunicorn.conf.py
 
 Now, you should be able to go to the publicly' exposed IP on port 8000: ``http://<public IP>:8000/``.
