@@ -90,6 +90,9 @@ sudo apt install -y postgresql-16 postgresql-contrib-16 postgresql-16-postgis-3
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
 
+# Install Nginx
+sudo apt install -y nginx
+
 # Install GDAL and GEOS
 sudo apt-get install -y gdal-bin
 sudo apt-get install -y libgdal-dev
