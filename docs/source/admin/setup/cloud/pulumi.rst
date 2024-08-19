@@ -442,11 +442,11 @@ Change the content of nginx config to make sure that it can access all the files
 
     $ sudo nano /etc/nginx/nginx.conf
 
-On the top of the file, the user should be changed from www-data to root:
+On the top of the file, the user should be changed from www-data to webadmin:
 
 .. code-block:: bash
 
-    user root;
+    user webadmin;
 
 Then, link the file to the sites-enabled directory:
 
