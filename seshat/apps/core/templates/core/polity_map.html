@@ -279,9 +279,9 @@
                                         displayedShapes.push(shape.name);
                                     }
 
-                                    // Adjust the viewer view to cover the polities
+                                    // Adjust the viewer so we get a nice spin of the globe
                                     viewer.flyTo(dataSource, {
-                                        offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-90), 0)
+                                        offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-90), viewer.camera.positionCartographic.height)
                                     });
 
                                 }).catch(function (error) {
