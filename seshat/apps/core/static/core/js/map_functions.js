@@ -58,9 +58,11 @@ function createBaseLayers() {
 
 function updateSliderOutput() {
     if (slider.value < 0) {
-        output.innerHTML = Math.abs(slider.value) + ' BCE';
+        sliderDate.innerHTML = Math.abs(slider.value) + ' BCE';
+        sliderDate2.innerHTML = Math.abs(slider.value) + ' BCE';
     } else {
-        output.innerHTML = slider.value + ' CE';
+        sliderDate.innerHTML = slider.value + ' CE';
+        sliderDate2.innerHTML = slider.value + ' CE';
     }
 }
 
