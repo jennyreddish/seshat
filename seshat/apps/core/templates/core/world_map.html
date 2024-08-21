@@ -232,9 +232,13 @@
             </div>
         </div>
         <div style="position: relative; height: 85vh; width: 80%">
-            <div id="map" style="height: 100%; width: 100%; z-index: 0; position: relative;">
-                    <div id="popup" class="p-1"></div>
-		    <h1 class="text-teal" id="sliderDate"></h1>
+            <div id="map" style="height: 100%; width: 100%; z-index: 0; position: relative;">          
+                <div id="popup" class="p-1"></div>
+		        <h1 class="text-teal" id="sliderDate"></h1>
+            </div>
+            <div id="globe" style="height: 100%; width: 100%; z-index: 0; position: relative; max-height: 85vh; display: none">
+                <div id="popup" class="p-1"></div>
+                <h1 class="text-teal" id="sliderDate"></h1>
             </div>
             <div id="sliderdiv">
                 <fieldset>
@@ -543,6 +547,15 @@
                     map.removeLayer(layer);
                 }
             });
+
+            // Hide the viewer or map div depending on the selected base map
+            if (selectedMap !== 'cesium') {
+                document.getElementById('globe').style.display = 'none';
+                document.getElementById('map').style.display = 'block';
+            } else {
+                document.getElementById('map').style.display = 'none';
+                document.getElementById('globe').style.display = 'block';
+            }
 
             // Convert to int, because for some reason JS converts it to a string
             var selectedYearInt = parseInt(selectedYear);
