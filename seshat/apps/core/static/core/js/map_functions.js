@@ -341,7 +341,7 @@ function updateLegend() {
 
             // Make the polityContainer scrollable if there are more than 7 polities
             if (addedPolities.length > 7) {
-                polityContainer.style.maxHeight = '420px'; // Adjust based on actual item height
+                polityContainer.style.maxHeight = '420px';
                 polityContainer.style.overflowY = 'scroll';
             } else {
                 // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
@@ -434,6 +434,8 @@ function updateComponentLegend() {
     var legendDiv = document.getElementById('componentLegend');
     var displayComponent = document.getElementById('switchPolitiesComponents').value;
     var selectedYearInteger = parseInt(document.getElementById('dateSlide').value);
+    // Create a container for polity items
+    var polityContainer = document.createElement('div');
 
     // Clear the current legend
     legendDiv.innerHTML = '';
@@ -475,7 +477,20 @@ function updateComponentLegend() {
             colorBox.style.marginRight = '10px';
             legendItem.appendChild(colorBox);
             legendItem.appendChild(document.createTextNode(addedPolities[i].polity));
-            legendDiv.appendChild(legendItem);
+            polityContainer.appendChild(legendItem); // Append to the container
+        }
+
+        // Append the container to the legendDiv
+        legendDiv.appendChild(polityContainer);
+
+        // Make the polityContainer scrollable if there are more than 7 polities
+        if (addedPolities.length > 7) {
+            polityContainer.style.maxHeight = '420px';
+            polityContainer.style.overflowY = 'scroll';
+        } else {
+            // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
+            polityContainer.style.maxHeight = '';
+            polityContainer.style.overflowY = '';
         }
     };
 }
