@@ -188,6 +188,13 @@
                 // Remove all existing data sources from the viewer
                 viewer.dataSources.removeAll();
 
+                // Remove all existing layers from the map
+                map.eachLayer(function (layer) {
+                    if (layer instanceof L.GeoJSON || layer instanceof L.MarkerClusterGroup || layer instanceof L.CircleMarker) {
+                        map.removeLayer(layer);
+                    }
+                });
+
                 // Hide the viewer or map div depending on the selected base map
                 if (selectedMap !== 'cesium') {
                     document.getElementById('globe').style.display = 'none';
@@ -196,13 +203,6 @@
                     document.getElementById('map').style.display = 'none';
                     document.getElementById('globe').style.display = 'block';
                 }
-
-                // Remove all existing layers from the map
-                map.eachLayer(function (layer) {
-                    if (layer instanceof L.GeoJSON || layer instanceof L.MarkerClusterGroup || layer instanceof L.CircleMarker) {
-                        map.removeLayer(layer);
-                    }
-                });
 
                 // Convert to int, because for some reason JS converts it to a string
                 var selectedYearInt = parseInt(selectedYear);
