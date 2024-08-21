@@ -24,7 +24,7 @@ function createGlobe() {
     }
 
     // Create the Cesium viewer with the defined container
-    var viewer = new Cesium.Viewer('map', {
+    var viewer = new Cesium.Viewer('globe', {
         imageryProvider: new Cesium.IonImageryProvider({ assetId: 2 }), // Default imagery provider
         geocoder: false, // Disable geocoder
         homeButton: true, // Enable home button

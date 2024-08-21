@@ -93,7 +93,12 @@
                 </fieldset>
             </div>
             <div style="display: flex; flex-direction: column; width: 80%; height: 60vh;">
-                <div id="map" style="flex: 1; width: 100%"><div id="componentLegend"></div></div>
+                <div id="map" style="flex: 1; width: 100%;">
+                    <div id="componentLegend"></div>
+                </div>
+                <div id="globe" style="flex: 1; width: 100%; max-height: 60vh;">
+                    <div id="componentLegend"></div>
+                </div>
                 <div style="display: block; width: 100%">
                     <fieldset>
                         <div class="slider-container" style="position: relative;">
@@ -182,6 +187,15 @@
 
                 // Remove all existing data sources from the viewer
                 viewer.dataSources.removeAll();
+
+                // Hide the viewer or map div depending on the selected base map
+                if (selectedMap !== 'cesium') {
+                    document.getElementById('globe').style.display = 'none';
+                    document.getElementById('map').style.display = 'block';
+                } else {
+                    document.getElementById('map').style.display = 'none';
+                    document.getElementById('globe').style.display = 'block';
+                }
 
                 // Remove all existing layers from the map
                 map.eachLayer(function (layer) {
