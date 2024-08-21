@@ -434,6 +434,7 @@ function updateLegend() {
 function updateComponentLegend() {
 
     var legendDiv = document.getElementById('componentLegend');
+    var legendDiv2 = document.getElementById('componentLegend2');
     var displayComponent = document.getElementById('switchPolitiesComponents').value;
     var selectedYearInteger = parseInt(document.getElementById('dateSlide').value);
     // Create a container for polity items
@@ -441,6 +442,7 @@ function updateComponentLegend() {
 
     // Clear the current legend
     legendDiv.innerHTML = '';
+    legendDiv2.innerHTML = '';
 
     var addedPolities = [];
     var addedPolityNames = [];
@@ -468,6 +470,7 @@ function updateComponentLegend() {
         var legendTitle = document.createElement('h3');
         legendTitle.textContent = 'Components';
         legendDiv.appendChild(legendTitle);
+        legendDiv2.appendChild(legendTitle.cloneNode(true));
         for (var i = 0; i < addedPolities.length; i++) {
             var legendItem = document.createElement('p');
             var colorBox = document.createElement('span');
@@ -484,6 +487,7 @@ function updateComponentLegend() {
 
         // Append the container to the legendDiv
         legendDiv.appendChild(polityContainer);
+        legendDiv2.appendChild(polityContainer.cloneNode(true));
 
         // Make the polityContainer scrollable if there are more than 7 polities
         if (addedPolities.length > 7) {
