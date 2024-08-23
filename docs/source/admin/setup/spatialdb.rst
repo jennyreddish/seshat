@@ -1,18 +1,18 @@
 Cliopatria shape dataset
 -------------------------
 
-..
-    TODO: Add a link here to the published Cliopatria dataset
+1. Clone the `Cliopatria GitHub repository <https://github.com/Seshat-Global-History-Databank/cliopatria>`_.
+2. Unzip the file ``cliopatria.geojson.zip``.
+3. Enter the `notebooks` directory and set up the Python environment as per the instructions in the `README.md` file in the same directory.
+4. Run the following command to add colours to the dataset:
 
-1. Download and unzip the Cliopatria dataset.
-2. Update the Cliopatria GeoJSON file with colours and other properties required by Seshat:
-   
    .. code-block:: bash
 
-      $ python cliopatria/convert_data.py /path/to/cliopatria.geojson
+      $ python convert_data.py ../cliopatria.geojson
 
-   Note: this will create a new file with the same name but with the suffix "_seshat_processed.geojson"
-3. Populate ``core_videoshapefile`` table using the following command:
+   This will create a new file with the name "cliopatria_seshat_processed.geojson".
+   Note: You can preview the file in the Jupyter notebook found in the `notebooks` directory. Instructions on how to run the notebook are found in the `README.md` file in the same directory.
+5. Go back to the Seshat repo on the machine the website code is running from (if you are running it on a remote server, upload the processed GeoJSON). With your Seshat Python environment activated, you can populate ``core_videoshapefile`` table using the following command:
 
    .. code-block:: bash
 
@@ -30,7 +30,7 @@ GADM
       $ python manage.py populate_gadm /path/to/gpkg_file
 
 How to add new shape datasets to the maps
-=========================================
+------------------------------------------
 
 Ensure that the database and Django are already set up (see :doc:`local instructions </getting-started/setup/local/index>` for more detail) and all migrations have been run for the "core" Django app (``python manage.py migrate core``).
 
