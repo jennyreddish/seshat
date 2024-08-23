@@ -5218,3 +5218,5 @@ def xxyyzz(request, com_id):
 
     return redirect(reverse('seshatprivatecomment-update', kwargs={'pk': com_id}))
 
+def cliopatria(request):
+    return render(request, 'core/cliopatria.html')

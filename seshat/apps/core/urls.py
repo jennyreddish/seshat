@@ -176,3 +176,6 @@ urlpatterns += [path('core/world_map/', views.map_view_initial, name='world_map'
 urlpatterns += [path('core/world_map_all/', views.map_view_all, name='world_map_all'),]
 urlpatterns += [path('core/world_map_all_with_vars/', views.map_view_all_with_vars, name='world_map_all_with_vars'),]
 urlpatterns += [path('core/provinces_and_countries', views.provinces_and_countries_view, name='provinces_and_countries'),]
+
+# Cliopatria page
+urlpatterns += [path('core/cliopatria/', views.cliopatria, name='cliopatria'),]
