@@ -59,10 +59,14 @@ function createBaseLayers() {
 function updateSliderOutput() {
     if (slider.value < 0) {
         sliderDate.innerHTML = Math.abs(slider.value) + ' BCE';
-        sliderDate2.innerHTML = Math.abs(slider.value) + ' BCE';
+        if (sliderDate2) { // Exists in world_map.html but not in polity_map.html
+            sliderDate2.innerHTML = Math.abs(slider.value) + ' BCE';
+        }
     } else {
         sliderDate.innerHTML = slider.value + ' CE';
-        sliderDate2.innerHTML = slider.value + ' CE';
+        if (sliderDate2) { // Exists in world_map.html but not in polity_map.html
+            sliderDate2.innerHTML = slider.value + ' CE';
+        }
     }
 }
 
