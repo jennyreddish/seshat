@@ -496,9 +496,9 @@ function updateComponentLegend() {
 
         // Make the polityContainer scrollable if there are more than 7 polities
         if (addedPolities.length > 7) {
-            polityContainer.style.maxHeight = '420px';
+            polityContainer.style.maxHeight = '300px';
             polityContainer.style.overflowY = 'scroll';
-            polityContainer2.style.maxHeight = '420px';
+            polityContainer2.style.maxHeight = '300px';
             polityContainer2.style.overflowY = 'scroll';
         } else {
             // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
