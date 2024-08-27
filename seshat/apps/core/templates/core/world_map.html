@@ -79,7 +79,7 @@
         position: absolute;
         bottom: 90;
         right: 10;
-        background-color: rgba(255, 253, 242, 0.8);
+        background-color: rgba(255, 253, 242, 1);
         padding: 10px;
         border-radius: 5px;
         max-width: 200px;
@@ -95,7 +95,7 @@
     #sliderdiv {
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
-        background-color: rgba(255, 253, 242, 0.8);
+        background-color: rgba(255, 253, 242, 1);
         padding: 10px;
         display: block;
         position: absolute;
@@ -115,13 +115,13 @@
         font-size: 90px;
     }
 
-    #sliderDate {
+    .sliderDate {
         position: absolute;
         top: 79%;
         left: 16%;
         transform: translate(-50%, -50%);
         z-index: 1000;
-        background-color: rgba(255, 253, 242, 0.8);
+        background-color: rgba(255, 253, 242, 1);
         border-radius: 5px; /* Adds rounded edges */
     }
 
@@ -133,7 +133,7 @@
         overflow: auto;
         border-style: solid;
         border-width: 0px;
-        background-color: rgba(255, 253, 242, 0.8);
+        background-color: rgba(255, 253, 242, 1);
         border-radius: 5px; /* Adds rounded edges */
     }
 
@@ -191,7 +191,6 @@
                 </div>
             </fieldset>
             <p>🗣️ <i>Double click to reach polity pages.</i></p>
-            <button id="clearSelection" type="button" onclick="clearSelection()">Clear selected polities</button><br><br>
             <fieldset>
                 <label for="baseMapOnly">Base map only</label>
                 <input type="checkbox" id="baseMapOnly" name="baseMapOnly" onclick=plotPolities()><br>
@@ -233,9 +232,12 @@
             </div>
         </div>
         <div style="position: relative; height: 85vh; width: 80%">
-            <div id="map" style="height: 100%; width: 100%; z-index: 0; position: relative;">
-                    <div id="popup" class="p-1"></div>
-		    <h1 class="text-teal" id="sliderDate"></h1>
+            <div id="map" style="height: 100%; width: 100%; z-index: 0; position: relative;">          
+                <div id="popup" class="p-1"></div>
+		        <h1 class="text-teal sliderDate" id="sliderDate"></h1>
+            </div>
+            <div id="globe" style="height: 100%; width: 100%; z-index: 0; position: relative; max-height: 85vh; display: none">
+                <h1 class="text-teal sliderDate" id="sliderDate2"></h1>
             </div>
             <div id="sliderdiv">
                 <fieldset>
@@ -548,6 +550,15 @@
                     map.removeLayer(layer);
                 }
             });
+
+            // Hide the viewer or map div depending on the selected base map
+            if (selectedMap !== 'cesium') {
+                document.getElementById('globe').style.display = 'none';
+                document.getElementById('map').style.display = 'block';
+            } else {
+                document.getElementById('map').style.display = 'none';
+                document.getElementById('globe').style.display = 'block';
+            }
 
             // Convert to int, because for some reason JS converts it to a string
             var selectedYearInt = parseInt(selectedYear);
@@ -1030,7 +1041,8 @@
         // Display slider value
         var slider = document.getElementById("dateSlide");
         var enterYearInput = document.getElementById("enterYear");
-        var output = document.getElementById("sliderDate");  // Used in updateSliderOutput()
+        var sliderDate = document.getElementById("sliderDate");  // Used in updateSliderOutput()
+        var sliderDate2 = document.getElementById("sliderDate2");  // Used in updateSliderOutput()
         updateSliderOutput(); // Display the default slider value
 
         // Update the current slider value (each time you drag the slider handle)

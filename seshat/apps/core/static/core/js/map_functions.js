@@ -24,7 +24,7 @@ function createGlobe() {
     }
 
     // Create the Cesium viewer with the defined container
-    var viewer = new Cesium.Viewer('map', {
+    var viewer = new Cesium.Viewer('globe', {
         imageryProvider: new Cesium.IonImageryProvider({ assetId: 2 }), // Default imagery provider
         geocoder: false, // Disable geocoder
         homeButton: true, // Enable home button
@@ -58,9 +58,15 @@ function createBaseLayers() {
 
 function updateSliderOutput() {
     if (slider.value < 0) {
-        output.innerHTML = Math.abs(slider.value) + ' BCE';
+        sliderDate.innerHTML = Math.abs(slider.value) + ' BCE';
+        if (sliderDate2) { // Exists in world_map.html but not in polity_map.html
+            sliderDate2.innerHTML = Math.abs(slider.value) + ' BCE';
+        }
     } else {
-        output.innerHTML = slider.value + ' CE';
+        sliderDate.innerHTML = slider.value + ' CE';
+        if (sliderDate2) { // Exists in world_map.html but not in polity_map.html
+            sliderDate2.innerHTML = slider.value + ' CE';
+        }
     }
 }
 
@@ -339,6 +345,12 @@ function updateLegend() {
             // Append the container to the legendDiv
             legendDiv.appendChild(polityContainer);
 
+            // Add clear selection button
+            var clearSelectionButton = document.createElement('button');
+            clearSelectionButton.textContent = 'Clear selection';
+            clearSelectionButton.onclick = clearSelection;
+            legendDiv.appendChild(clearSelectionButton);
+
             // Make the polityContainer scrollable if there are more than 7 polities
             if (addedPolities.length > 7) {
                 polityContainer.style.maxHeight = '420px';
@@ -432,6 +444,7 @@ function updateLegend() {
 function updateComponentLegend() {
 
     var legendDiv = document.getElementById('componentLegend');
+    var legendDiv2 = document.getElementById('componentLegend2');
     var displayComponent = document.getElementById('switchPolitiesComponents').value;
     var selectedYearInteger = parseInt(document.getElementById('dateSlide').value);
     // Create a container for polity items
@@ -439,6 +452,7 @@ function updateComponentLegend() {
 
     // Clear the current legend
     legendDiv.innerHTML = '';
+    legendDiv2.innerHTML = '';
 
     var addedPolities = [];
     var addedPolityNames = [];
@@ -466,6 +480,7 @@ function updateComponentLegend() {
         var legendTitle = document.createElement('h3');
         legendTitle.textContent = 'Components';
         legendDiv.appendChild(legendTitle);
+        legendDiv2.appendChild(legendTitle.cloneNode(true));
         for (var i = 0; i < addedPolities.length; i++) {
             var legendItem = document.createElement('p');
             var colorBox = document.createElement('span');
@@ -482,15 +497,21 @@ function updateComponentLegend() {
 
         // Append the container to the legendDiv
         legendDiv.appendChild(polityContainer);
+        polityContainer2 = polityContainer.cloneNode(true);
+        legendDiv2.appendChild(polityContainer2);
 
         // Make the polityContainer scrollable if there are more than 7 polities
         if (addedPolities.length > 7) {
-            polityContainer.style.maxHeight = '420px';
+            polityContainer.style.maxHeight = '300px';
             polityContainer.style.overflowY = 'scroll';
+            polityContainer2.style.maxHeight = '300px';
+            polityContainer2.style.overflowY = 'scroll';
         } else {
             // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
             polityContainer.style.maxHeight = '';
             polityContainer.style.overflowY = '';
+            polityContainer2.style.maxHeight = '';
+            polityContainer2.style.overflowY = '';
         }
     };
 }

@@ -21,6 +21,21 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+        flex: 1;
+    }
+    #globeParent {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        flex: 1;
+        display: none;
+    }
+    #globe {
+        position: absolute;
+        width: 125vh;
+        height: 55vh;
     }
     body, html {
         width: 100%;
@@ -30,9 +45,19 @@
     }
     #componentLegend {
         position: absolute;
-        bottom: 0;
-        left: 0;
-        background-color: rgba(255, 253, 242, 0.8);
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        background-color: rgba(255, 253, 242, 1);
+        padding: 10px;
+        border-radius: 5px;
+        max-width: 200px;
+        z-index: 999;
+    }
+    #componentLegend2 {
+        position: relative;
+        right: 0;
+        background-color: rgba(255, 253, 242, 1);
         padding: 10px;
         border-radius: 5px;
         max-width: 200px;
@@ -94,7 +119,13 @@
                 </fieldset>
             </div>
             <div style="display: flex; flex-direction: column; width: 80%; height: 60vh;">
-                <div id="map" style="flex: 1; width: 100%"><div id="componentLegend"></div></div>
+                <div id="map">
+                    <div id="componentLegend"></div>
+                </div>
+                <div id="globeParent">
+                    <div id="globe"></div>
+                    <div id="componentLegend2"></div>
+                </div>
                 <div style="display: block; width: 100%">
                     <fieldset>
                         <div class="slider-container" style="position: relative;">
@@ -110,6 +141,12 @@
         </div>
         <script src="{% static 'core/js/map_functions.js' %}"></script>
         <script>
+
+            // Allows scrolling on the componentLegend div
+            const componentLegend = document.getElementById('componentLegend');
+            componentLegend.addEventListener('wheel', function (event) {
+                event.stopPropagation();
+            });
 
             window.onload = setSliderTicks({{ content.tick_years }});
 
@@ -163,7 +200,15 @@
                     });
             });
 
+            // Create the map
             var map = createMap();
+
+            // Set the initial map zoom level to fit everything in polityMapShapesData
+            var fullGeojsonData = polityMapShapesData.map(function (shape) {
+                return JSON.parse(shape.geom_json);
+            });
+            map.fitBounds(L.geoJSON(fullGeojsonData).getBounds());
+
             var viewer = createGlobe();
 
             var baseLayers = createBaseLayers();
@@ -190,6 +235,15 @@
                         map.removeLayer(layer);
                     }
                 });
+
+                // Hide the viewer or map div depending on the selected base map
+                if (selectedMap !== 'cesium') {
+                    document.getElementById('globeParent').style.display = 'none';
+                    document.getElementById('map').style.display = 'block';
+                } else {
+                    document.getElementById('map').style.display = 'none';
+                    document.getElementById('globeParent').style.display = 'block';
+                }
 
                 // Convert to int, because for some reason JS converts it to a string
                 var selectedYearInt = parseInt(selectedYear);
@@ -265,14 +319,12 @@
                                     if (displayedShapes.indexOf(shape.name) === -1) {
                                         displayedShapes.push(shape.name);
                                     }
-                                
-                                    // Adjust the viewer view to cover the geoJSON layer
-                                    // but not if there is > 1 shape dataset polity on this polity page
-                                    if (displayedShapes.length == 1) {
-                                        viewer.flyTo(dataSource, {
-                                            offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-90), 0)
-                                        });
-                                    }
+
+                                    // Adjust the viewer so we get a nice spin of the globe
+                                    viewer.flyTo(dataSource, {
+                                        offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-90), viewer.camera.positionCartographic.height)
+                                    });
+
                                 }).catch(function (error) {
                                     console.error('Error loading GeoJSON data: ', error);
                                 });
@@ -332,15 +384,10 @@
                                     displayedShapes.push(shape.name);
                                 }
 
-                                // adjust the map view to cover the geoJSON layer
-                                // but not if there is > 1 shape dataset polity on this polity page
-                                if (displayedShapes.length == 1) {
-                                    map.fitBounds(geoJSONLayer.getBounds());
-                                }
-
                             }
                         }
                     });
+
                 };
                 updateComponentLegend();
             }
@@ -351,7 +398,8 @@
             // Display slider value
             var slider = document.getElementById("dateSlide");
             var enterYearInput = document.getElementById("enterYear");
-            var output = document.getElementById("sliderDate");
+            var sliderDate = document.getElementById("sliderDate");
+            var sliderDate2 = document.getElementById("sliderDate2");  // This is undefined in the polity_map template, but is set to not break updateSliderOutput() in map_functions.js
             updateSliderOutput(); // Display the default slider value
 
             // Update the current slider value (each time you drag the slider handle)
