@@ -345,6 +345,12 @@ function updateLegend() {
             // Append the container to the legendDiv
             legendDiv.appendChild(polityContainer);
 
+            // Add clear selection button
+            var clearSelectionButton = document.createElement('button');
+            clearSelectionButton.textContent = 'Clear selection';
+            clearSelectionButton.onclick = clearSelection;
+            legendDiv.appendChild(clearSelectionButton);
+
             // Make the polityContainer scrollable if there are more than 7 polities
             if (addedPolities.length > 7) {
                 polityContainer.style.maxHeight = '420px';
