@@ -43,10 +43,20 @@
         margin: 0;
         padding: 0;
     }
-    .componentLegend {
+    #componentLegend {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        background-color: rgba(255, 253, 242, 0.8);
+        padding: 10px;
+        border-radius: 5px;
+        max-width: 200px;
+        z-index: 999;
+    }
+    #componentLegend2 {
         position: relative;
-        bottom: 0;
-        left: 0;
+        right: 0;
         background-color: rgba(255, 253, 242, 0.8);
         padding: 10px;
         border-radius: 5px;
@@ -109,11 +119,11 @@
             </div>
             <div style="display: flex; flex-direction: column; width: 80%; height: 60vh;">
                 <div id="map">
-                    <div id="componentLegend" class="componentLegend"></div>
+                    <div id="componentLegend"></div>
                 </div>
                 <div id="globeParent">
                     <div id="globe"></div>
-                    <div id="componentLegend2" class="componentLegend"></div>
+                    <div id="componentLegend2"></div>
                 </div>
                 <div style="display: block; width: 100%">
                     <fieldset>
