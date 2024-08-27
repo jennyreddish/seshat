@@ -199,7 +199,15 @@
                     });
             });
 
+            // Create the map
             var map = createMap();
+
+            // Set the initial map zoom level to fit everything in polityMapShapesData
+            var fullGeojsonData = polityMapShapesData.map(function (shape) {
+                return JSON.parse(shape.geom_json);
+            });
+            map.fitBounds(L.geoJSON(fullGeojsonData).getBounds());
+
             var viewer = createGlobe();
 
             var baseLayers = createBaseLayers();
@@ -378,21 +386,6 @@
                             }
                         }
                     });
-
-                    // Get a single GeoJSON layer for all the shapes that were added to the map
-                    var geojsonData = polityMapShapesData.filter(function (shape) {
-                        return displayedShapes.indexOf(shape.name) !== -1;
-                    }).map(function (shape) {
-                        return JSON.parse(shape.geom_json);
-                    });
-
-                    // Adjust the map zoom to fit the bounds of all GeoJSON layers included
-                    // Do the minimum zoom where all shapes are visible
-                    // Base this on the coordinates of the shapes
-                    // e.g. if all the shapes are in the british isles, the zoom should roughly cover that region
-                    var fullGeojsonLayer = L.geoJson(geojsonData);
-                    map.fitBounds(fullGeojsonLayer.getBounds());
-                    
 
                 };
                 updateComponentLegend();
