@@ -141,6 +141,12 @@
         <script src="{% static 'core/js/map_functions.js' %}"></script>
         <script>
 
+            // Allows scrolling on the componentLegend div
+            const componentLegend = document.getElementById('componentLegend');
+            componentLegend.addEventListener('wheel', function (event) {
+                event.stopPropagation();
+            });
+
             window.onload = setSliderTicks({{ content.tick_years }});
 
             var allPolitiesLoaded = false;
