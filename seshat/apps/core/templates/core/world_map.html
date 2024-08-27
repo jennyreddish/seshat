@@ -158,6 +158,7 @@
                 </div>
 
                 <div class="slidecontainer">
+                    <p style="display: none;" id="cliopatria-link"><a href="../cliopatria" target="_blank">Learn more about this dataset.</a></p>
                     <label for="chooseVariable">Variable: </label>
                     <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;" disabled>
                         <option value="polity">Polity</option>
@@ -391,6 +392,7 @@
                         plotPolities();
                         allPolitiesLoaded = true;
                         document.getElementById('loadingIndicator').style.display = 'none';
+                        document.getElementById('cliopatria-link').style.display = 'block';
 
                         return fetch('/core/world_map_all_with_vars');
                     })
@@ -410,6 +412,7 @@
                         allVariablesLoaded = true;
                         plotPolities();
                         document.getElementById('variablesLoadingIndicator').style.display = 'none';
+                        document.getElementById('cliopatria-link').style.display = 'block';
 
                         return fetch('/core/provinces_and_countries');
                     })
@@ -432,6 +435,7 @@
                         });
 
                         document.getElementById('baseMapCurrentLoadingIndicator').style.display = 'none';
+                        document.getElementById('cliopatria-link').style.display = 'block';
                         document.getElementById('baseMapCurrent').disabled = false;
 
                     });
@@ -500,6 +504,7 @@
                 var initialDisplayYear = {{ display_year }};
                 if (selectedYear != initialDisplayYear) {
                     document.getElementById('loadingIndicator').style.display = 'block';
+                    document.getElementById('cliopatria-link').style.display = 'none';
                 }
             }
 
@@ -1031,6 +1036,7 @@
         allPolitiesLoaded = true;
         plotPolities()
         document.getElementById('loadingIndicator').style.display = 'none';
+        document.getElementById('cliopatria-link').style.display = 'block';
         allPolitiesLoaded = false;
 
         // Display slider value

@@ -1,9 +1,12 @@
 Research Assistant
 ============
 
-TODO: Add content here
+.. toctree::
+   :maxdepth: 3
 
-See the `API documentation <../api/index.rst>`_.
+   cliopatria
+
+See also the `API documentation <../api/index.rst>`_.
 
 
 

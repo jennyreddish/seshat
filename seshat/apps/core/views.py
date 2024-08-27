@@ -3917,9 +3917,10 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         latest_year = result['max_year']
         initial_displayed_year = earliest_year
     else:
-        earliest_year, latest_year = 2014, 2014
+        earliest_year, latest_year = 2024, 2024  # These are not used in the web app, but are set to avoid errors when running migrations
         initial_displayed_year = -3400
 
+    # Overrides can be set to restrict the years shown on the map
     if override_earliest_year is not None:
         earliest_year = override_earliest_year
     if override_latest_year is not None:
@@ -4353,7 +4354,7 @@ def common_map_view_content(content):
     content['world_map_initial_polity'] = world_map_initial_polity
 
     # Set the last year in history we ever want to display, which will be used to determine when we should say "present"
-    content['last_history_year'] = last_history_year
+    content['last_history_year'] = content['latest_year']  # Set this to the latest year in the data or a value of choice
 
     return content
 
@@ -4375,13 +4376,12 @@ def dummy_map_view_content(content):
     content['world_map_initial_polity'] = world_map_initial_polity
 
     # Set the last year in history we ever want to display, which will be used to determine when we should say "present"
-    content['last_history_year'] = last_history_year
+    content['last_history_year'] = content['latest_year']  # Set this to the latest year in the data or a value of choice
     return content
 
 # World map default settings
 world_map_initial_displayed_year = 117
 world_map_initial_polity = 'it_roman_principate'
-last_history_year = 2014
 
 def map_view_initial(request):
     global world_map_initial_displayed_year, world_map_initial_polity
@@ -4407,7 +4407,7 @@ def map_view_initial(request):
             world_map_initial_displayed_year, world_map_initial_polity = random_polity_shape()
         return redirect('{}?year={}'.format(request.path, world_map_initial_displayed_year))
 
-    content = get_polity_shape_content(displayed_year=world_map_initial_displayed_year, override_latest_year=last_history_year)
+    content = get_polity_shape_content(displayed_year=world_map_initial_displayed_year)
 
     content = dummy_map_view_content(content)
 
@@ -4428,7 +4428,7 @@ def map_view_all(request):
         JsonResponse: The HTTP response with serialized JSON.
     """
 
-    content = get_polity_shape_content(override_latest_year=last_history_year)
+    content = get_polity_shape_content()
 
     content = dummy_map_view_content(content)
 
@@ -4446,7 +4446,7 @@ def map_view_all_with_vars(request):
         JsonResponse: The HTTP response with serialized JSON.
     """
 
-    content = get_polity_shape_content(override_latest_year=last_history_year)
+    content = get_polity_shape_content()
 
     content = common_map_view_content(content)
 
@@ -5218,3 +5218,5 @@ def xxyyzz(request, com_id):
 
     return redirect(reverse('seshatprivatecomment-update', kwargs={'pk': com_id}))
 
+def cliopatria(request):
+    return render(request, 'core/cliopatria.html')
