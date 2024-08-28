@@ -521,7 +521,9 @@ function updateComponentLegend() {
 }
 
 function clearSelection() {
-    document.getElementById('popup').innerHTML = '';
+    var popup = document.getElementById('popup');
+    popup.innerHTML = '';
+    popup.style.display = 'none';
     shapesData.forEach(function (shape) {
         shape['weight'] = 0;
     });

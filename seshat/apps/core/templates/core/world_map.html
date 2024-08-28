@@ -539,6 +539,7 @@
             var opacity = document.getElementById('opacitySlide').value;
             var atLeastOnePolityHighlighted = false;
             var selectedMap = document.querySelector('input[name="baseMap"]:checked').value;
+            var popup = document.getElementById('popup');
 
             // If not all polities loaded and the url year does not match the selected year, restore the loading indicator
             if (!allPolitiesLoaded) {
@@ -910,8 +911,8 @@
 
                         if (selectedMap === 'cesium') {
 
-                            document.getElementById('popup').innerHTML = '';
-                            document.getElementById('popup').style.borderWidth = '0px';
+                            popup.innerHTML = '';
+                            popup.style.display = 'none';
 
                             if (variable == 'polity') {
                                 document.getElementById('variableLegend').innerHTML = '';
@@ -977,12 +978,13 @@
                         
                                     // Add the popup for the initially selected polity
                                     if (shape.weight > 0) {
+                                        popup.style.display = 'block';
                                         // Add the popup to the popup div
-                                        document.getElementById('popup').innerHTML = popupContent;
+                                        popup.innerHTML = popupContent;
                                         // Set the border colour of the popup div
-                                        document.getElementById('popup').style.borderColor = layer.feature.properties.colour;
+                                        popup.style.borderColor = layer.feature.properties.colour;
                                         // Increase the border width of the popup div
-                                        document.getElementById('popup').style.borderWidth = '4px';
+                                        popup.style.borderWidth = '4px';
                                     };
                         
                                     // Listen for the click event on the layer
@@ -995,17 +997,19 @@
                                                 this.setStyle({
                                                     weight: newWeight
                                                 });
+                                                popup.style.display = 'block';
                                                 // Add the popup to the popup div
-                                                document.getElementById('popup').innerHTML = popupContent;
+                                                popup.innerHTML = popupContent;
                                                 // Set the border colour of the popup div
-                                                document.getElementById('popup').style.borderColor = layer.feature.properties.colour;
+                                                popup.style.borderColor = layer.feature.properties.colour;
                                                 // Increase the border width of the popup div
-                                                document.getElementById('popup').style.borderWidth = '4px';                        
+                                                popup.style.borderWidth = '4px';                        
                                             } else {
                                                 // Decrease the weight of the clicked layer
                                                 newWeight = polityBorderWeight;
                                                 // Remove the popup from the popup div
-                                                document.getElementById('popup').innerHTML = '';
+                                                popup.innerHTML = '';
+                                                popup.style.display = 'none';
                                             };
                                             // Update weights in this layer and others of the same polity
                                             map.eachLayer(function (layer) {
@@ -1025,12 +1029,13 @@
                                             });
                                             updateLegend();
                                         } else {
+                                            popup.style.display = 'block';
                                             // Add the popup to the popup div
-                                            document.getElementById('popup').innerHTML = popupContent;
+                                            popup.innerHTML = popupContent;
                                             // Set the border colour of the popup div
-                                            document.getElementById('popup').style.borderColor = layer.feature.properties.colour;
+                                            popup.style.borderColor = layer.feature.properties.colour;
                                             // Increase the border width of the popup div
-                                            document.getElementById('popup').style.borderWidth = '4px';
+                                            popup.style.borderWidth = '4px';
                                         }
                                         L.DomEvent.stopPropagation(e);
                                     });
@@ -1067,7 +1072,8 @@
             adjustScroll();
 
             if (!atLeastOnePolityHighlighted){
-                document.getElementById('popup').innerHTML = '';
+                popup.innerHTML = '';
+                popup.style.display = 'none';
             }
 
         }
