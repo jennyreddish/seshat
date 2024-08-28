@@ -95,8 +95,6 @@
                         <button id="stopButton" type="button" onclick="stopPlay()">⏸</button><br>
                         <fieldset>
                             <br>
-                            <label for="baseMapOnly">Base map only</label>
-                            <input type="checkbox" id="baseMapOnly" name="baseMapOnly" onclick=plotPolities()><br><br>
                             <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMap()" checked>Esri World Imagery</label><br>
                             <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Cesium Globe</label><br>
                             <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMap()">CartoDB (no labels)</label><br>
@@ -114,6 +112,8 @@
                                 <option value="country">Countries</option>
                                 <option value="province">Provinces</option>
                             </select><br>
+                            <label for="baseMapOnly">Base map only</label>
+                            <input type="checkbox" id="baseMapOnly" name="baseMapOnly" onclick=plotPolities()><br><br>
                         </fieldset>
                     </div>
                 </fieldset>
