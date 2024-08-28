@@ -344,22 +344,6 @@ function updateLegend() {
 
             // Append the container to the legendDiv
             legendDiv.appendChild(polityContainer);
-
-            // Add clear selection button
-            var clearSelectionButton = document.createElement('button');
-            clearSelectionButton.textContent = 'Clear selection';
-            clearSelectionButton.onclick = clearSelection;
-            legendDiv.appendChild(clearSelectionButton);
-
-            // Make the polityContainer scrollable if there are more than 7 polities
-            if (addedPolities.length > 7) {
-                polityContainer.style.maxHeight = '420px';
-                polityContainer.style.overflowY = 'scroll';
-            } else {
-                // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
-                polityContainer.style.maxHeight = '';
-                polityContainer.style.overflowY = '';
-            }
         }
 
     } else if (variable in categorical_variables) {
@@ -438,6 +422,26 @@ function updateLegend() {
         legendItem.appendChild(document.createTextNode('Base map'));
 
         legendDiv.appendChild(legendItem);
+    }
+
+    if (variable == 'polity') {
+        if (addedPolities.length > 0) {
+            // Add clear selection button
+            var clearSelectionButton = document.createElement('button');
+            clearSelectionButton.textContent = 'Clear selection';
+            clearSelectionButton.onclick = clearSelection;
+            legendDiv.appendChild(clearSelectionButton);
+
+            // Make the polityContainer scrollable if there are more than 7 polities
+            if (addedPolities.length > 7) {
+                polityContainer.style.maxHeight = '420px';
+                polityContainer.style.overflowY = 'scroll';
+            } else {
+                // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
+                polityContainer.style.maxHeight = '';
+                polityContainer.style.overflowY = '';
+            }
+        }
     }
 }
 
