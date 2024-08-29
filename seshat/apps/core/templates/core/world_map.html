@@ -1096,13 +1096,14 @@
                                     };
                         
                                     // Listen for the click event on the layer
-                                    layer.on('click', function (e) {        
-                        
-                                        if (variable == 'polity'){
+
+                                    function handleLayerInteraction(e, layer, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend) {
+                                        let newWeight;
+                                        if (variable == 'polity') {
                                             if (shape.weight === 0) {
                                                 // Increase the weight of the clicked layer
                                                 newWeight = polityBorderWeightSelected;
-                                                this.setStyle({
+                                                layer.setStyle({
                                                     weight: newWeight
                                                 });
                                                 popup.style.display = 'block';
@@ -1111,17 +1112,17 @@
                                                 // Set the border colour of the popup div
                                                 popup.style.borderColor = layer.feature.properties.colour;
                                                 // Increase the border width of the popup div
-                                                popup.style.borderWidth = '4px';                        
+                                                popup.style.borderWidth = '4px';
                                             } else {
                                                 // Decrease the weight of the clicked layer
                                                 newWeight = polityBorderWeight;
                                                 // Remove the popup from the popup div
                                                 popup.innerHTML = '';
                                                 popup.style.display = 'none';
-                                            };
+                                            }
                                             // Update weights in this layer and others of the same polity
                                             map.eachLayer(function (layer) {
-                                                if (layer.feature && layer.feature.properties && layer.feature.properties.name === shape.name ) {
+                                                if (layer.feature && layer.feature.properties && layer.feature.properties.name === shape.name) {
                                                     layer.setStyle({
                                                         weight: newWeight
                                                     });
@@ -1130,7 +1131,7 @@
                                             // Update weights in shapesData
                                             var i = 0;
                                             shapesData.forEach(function (shape2) {
-                                                if (shape2.name === shape.name) {                                           
+                                                if (shape2.name === shape.name) {
                                                     shapesData[i]['weight'] = newWeight;
                                                 }
                                                 i++;
@@ -1146,6 +1147,41 @@
                                             popup.style.borderWidth = '4px';
                                         }
                                         L.DomEvent.stopPropagation(e);
+                                    }
+                                
+                                    layer.on('click', function (e) {
+                                        handleLayerInteraction(e, this, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend);
+                                    });
+                                
+                                    layer.on('mouseover', function (e) {
+                                        handleLayerInteraction(e, this, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend);
+                                    });
+                                
+                                    layer.on('mouseout', function () {
+                                        // Revert the changes on mouseout
+                                        if (variable == 'polity') {
+                                            newWeight = polityBorderWeight;
+                                            // Remove the popup from the popup div
+                                            popup.innerHTML = '';
+                                            popup.style.display = 'none';
+                                            // Update weights in this layer and others of the same polity
+                                            map.eachLayer(function (layer) {
+                                                if (layer.feature && layer.feature.properties && layer.feature.properties.name === shape.name) {
+                                                    layer.setStyle({
+                                                        weight: newWeight
+                                                    });
+                                                }
+                                            });
+                                            // Update weights in shapesData
+                                            var i = 0;
+                                            shapesData.forEach(function (shape2) {
+                                                if (shape2.name === shape.name) {
+                                                    shapesData[i]['weight'] = newWeight;
+                                                }
+                                                i++;
+                                            });
+                                            updateLegend();
+                                        }
                                     });
                                 }
                             }).addTo(map);
