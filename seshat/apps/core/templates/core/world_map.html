@@ -1096,7 +1096,32 @@
                                     };
 
                                     var isClicked = false; // Flag to track if the layer was clicked
-                                
+                                    var previousPopupContent = '';
+                                    var previousPopupBorderColor = '';
+                                    var previousPopupBorderWidth = '';
+
+                                    function handleMouseover(e, layer, popupContent) {
+                                        // Store the previous state of the popup
+                                        previousPopupContent = popup.innerHTML;
+                                        previousPopupBorderColor = popup.style.borderColor;
+                                        previousPopupBorderWidth = popup.style.borderWidth;
+
+                                        // Update the popup with new content
+                                        popup.style.display = 'block';
+                                        popup.innerHTML = popupContent;
+                                        popup.style.borderColor = layer.feature.properties.colour;
+                                        popup.style.borderWidth = '4px';
+                                    }
+
+                                    function handleMouseout() {
+                                        // Revert the popup to the previous state only if the layer was not clicked
+                                        if (!isClicked) {
+                                            popup.innerHTML = previousPopupContent;
+                                            popup.style.borderColor = previousPopupBorderColor;
+                                            popup.style.borderWidth = previousPopupBorderWidth;
+                                        }
+                                    }
+
                                     function handleLayerInteraction(e, layer, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend, isClick) {
                                         let newWeight;
                                         if (variable == 'polity') {
@@ -1151,35 +1176,11 @@
                                         }
                                         L.DomEvent.stopPropagation(e);
                                     }
-                                
-                                    var previousPopupContent = '';
-                                    var previousPopupBorderColor = '';
-                                    var previousPopupBorderWidth = '';
 
-                                    function handleMouseover(e, layer, popupContent) {
-                                        // Store the previous state of the popup
-                                        previousPopupContent = popup.innerHTML;
-                                        previousPopupBorderColor = popup.style.borderColor;
-                                        previousPopupBorderWidth = popup.style.borderWidth;
-
-                                        // Update the popup with new content
-                                        popup.style.display = 'block';
-                                        popup.innerHTML = popupContent;
-                                        popup.style.borderColor = layer.feature.properties.colour;
-                                        popup.style.borderWidth = '4px';
-                                    }
-
-                                    function handleMouseout() {
-                                        // Revert the popup to the previous state
-                                        popup.innerHTML = previousPopupContent;
-                                        popup.style.borderColor = previousPopupBorderColor;
-                                        popup.style.borderWidth = previousPopupBorderWidth;
-                                    }
-                                
                                     layer.on('click', function (e) {
                                         handleLayerInteraction(e, this, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend, true);
                                     });
-                                
+
                                     layer.on('mouseover', function (e) {
                                         handleMouseover(e, this, popupContent);
                                     });
