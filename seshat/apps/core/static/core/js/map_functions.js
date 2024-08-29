@@ -454,9 +454,11 @@ function updateComponentLegend() {
     // Create a container for polity items
     var polityContainer = document.createElement('div');
 
-    // Clear the current legend
+    // Clear current legend and ensure it is displayed
     legendDiv.innerHTML = '';
     legendDiv2.innerHTML = '';
+    legendDiv.style.display = 'block';
+    legendDiv2.style.display = 'block';
 
     var addedPolities = [];
     var addedPolityNames = [];
@@ -517,7 +519,11 @@ function updateComponentLegend() {
             polityContainer2.style.maxHeight = '';
             polityContainer2.style.overflowY = '';
         }
-    };
+    } else {
+        // Hide the component legend if there are no components to display
+        legendDiv.style.display = 'none';
+        legendDiv2.style.display = 'none';
+    }
 }
 
 function clearSelection() {
