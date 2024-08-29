@@ -63,6 +63,33 @@
         max-width: 200px;
         z-index: 999;
     }
+    .display-info-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+    
+    .display-info-container::after {
+        content: "Many polities have component sub-polities with their own polygons on the map. Switching to 'Polity components' assigns a unique color to each polity component. 'Full polities' shows components from the same polity in the same color.";
+        visibility: hidden;
+        width: 200px;
+        background-color: #782823;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        position: absolute;
+        z-index: 9999;
+        top: 50%;
+        right: 125%;
+        margin-top: -20px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .display-info-container:hover::after {
+        visibility: visible;
+        opacity: 1;
+    }
 </style>
 
 <body>
@@ -78,7 +105,10 @@
                         <select name="switchPolitiesComponents" id="switchPolitiesComponents" onchange="plotPolities()">
                             <option value="components">Polity components</option>
                             <option value="polities">Full polity</option>
-                        </select><br>
+                        </select>
+                        <div class="display-info-container">
+                            ℹ️
+                        </div><br>
                         <label for="opacitySlide">Opacity:</label>
                         <input type="range" name="opacitySlide" id="opacitySlide" min="0.1" max="1" step="0.1" value="0.7" class="slider"
                             onchange="plotPolities()" style="width: 150px;">
