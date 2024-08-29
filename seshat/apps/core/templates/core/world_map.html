@@ -1152,20 +1152,28 @@
                                         L.DomEvent.stopPropagation(e);
                                     }
                                 
+                                    var previousPopupContent = '';
+                                    var previousPopupBorderColor = '';
+                                    var previousPopupBorderWidth = '';
+
                                     function handleMouseover(e, layer, popupContent) {
+                                        // Store the previous state of the popup
+                                        previousPopupContent = popup.innerHTML;
+                                        previousPopupBorderColor = popup.style.borderColor;
+                                        previousPopupBorderWidth = popup.style.borderWidth;
+
+                                        // Update the popup with new content
                                         popup.style.display = 'block';
-                                        // Add the popup to the popup div
                                         popup.innerHTML = popupContent;
-                                        // Set the border colour of the popup div
                                         popup.style.borderColor = layer.feature.properties.colour;
-                                        // Increase the border width of the popup div
                                         popup.style.borderWidth = '4px';
                                     }
-                                
+
                                     function handleMouseout() {
-                                        // Remove the popup from the popup div
-                                        popup.innerHTML = '';
-                                        popup.style.display = 'none';
+                                        // Revert the popup to the previous state
+                                        popup.innerHTML = previousPopupContent;
+                                        popup.style.borderColor = previousPopupBorderColor;
+                                        popup.style.borderWidth = previousPopupBorderWidth;
                                     }
                                 
                                     layer.on('click', function (e) {
@@ -1175,7 +1183,7 @@
                                     layer.on('mouseover', function (e) {
                                         handleMouseover(e, this, popupContent);
                                     });
-                                
+
                                     layer.on('mouseout', function () {
                                         handleMouseout();
                                     });
