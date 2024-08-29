@@ -230,6 +230,13 @@
         opacity: 1;
     }
 
+    #previouslySelectedVariable {
+        text-overflow: ellipsis;
+        display: none;
+        background: none;
+        border: none;
+    }
+
 </style>
 <body style="background-color: #fffdf2;">
     <div class="wrapper">
@@ -252,11 +259,8 @@
                 </select>
                 <div class="variable-info-container">
                     ℹ️
-                </div><br>
-                <fieldset id="previouslySelectedVariableFieldset" style="display: none">
-                    <label for="previouslySelectedVariable">Variable: </label>
-                    <button id="previouslySelectedVariable" type="button" onclick="previouslySelectedVariableButton()" style="width: 150px; text-overflow: ellipsis;">Previous variable</button><br>
-                </fieldset>
+                </div>
+                <button id="previouslySelectedVariable" type="button" onclick="previouslySelectedVariableButton()">🔄</button><br>
                 <fieldset id="chooseCategoricalVariableSelectionFieldset">
                     <label for="chooseCategoricalVariableSelection"></label>
                     <select name="chooseCategoricalVariableSelection" id="chooseCategoricalVariableSelection" onchange="plotPolities()" style="width: 150px; text-overflow: ellipsis;">            
@@ -617,7 +621,7 @@
                 // Update previously selected variable button
                 document.getElementById('previouslySelectedVariable').setAttribute('variableSelection', localStorage.getItem('variable'));
                 if(allVariablesLoaded){
-                    document.getElementById('previouslySelectedVariableFieldset').style.display = 'block';
+                    document.getElementById('previouslySelectedVariable').style.display = 'inline-block';
                 }
             }
 
