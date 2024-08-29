@@ -131,11 +131,11 @@
                             <legend>
                                 <h2 class="text-teal federicka-medium">Background map</h2>
                             </legend>
-                            <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMap()" checked>Esri World Imagery</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Cesium Globe</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMap()">CartoDB (no labels)</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMap()">OpenStreetMap</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMap()" disabled>Current borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
+                            <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMap()" checked>Satellite (<a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Globe (<a href="https://cesium.com/" target="_blank">Cesium</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMap()">Steet Maps (<a href="https://www.openstreetmap.org/" target="_blank">OSM</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMap()">Basic unlabelled (<a href="https://carto.com/basemaps" target="_blank">CARTO</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMap()" disabled>Clickable borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
                             <!-- Add a loading indicator for Current borders -->
                             <div id="baseMapCurrentLoadingIndicator">
                                 <p><sub>Loading current borders...</sub></p>

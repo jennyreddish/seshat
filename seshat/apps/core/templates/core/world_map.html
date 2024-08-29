@@ -338,16 +338,11 @@
                     <legend>
                         <h1 class="text-teal federicka-big">Background map</h1>
                     </legend>
-                    <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMapWorldMap()"
-                            checked>Esri World Imagery</label><br>
-                    <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Cesium
-                        Globe</label><br>
-                    <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMapWorldMap()">CartoDB
-                        (no labels)</label><br>
-                    <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm"
-                            onclick="switchBaseMapWorldMap()">OpenStreetMap</label><br>
-                    <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMapWorldMap()"
-                            disabled>Current borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
+                    <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMapWorldMap()" checked>Satellite (<a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a>)</label><br>
+                    <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Globe (<a href="https://cesium.com/" target="_blank">Cesium</a>)</label><br>
+                    <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMapWorldMap()">Steet Maps (<a href="https://www.openstreetmap.org/" target="_blank">OSM</a>)</label><br>
+                    <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMapWorldMap()">Basic unlabelled (<a href="https://carto.com/basemaps" target="_blank">CARTO</a>)</label><br>
+                    <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMapWorldMap()" disabled>Clickable borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
                     <div id="baseMapCurrentLoadingIndicator">
                         <p>Loading current borders...</p>
                     </div><br>
