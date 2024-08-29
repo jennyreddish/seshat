@@ -237,6 +237,34 @@
         border: none;
     }
 
+    .previouslySelectedVariable-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .previouslySelectedVariable-container::after {
+        content: "Click to switch quickly between the two most recently selected variables.";
+        visibility: hidden;
+        width: 200px;
+        background-color: #782823;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        position: absolute;
+        z-index: 9999;
+        top: 50%;
+        right: 125%;
+        margin-top: -20px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .previouslySelectedVariable-container:hover::after {
+        visibility: visible;
+        opacity: 1;
+    }
+
 </style>
 <body style="background-color: #fffdf2;">
     <div class="wrapper">
@@ -260,7 +288,9 @@
                 <div class="variable-info-container">
                     ℹ️
                 </div>
-                <button id="previouslySelectedVariable" type="button" onclick="previouslySelectedVariableButton()">🔄</button><br>
+                <div class="previouslySelectedVariable-container">
+                    <button id="previouslySelectedVariable" type="button" onclick="previouslySelectedVariableButton()">🔄</button>
+                </div><br>
                 <fieldset id="chooseCategoricalVariableSelectionFieldset">
                     <label for="chooseCategoricalVariableSelection"></label>
                     <select name="chooseCategoricalVariableSelection" id="chooseCategoricalVariableSelection" onchange="plotPolities()" style="width: 150px; text-overflow: ellipsis;">            
