@@ -132,6 +132,13 @@
         left: 4%;
         z-index: 1000;
     }
+    .toprightcontainer {
+        display: flex;
+        position: absolute;
+        top: 1%;
+        right: 4%;
+        z-index: 1000;
+    }
 
     #popup{
         overflow: auto;
@@ -361,14 +368,16 @@
         <div style="position: relative; height: 85vh; width: 80%">
             <div id="map" style="height: 100%; width: 100%; z-index: 0; position: relative;">
                 <div class="topleftcontainer">
+                    <div id="popup" class="p-1"></div>
+                </div>
+                <div class="toprightcontainer">
                     <div id="help" class="p-1">
-                        <button class="transparent-button" onclick="toggleTips()">💡</button>
                         <div id="tips" class="tips-content">
                             <p><b>Click polity shapes on the map to reveal information.</b></p>
                             <p><b>Some polities have Seshat pages reachable with double click.</b></p>
                         </div>
+                        <button class="transparent-button" onclick="toggleTips()">💡</button>
                     </div>
-                    <div id="popup" class="p-1"></div>
                 </div>
 		        <h1 class="text-teal sliderDate" id="sliderDate"></h1>
             </div>
