@@ -1094,10 +1094,10 @@
                                         // Increase the border width of the popup div
                                         popup.style.borderWidth = '4px';
                                     };
-                        
-                                    // Listen for the click event on the layer
 
-                                    function handleLayerInteraction(e, layer, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend) {
+                                    var isClicked = false; // Flag to track if the layer was clicked
+                                
+                                    function handleLayerInteraction(e, layer, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend, isClick) {
                                         let newWeight;
                                         if (variable == 'polity') {
                                             if (shape.weight === 0) {
@@ -1146,42 +1146,38 @@
                                             // Increase the border width of the popup div
                                             popup.style.borderWidth = '4px';
                                         }
+                                        if (isClick) {
+                                            isClicked = true; // Set the flag if the interaction is a click
+                                        }
                                         L.DomEvent.stopPropagation(e);
                                     }
                                 
+                                    function handleMouseover(e, layer, popupContent) {
+                                        popup.style.display = 'block';
+                                        // Add the popup to the popup div
+                                        popup.innerHTML = popupContent;
+                                        // Set the border colour of the popup div
+                                        popup.style.borderColor = layer.feature.properties.colour;
+                                        // Increase the border width of the popup div
+                                        popup.style.borderWidth = '4px';
+                                    }
+                                
+                                    function handleMouseout() {
+                                        // Remove the popup from the popup div
+                                        popup.innerHTML = '';
+                                        popup.style.display = 'none';
+                                    }
+                                
                                     layer.on('click', function (e) {
-                                        handleLayerInteraction(e, this, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend);
+                                        handleLayerInteraction(e, this, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend, true);
                                     });
                                 
                                     layer.on('mouseover', function (e) {
-                                        handleLayerInteraction(e, this, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend);
+                                        handleMouseover(e, this, popupContent);
                                     });
                                 
                                     layer.on('mouseout', function () {
-                                        // Revert the changes on mouseout
-                                        if (variable == 'polity') {
-                                            newWeight = polityBorderWeight;
-                                            // Remove the popup from the popup div
-                                            popup.innerHTML = '';
-                                            popup.style.display = 'none';
-                                            // Update weights in this layer and others of the same polity
-                                            map.eachLayer(function (layer) {
-                                                if (layer.feature && layer.feature.properties && layer.feature.properties.name === shape.name) {
-                                                    layer.setStyle({
-                                                        weight: newWeight
-                                                    });
-                                                }
-                                            });
-                                            // Update weights in shapesData
-                                            var i = 0;
-                                            shapesData.forEach(function (shape2) {
-                                                if (shape2.name === shape.name) {
-                                                    shapesData[i]['weight'] = newWeight;
-                                                }
-                                                i++;
-                                            });
-                                            updateLegend();
-                                        }
+                                        handleMouseout();
                                     });
                                 }
                             }).addTo(map);
