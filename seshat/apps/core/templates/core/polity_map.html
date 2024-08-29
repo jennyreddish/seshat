@@ -46,7 +46,7 @@
     #componentLegend {
         position: absolute;
         top: 50%;
-        right: 0;
+        right: 1%;
         transform: translateY(-50%);
         background-color: rgba(255, 253, 242, 1);
         padding: 10px;
@@ -56,12 +56,40 @@
     }
     #componentLegend2 {
         position: relative;
-        right: 0;
+        top: 1%;
+        left: 1%;
         background-color: rgba(255, 253, 242, 1);
         padding: 10px;
         border-radius: 5px;
         max-width: 200px;
         z-index: 999;
+    }
+    .display-info-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+    
+    .display-info-container::after {
+        content: "Many polities have component sub-polities with their own polygons on the map. Switching to 'Polity components' assigns a unique color to each polity component. 'Full polities' shows components from the same polity in the same color.";
+        visibility: hidden;
+        width: 200px;
+        background-color: #782823;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        position: absolute;
+        z-index: 9999;
+        top: 50%;
+        right: 125%;
+        margin-top: -20px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .display-info-container:hover::after {
+        visibility: visible;
+        opacity: 1;
     }
 </style>
 
@@ -74,34 +102,41 @@
 		            <div>
 			            <h2 class="h1 text-teal federicka-big" id="sliderDate"></h2>
                         <p><a href="../cliopatria">Learn more about this dataset.</a></p>
-                        <label for="enterYear">Enter year:</label>
-                        <input type="number" id="enterYear" name="enterYear" value="{{ content.display_year }}" style="width: 75px;""><br>
-                        <label for="enterYear">Increment (years):</label>
-                        <input type="number" id="increment" name="increment" value="10" style="width: 50px;" onchange="playRateValue()">
-                        <button id=" minusButton" type="button" onclick="adjustSliderDown()">-</button>
-                        <button id="plusButton" type="button" onclick="adjustSliderUp()">+</button><br>
-                        <label for="playRate">Play rate: </label>
-                        <span id="playRate">10 y/s</span><br>
-                        <label for="playButton">Run animation:</label>
-                        <button id="playButton" type="button" onclick="startPlay()">▶️</button>
-                        <button id="stopButton" type="button" onclick="stopPlay()">⏸</button><br>
                         <label for="switchPolitiesComponents">Display:</label>
                         <select name="switchPolitiesComponents" id="switchPolitiesComponents" onchange="plotPolities()">
                             <option value="components">Polity components</option>
                             <option value="polities">Full polity</option>
-                        </select><br>
+                        </select>
+                        <div class="display-info-container">
+                            ℹ️
+                        </div><br>
                         <label for="opacitySlide">Opacity:</label>
                         <input type="range" name="opacitySlide" id="opacitySlide" min="0.1" max="1" step="0.1" value="0.7" class="slider"
                             onchange="plotPolities()" style="width: 150px;">
+                        <label for="enterYear">Enter year:</label>
+                        <input type="number" id="enterYear" name="enterYear" value="{{ content.display_year }}" style="width: 75px;"">
+                        <p>🗣️ <i>Hit enter to set year.</i></p>
+                        <label for="enterYear">Increment (years):</label>
+                        <input type="number" id="increment" name="increment" value="10" style="width: 50px;" onchange="playRateValue()">
+                        <button id=" minusButton" type="button" onclick="adjustSliderDown()">-</button>
+                        <button id="plusButton" type="button" onclick="adjustSliderUp()">+</button>
+                        <p>🗣️ <i>Hit enter to set increment.</i></p>
+                        <label for="playRate">Play rate: </label>
+                        <span id="playRate">10 y/s</span><br>
+                        <label for="playButton">Run animation:</label>
+                        <button id="playButton" type="button" onclick="startPlay()">▶️</button>
+                        <button id="stopButton" type="button" onclick="stopPlay()">⏸</button>
+                        <p>🗣️ <i>Rate inaccurate at high speeds.</i></p>
                         <fieldset>
                             <br>
-                            <label for="baseMapOnly">Base map only</label>
-                            <input type="checkbox" id="baseMapOnly" name="baseMapOnly" onclick=plotPolities()><br><br>
-                            <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMap()" checked>Esri World Imagery</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Cesium Globe</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMap()">CartoDB (no labels)</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMap()">OpenStreetMap</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMap()" disabled>Current borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
+                            <legend>
+                                <h2 class="text-teal federicka-medium">Background map</h2>
+                            </legend>
+                            <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMap()" checked>Satellite (<a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Globe (<a href="https://cesium.com/" target="_blank">Cesium</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMap()">Steet Maps (<a href="https://www.openstreetmap.org/" target="_blank">OSM</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMap()">Basic unlabelled (<a href="https://carto.com/basemaps" target="_blank">CARTO</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMap()" disabled>Clickable borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
                             <!-- Add a loading indicator for Current borders -->
                             <div id="baseMapCurrentLoadingIndicator">
                                 <p><sub>Loading current borders...</sub></p>
@@ -114,6 +149,8 @@
                                 <option value="country">Countries</option>
                                 <option value="province">Provinces</option>
                             </select><br>
+                            <label for="baseMapOnly">Base map only</label>
+                            <input type="checkbox" id="baseMapOnly" name="baseMapOnly" onclick=plotPolities()><br><br>
                         </fieldset>
                     </div>
                 </fieldset>

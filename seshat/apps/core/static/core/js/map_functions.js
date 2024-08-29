@@ -344,22 +344,6 @@ function updateLegend() {
 
             // Append the container to the legendDiv
             legendDiv.appendChild(polityContainer);
-
-            // Add clear selection button
-            var clearSelectionButton = document.createElement('button');
-            clearSelectionButton.textContent = 'Clear selection';
-            clearSelectionButton.onclick = clearSelection;
-            legendDiv.appendChild(clearSelectionButton);
-
-            // Make the polityContainer scrollable if there are more than 7 polities
-            if (addedPolities.length > 7) {
-                polityContainer.style.maxHeight = '420px';
-                polityContainer.style.overflowY = 'scroll';
-            } else {
-                // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
-                polityContainer.style.maxHeight = '';
-                polityContainer.style.overflowY = '';
-            }
         }
 
     } else if (variable in categorical_variables) {
@@ -439,6 +423,26 @@ function updateLegend() {
 
         legendDiv.appendChild(legendItem);
     }
+
+    if (variable == 'polity') {
+        if (addedPolities.length > 0) {
+            // Add clear selection button
+            var clearSelectionButton = document.createElement('button');
+            clearSelectionButton.textContent = 'Clear selection';
+            clearSelectionButton.onclick = clearSelection;
+            legendDiv.appendChild(clearSelectionButton);
+
+            // Make the polityContainer scrollable if there are more than 7 polities
+            if (addedPolities.length > 7) {
+                polityContainer.style.maxHeight = '420px';
+                polityContainer.style.overflowY = 'scroll';
+            } else {
+                // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
+                polityContainer.style.maxHeight = '';
+                polityContainer.style.overflowY = '';
+            }
+        }
+    }
 }
 
 function updateComponentLegend() {
@@ -450,9 +454,11 @@ function updateComponentLegend() {
     // Create a container for polity items
     var polityContainer = document.createElement('div');
 
-    // Clear the current legend
+    // Clear current legend and ensure it is displayed
     legendDiv.innerHTML = '';
     legendDiv2.innerHTML = '';
+    legendDiv.style.display = 'block';
+    legendDiv2.style.display = 'block';
 
     var addedPolities = [];
     var addedPolityNames = [];
@@ -513,11 +519,17 @@ function updateComponentLegend() {
             polityContainer2.style.maxHeight = '';
             polityContainer2.style.overflowY = '';
         }
-    };
+    } else {
+        // Hide the component legend if there are no components to display
+        legendDiv.style.display = 'none';
+        legendDiv2.style.display = 'none';
+    }
 }
 
 function clearSelection() {
-    document.getElementById('popup').innerHTML = '';
+    var popup = document.getElementById('popup');
+    popup.innerHTML = '';
+    popup.style.display = 'none';
     shapesData.forEach(function (shape) {
         shape['weight'] = 0;
     });
@@ -619,4 +631,13 @@ function populateVariableDropdown(variables) {
             chooseVariableDropdown.appendChild(optgroup);
         }
     });
+}
+
+function toggleTips() {
+    var dropdown = document.getElementById("tips");
+    if (dropdown.style.display === "none" || dropdown.style.display === "") {
+        dropdown.style.display = "block";
+    } else {
+        dropdown.style.display = "none";
+    }
 }
