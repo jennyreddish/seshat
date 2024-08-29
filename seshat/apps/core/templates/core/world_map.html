@@ -174,6 +174,34 @@
         font-size: 2.5em;
     }
 
+    .display-info-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+    
+    .display-info-container::after {
+        content: "Many polities have component sub-polities with their own polygons on the map. Switching to 'Polity components' assigns a unique color to each polity component. 'Full polities' shows components from the same polity in the same color.";
+        visibility: hidden;
+        width: 200px; /* Adjusted width for better readability */
+        background-color: #782823;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px; /* Adjusted padding for better readability */
+        position: absolute;
+        z-index: 9999; /* Ensure it is above all other elements */
+        top: 50%; /* Position the tooltip to the right of the icon */
+        right: 125%; /* Position the tooltip to the right of the icon */
+        margin-top: -20px; /* Center the tooltip vertically */
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .display-info-container:hover::after {
+        visibility: visible;
+        opacity: 1;
+    }
+
 </style>
 <body style="background-color: #fffdf2;">
     <div class="wrapper">
@@ -212,6 +240,9 @@
                         <option value="polities">Full polities</option>
                         <option value="components">Polity components</option>
                     </select>
+                    <div class="display-info-container">
+                        ℹ️
+                    </div>
                 </fieldset>
                 <label for="opacitySlide">Opacity:</label>
                 <input type="range" name="opacitySlide" id="opacitySlide" min="0.1" max="1" step="0.1" value="0.7" class="slider"
