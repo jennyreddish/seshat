@@ -149,29 +149,35 @@ function setSliderTicks (tickYears) {
     }
 };
 
-function startPlay() {
-    stopPlay(); // Clear existing interval before starting a new one
+function playBack() {
+
     var increment = Number(document.getElementById('increment').value);
-
     var milliseconds = 1 / (increment / 1000);
+    var symbol = document.getElementById('playButton').innerHTML;
+    if (symbol === '▶️') {
+        playInterval = setInterval(function () {
+            // Increment the slider value by 1
+            slider.value = Number(slider.value) + 1;
+            enterYearInput.value = slider.value; // Sync enterYear input with dateSlide value
+            updateSliderOutput(); // Update the displayed year
+            plotPolities(); // This function is defined differently in the world_map and polity_map templates
 
-    playInterval = setInterval(function () {
-        // Increment the slider value by 1
-        slider.value = Number(slider.value) + 1;
-        enterYearInput.value = slider.value; // Sync enterYear input with dateSlide value
-        updateSliderOutput(); // Update the displayed year
-        plotPolities(); // This function is defined differently in the world_map and polity_map templates
+            // Stop playing when the slider reaches its maximum value
+            if (slider.value >= parseInt(slider.max)) {
+                stopPlay();
+            }
+        }, milliseconds); // Interval based on user input
+        document.getElementById('playButton').innerHTML = '⏸';
+    } else {
+        stopPlay();
+    }
 
-        // Stop playing when the slider reaches its maximum value
-        if (slider.value >= parseInt(slider.max)) {
-            stopPlay();
-        }
-    }, milliseconds); // Interval based on user input
 }
 
 function stopPlay() {
     clearInterval(playInterval);
-}
+    document.getElementById('playButton').innerHTML = '▶️';
+};
 
 function storeYear() {
     var year = document.getElementById('enterYear').value;
@@ -186,13 +192,11 @@ function switchBaseMap() {
     var base = document.getElementById("baseMapGADM").value
 
     if (selectedMap === 'cesium') {
-        // Disable the play button and stop button when switching to the globe view
+        // Disable the play button when switching to the globe view
         document.getElementById('playButton').disabled = true;
-        document.getElementById('stopButton').disabled = true;
     } else {
-        // Enable the play button and stop button when switching to the map view
+        // Enable the play button when switching to the map view
         document.getElementById('playButton').disabled = false;
-        document.getElementById('stopButton').disabled = false;
     }
 
     if (base == 'province') {

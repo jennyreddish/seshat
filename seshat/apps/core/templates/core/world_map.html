@@ -338,22 +338,18 @@
                 <!-- <label for="showCapitals">Show capital cities</label>
                 <input type="checkbox" id="showCapitals" name="showCapitals" onclick=plotPolities()><br><br> -->
                 <label for="enterYear">Enter year:</label>
-                <input type="number" id="enterYear" name="enterYear" value="{{ display_year }}" style="width: 75px;"
-                    onchange="storeYear()">
-                <button id="startButton" type="button" onclick="adjustSliderStartYear()">Start</button>
-                <button id="endButton" type="button" onclick="adjustSliderEndYear()">End</button>
+                <input type="number" id="enterYear" name="enterYear" value="{{ display_year }}" style="width: 75px;" onchange="storeYear()">
                 <p>🗣️ <i>Hit enter to set year.</i></p>
-                <label for="enterYear">Increment (years):</label>
-                <input type="number" id="increment" name="increment" value="10" style="width: 50px;" onchange="playRateValue();">
-                <button id="minusButton" type="button" onclick="adjustSliderDown()">-</button>
-                <button id="plusButton" type="button" onclick="adjustSliderUp()">+</button>
-                <p>🗣️ <i>Hit enter to set increment.</i></p>
-                <label for="playRate">Play rate: </label>
-                <span id="playRate">10 y/s</span><br>
-                <label for="playButton">Run animation:</label>
-                <button id="playButton" type="button" onclick="startPlay()">▶️</button>
-                <button id="stopButton" type="button" onclick="stopPlay()">⏸</button>
-                <p>🗣️ <i>Rate inaccurate at high speeds.</i></p>
+                <label for="increment">Play rate (years/second):</label>
+                <input type="number" id="increment" name="increment" value="10" style="width: 50px;" onchange="playRateValue()">
+                <p style="width: 250px;">🗣️ <i>Hit enter to set play rate (inaccurate at high speeds).</i></p>
+                <div style="text-align: center;">
+                    <button id="startButton" type="button" onclick="adjustSliderStartYear()">⏮️</button>
+                    <button id="minusButton" type="button" onclick="adjustSliderDown()">⏪</button>
+                    <button id="playButton" type="button" onclick="playBack()">▶️</button>
+                    <button id="plusButton" type="button" onclick="adjustSliderUp()">⏩</button>
+                    <button id="endButton" type="button" onclick="adjustSliderEndYear()">⏭️</button><br>
+                </div>
             </fieldset>
             <div id="baseMapControls" style="position: absolute; bottom: 0px; display: flex; flex-direction: column; justify-content: flex-end;">
                 <fieldset>
@@ -1273,16 +1269,9 @@
         }
 
         var playInterval;
-        var playRateInput = document.getElementById("playRate");
 
         // Add event listener to stop playing when adjusting the slider manually
         slider.addEventListener("input", stopPlay);
-
-        // Add event listener to update play rate when the input changes
-        playRateInput.addEventListener("change", function () {
-            stopPlay(); // Stop current play if ongoing
-            startPlay(); // Start with the updated play rate
-        });
 
         // Make sure Radio selection is kept on page refresh
         document.addEventListener("DOMContentLoaded", function () {
