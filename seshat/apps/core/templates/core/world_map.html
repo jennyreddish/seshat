@@ -879,16 +879,16 @@
                                 `;
                         }
                         popupContent = popupContent + `
-                                    <tr>
-                                        <td>Duration</td>
-                                        <td>${displaystart_year} to ${displayend_year}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Area (est.)</td>
-                                        <td>${formattedArea} Km<sup>2</sup></td>
-                                    </tr>
-                            `;
-                            // Absent/present variables
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>${displaystart_year} to ${displayend_year}</td>
+                                </tr>
+                                <tr>
+                                    <td>Area (est.)</td>
+                                    <td>${formattedArea} Km<sup>2</sup></td>
+                                </tr>
+                        `;
+                        // Absent/present variables
                         if (variable != 'polity' && !categorical_variables.hasOwnProperty(variable)) {
                             if (shape[variable + '_dict']) {
                                 // Iterate through key/values in the dictionary
