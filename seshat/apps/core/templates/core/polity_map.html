@@ -458,7 +458,7 @@
             // Add event listener to update play rate when the input changes
             playRateInput.addEventListener("change", function () {
                 stopPlay(); // Stop current play if ongoing
-                startPlay(); // Start with the updated play rate
+                playBack(); // Start with the updated play rate
             });
 
             // Make sure Radio selection is kept on page refresh
