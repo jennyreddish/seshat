@@ -1,8 +1,8 @@
-name: Documentation Improvement
+name: "📚 Documentation Improvement"
 
 description: Suggest changes or improvements to the Seshat documentation.
 
-title: "📚 [Documentation] <title>"
+title: "📚 [Documentation] - <title>"
 
 labels: ["documentation"]
 

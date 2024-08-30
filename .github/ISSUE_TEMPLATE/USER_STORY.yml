@@ -1,6 +1,6 @@
-name: Feature request
+name: "✨ Feature request"
 description: Suggest a new feature for the Seshat website.
-title: "👤 [User Story]: "
+title: "✨ [Feature request] - <title>"
 labels: ["feature-request"]
 body:
   - type: markdown
