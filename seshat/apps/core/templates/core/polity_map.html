@@ -119,11 +119,13 @@
                         <label for="increment">Play rate (years/second):</label>
                         <input type="number" id="increment" name="increment" value="10" style="width: 50px;" onchange="playRateValue()">
                         <p style="width: 250px;">🗣️ <i>Hit enter to set play rate (inaccurate at high speeds).</i></p>
-                        <button id="startButton" type="button" onclick="adjustSliderStartYear()">⏮️</button>
-                        <button id="minusButton" type="button" onclick="adjustSliderDown()">⏪</button>
-                        <button id="playButton" type="button" onclick="playBack()">▶️</button>
-                        <button id="plusButton" type="button" onclick="adjustSliderUp()">⏩</button>
-                        <button id="endButton" type="button" onclick="adjustSliderEndYear()">⏭️</button><br>
+                        <div style="text-align: center;">
+                            <button id="startButton" type="button" onclick="adjustSliderStartYear()">⏮️</button>
+                            <button id="minusButton" type="button" onclick="adjustSliderDown()">⏪</button>
+                            <button id="playButton" type="button" onclick="playBack()">▶️</button>
+                            <button id="plusButton" type="button" onclick="adjustSliderUp()">⏩</button>
+                            <button id="endButton" type="button" onclick="adjustSliderEndYear()">⏭️</button><br>
+                        </div>
                         <fieldset>
                             <br>
                             <legend>
