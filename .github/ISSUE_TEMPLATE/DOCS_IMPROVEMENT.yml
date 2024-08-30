@@ -51,3 +51,13 @@ body:
       label: Additional Context
       description: Add any other context or information related to this improvement request.
       placeholder: "Include any relevant links, examples, or references."
+  - type: checkboxes
+    id: definition-of-done
+    attributes:
+      label: Definition of Done
+      description:
+        Please confirm the following are completed before this issue can be closed.
+      options:
+        - label: The documentation improvement has been developed on a branch.
+        - label: The new branch has been tested in the QA environment.
+        - label: A pull request has been created for the new branch to be merged into the main branch.

@@ -78,3 +78,13 @@ body:
         - Mac
     validations:
       required: false
+  - type: checkboxes
+    id: definition-of-done
+    attributes:
+      label: Definition of Done
+      description:
+        Please confirm the following are completed before this issue can be closed.
+      options:
+        - label: A fix for the bug has been developed on a branch.
+        - label: The bug fix branch has been tested in the QA environment.
+        - label: A pull request has been created for the new branch to be merged into the main branch.
