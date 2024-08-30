@@ -57,7 +57,8 @@ class ShapesTest(TestCase):
             polity_end_year=2020,
             colour="#FFFFFF",
             components="Test components",
-            member_of="Test member_of"
+            member_of="Test member_of",
+            wikipedia_name="Test Wikipedia"
         )
         VideoShapefile.objects.create(
             id=2,
@@ -72,7 +73,8 @@ class ShapesTest(TestCase):
             polity_end_year=1000,
             colour="#FFFFFF",
             components="Test components",
-            member_of="Test member_of"
+            member_of="Test member_of",
+            wikipedia_name="Test Wikipedia 2"
         )
         self.gadm_shapefile = GADMShapefile.objects.create(
             geom=self.square,
@@ -223,6 +225,7 @@ class ShapesTest(TestCase):
                     'id': 1,
                     'components': 'Test components',
                     'member_of': 'Test member_of',
+                    'wikipedia_name': 'Test Wikipedia'
                 },
                 {
                     'seshat_id': 'Cn5Dyna',
@@ -237,6 +240,7 @@ class ShapesTest(TestCase):
                     'id': 2,
                     'components': 'Test components',
                     'member_of': 'Test member_of',
+                    'wikipedia_name': 'Test Wikipedia 2'
                 }
             ],
             'earliest_year': 0,
@@ -272,6 +276,7 @@ class ShapesTest(TestCase):
                     'id': 1,
                     'components': 'Test components',
                     'member_of': 'Test member_of',
+                    'wikipedia_name': 'Test Wikipedia'
                 }
             ],
             'earliest_year': 0,  # This is the earliest year in the database, not the earliest year of the polity
@@ -306,6 +311,7 @@ class ShapesTest(TestCase):
                     'id': 1,
                     'components': 'Test components',
                     'member_of': 'Test member_of',
+                    'wikipedia_name': 'Test Wikipedia'
                 }
             ],
             'earliest_year': 2000,  # This is the earliest year of the polity
@@ -363,6 +369,7 @@ class ShapesTest(TestCase):
                         'id': 1,
                         'components': 'Test components',
                         'member_of': 'Test member_of',
+                        'wikipedia_name': 'Test Wikipedia'
                     }
                 ],
                 'earliest_year': 2000,
@@ -400,6 +407,7 @@ class ShapesTest(TestCase):
                         'id': 2,
                         'components': 'Test components',
                         'member_of': 'Test member_of',
+                        'wikipedia_name': 'Test Wikipedia 2'
                     }
                 ],
                 'earliest_year': 0,
@@ -462,6 +470,7 @@ class ShapesTest(TestCase):
                         'id': 2,
                         'components': 'Test components',
                         'member_of': 'Test member_of',
+                        'wikipedia_name': 'Test Wikipedia'
                     }
                 ]
         app_map = {
@@ -503,6 +512,7 @@ class ShapesTest(TestCase):
                         'id': 2,
                         'components': 'Test components',
                         'member_of': 'Test member_of',
+                        'wikipedia_name': 'Test Wikipedia'
                     }
                 ]
         result_shapes, result_variables = assign_categorical_variables_to_shapes(shapes, {})

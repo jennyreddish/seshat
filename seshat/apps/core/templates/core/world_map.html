@@ -842,14 +842,14 @@
                             if (selectedMap == 'cesium'){
                                 popupContent = popupContent + `
                                     <tr>
-                                        <td>Seshat Page</td>
+                                        <td>Seshat page</td>
                                         <td>${longName} (${shape.seshat_id})</td>
                                     </tr>
                                 `;
                             } else {
                                 popupContent = popupContent + `
                                         <tr>
-                                            <td>Seshat Page</td>
+                                            <td>Seshat page</td>
                                             <td><a href="/core/polity/${polityId}" target="_blank">${longName} (${shape.seshat_id})</a></td>
                                         </tr>
                                     `;
@@ -873,22 +873,31 @@
                             }
                             popupContent = popupContent + `
                                     <tr>
-                                        <td>Seshat Pages</td>
+                                        <td>Seshat pages</td>
                                         <td>${polityLinks}</td>
                                     </tr>
                                 `;
                         }
+
+                        let wiki_page = 'https://en.wikipedia.org/wiki/' + shape.wikipedia_name.replace(/ /g, '_');
                         popupContent = popupContent + `
-                                    <tr>
-                                        <td>Duration</td>
-                                        <td>${displaystart_year} to ${displayend_year}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Area (est.)</td>
-                                        <td>${formattedArea} Km<sup>2</sup></td>
-                                    </tr>
-                            `;
-                            // Absent/present variables
+                            <tr>
+                                <td>Wikipedia page</td>
+                                <td><a href="${wiki_page}" target="_blank">${shape.wikipedia_name}</a></td>
+                            </tr>
+                        `;
+
+                        popupContent = popupContent + `
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>${displaystart_year} to ${displayend_year}</td>
+                                </tr>
+                                <tr>
+                                    <td>Area (est.)</td>
+                                    <td>${formattedArea} Km<sup>2</sup></td>
+                                </tr>
+                        `;
+                        // Absent/present variables
                         if (variable != 'polity' && !categorical_variables.hasOwnProperty(variable)) {
                             if (shape[variable + '_dict']) {
                                 // Iterate through key/values in the dictionary
