@@ -1,5 +1,5 @@
 name: "🐛 Bug Report"
-description: Create a new ticket for a bug.
+description: Report a bug on the Seshat Global History Databank website.
 title: "🐛 [BUG] - <title>"
 labels: [
   "bug"
