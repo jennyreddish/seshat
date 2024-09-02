@@ -179,7 +179,6 @@
         background-color: transparent;
         border: none;
         cursor: pointer;
-        font-size: 2.5em;
     }
 
     .display-info-container {
@@ -302,7 +301,12 @@
                 <div id="loadingIndicator">
                     <div class="spinner"></div>                   
                 </div>
-                <p style="display: none;" id="cliopatria-link"><a href="../cliopatria" target="_blank">Learn more about this dataset.</a></p>
+                <div style="display: none;" id="cliopatria-link">
+                    <p>
+                        <a href="../cliopatria" target="_blank">About this dataset.</a>
+                        <button class="transparent-button" onclick="toggleTips()">💡 Navigating this map.</button>
+                    </p>
+                </div>
                 <label for="chooseVariable">Variable: </label>
                 <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;" disabled>
                     <option value="polity">Polity</option>
@@ -391,7 +395,6 @@
                             <p><b>🔹 Use the play button to animate the map through time.</b></p>
                             <p><b>🔹 Use the background map controls to switch between different base maps.</b></p>
                         </div>
-                        <button class="transparent-button" onclick="toggleTips()">💡</button>
                     </div>
                 </div>
 		        <h1 class="text-teal sliderDate" id="sliderDate"></h1>
