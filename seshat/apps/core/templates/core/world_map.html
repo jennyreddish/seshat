@@ -359,7 +359,7 @@
             </fieldset>
             <div id="baseMapControls" style="position: absolute; bottom: 0px; display: flex; flex-direction: column; justify-content: flex-end;">
                 <fieldset>
-                    <legend>
+                    <legend id="background-map-header" style="display: none">
                         <h1 class="text-teal federicka-big">Background map</h1>
                     </legend>
                     <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMapWorldMap()" checked>Satellite (<a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a>)</label><br>
@@ -578,6 +578,7 @@
                         allVariablesLoaded = true;
                         plotPolities();
                         document.getElementById('variablesLoadingIndicator').style.display = 'none';
+                        document.getElementById('background-map-header').style.display = 'block';
                         document.getElementById('cliopatria-link').style.display = 'block';
 
                         return fetch('/core/provinces_and_countries');
