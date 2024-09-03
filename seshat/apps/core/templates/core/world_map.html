@@ -132,11 +132,11 @@
         left: 4%;
         z-index: 1000;
     }
-    .toprightcontainer {
+    .helpcontainer {
         display: flex;
         position: absolute;
-        top: 1%;
-        right: 4%;
+        top: 30%;
+        left: 30%;
         z-index: 1000;
     }
 
@@ -179,7 +179,11 @@
         background-color: transparent;
         border: none;
         cursor: pointer;
-        font-size: 2.5em;
+        color: teal;
+    }
+
+    .transparent-button:hover {
+        color: orange;
     }
 
     .display-info-container {
@@ -287,6 +291,13 @@
         100% { transform: rotate(360deg); }
     }
 
+    #crossButton {
+        background-color: rgba(255, 253, 242, 1);
+        right: 4%;
+        position: absolute;
+        border-color: #782823;
+    }
+
 </style>
 <body style="background-color: #fffdf2;">
     <div class="wrapper">
@@ -302,7 +313,14 @@
                 <div id="loadingIndicator">
                     <div class="spinner"></div>                   
                 </div>
-                <p style="display: none;" id="cliopatria-link"><a href="../cliopatria" target="_blank">Learn more about this dataset.</a></p>
+                <div style="display: none; text-align: center;" id="cliopatria-link">
+                    <p>
+                        <a href="../cliopatria" target="_blank">🔹 Learn more about this dataset.</a>
+                    </p>
+                    <p>
+                        <button class="transparent-button" onclick="toggleTips()">🔹 How to navigate this map.</button>
+                    </p>
+                </div>
                 <label for="chooseVariable">Variable: </label>
                 <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;" disabled>
                     <option value="polity">Polity</option>
@@ -353,7 +371,7 @@
             </fieldset>
             <div id="baseMapControls" style="position: absolute; bottom: 0px; display: flex; flex-direction: column; justify-content: flex-end;">
                 <fieldset>
-                    <legend>
+                    <legend id="background-map-header" style="display: none">
                         <h1 class="text-teal federicka-big">Background map</h1>
                     </legend>
                     <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMapWorldMap()" checked>Satellite (<a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a>)</label><br>
@@ -381,17 +399,19 @@
                 <div class="topleftcontainer">
                     <div id="popup" class="p-1"></div>
                 </div>
-                <div class="toprightcontainer">
+                <div class="helpcontainer">
                     <div id="help" class="p-1">
                         <div id="tips" class="tips-content">
-                            <p><b>🔹 Click polity shapes on the map to reveal information.</b></p>
+                            <button id="crossButton" onclick="toggleTips()">❌</button>
+                            <p><b>🔹 Hover the mouse over polity shapes on the map to reveal information.</b></p>
+                            <p><b>🔹 Clicking polity shapes adds them to the legend.</b></p>
                             <p><b>🔹 Some polities have Seshat pages reachable with double click.</b></p>
-                            <p><b>🔹 Use the variable dropdown to color polities by different variables.</b></p>
+                            <p><b>🔹 Enter a year of interest to jump to it, or use the slider at the bottom of the page.</b></p>
+                            <p><b>🔹 Use the variable dropdown to color polities by different Seshat variables.</b></p>
                             <p><b>🔹 Use the opacity slider to adjust the transparency of the polity shapes.</b></p>
-                            <p><b>🔹 Use the play button to animate the map through time.</b></p>
+                            <p><b>🔹 Use the play controls to quickly increment the year and animate the map through time.</b></p>
                             <p><b>🔹 Use the background map controls to switch between different base maps.</b></p>
                         </div>
-                        <button class="transparent-button" onclick="toggleTips()">💡</button>
                     </div>
                 </div>
 		        <h1 class="text-teal sliderDate" id="sliderDate"></h1>
@@ -571,6 +591,7 @@
                         allVariablesLoaded = true;
                         plotPolities();
                         document.getElementById('variablesLoadingIndicator').style.display = 'none';
+                        document.getElementById('background-map-header').style.display = 'block';
                         document.getElementById('cliopatria-link').style.display = 'block';
 
                         return fetch('/core/provinces_and_countries');
