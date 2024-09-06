@@ -17,11 +17,14 @@ function createMap() {
     return map;
 }
 
-function createGlobe() {
+function createGlobe(accessToken) {
     // Ensure Cesium is loaded
     if (typeof Cesium === 'undefined') {
         throw new Error('Cesium library is not loaded.');
     }
+
+    // Set the Cesium Ion default access token
+    Cesium.Ion.defaultAccessToken = accessToken;
 
     // Create the Cesium viewer with the defined container
     var viewer = new Cesium.Viewer('globe', {

@@ -3943,7 +3943,8 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         'display_year': displayed_year,
         'tick_years': json.dumps(tick_years),
         'latest_year': latest_year,
-        'seshat_id_page_id': seshat_id_page_id
+        'seshat_id_page_id': seshat_id_page_id,
+        'CESIUM_ION_ACCESS_TOKEN': settings.CESIUM_ION_ACCESS_TOKEN  # This is used in the template to access Cesium Ion
     }
 
     return content
