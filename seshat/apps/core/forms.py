@@ -130,7 +130,7 @@ class PolityForm(forms.ModelForm):
         'end_year': 'End Year',
         'home_seshat_region': 'Home Seshat Region',
         'polity_tag': 'Polity Tag',
-        'shapefile_name': 'Shapefile name',
+        'shapefile_name': 'Shapefile ID',
         'private_comment': 'Private Comment (optional)',
         'general_description': 'General Description of the Polity',
 
@@ -149,7 +149,7 @@ class PolityForm(forms.ModelForm):
             'home_seshat_region': forms.Select(attrs={'class': 'form-control  js-example-basic-single form-select mb-3',}),
             'polity_tag': forms.Select(attrs={'class': 'form-control form-select mb-3',}),
             'shapefile_name': forms.TextInput(attrs={'class': 'form-control mb-3', }),
-            'private_comment': forms.Textarea(attrs={'class': 'form-control', 'style': 'height: 100px', 'placeholder':'Add a private comment that will only be visible to Seshat experts and RAs.\nUse this box to request edits to the polity map data.'}),
+            'private_comment': forms.Textarea(attrs={'class': 'form-control', 'style': 'height: 100px', 'placeholder':'Add a private comment that will only be visible to Seshat experts and RAs.\nUse this box to request edits to the polity border shapes. Enter the ID of the relevant shape in the box above (found by clicking on the map).'}),
             'general_description': forms.Textarea(attrs={'class': 'form-control  mb-3', 'style': 'height: 265px', 'placeholder':'Add a general description (optional)'}),
 
         }
@@ -171,7 +171,7 @@ class PolityUpdateForm(forms.ModelForm):
         'start_year': 'Start Year',
         'end_year': 'End Year',
         'home_seshat_region': 'Home Seshat Region',
-        'shapefile_name': 'Shapefile name',
+        'shapefile_name': 'Shapefile ID',
         'polity_tag': 'Polity Tag',
         'private_comment': 'Private Comment (optional)',
         'general_description': 'General Description of the Polity',
@@ -191,7 +191,7 @@ class PolityUpdateForm(forms.ModelForm):
             'home_seshat_region': forms.Select(attrs={'class': 'form-control  js-example-basic-single form-select mb-3',}),
             'polity_tag': forms.Select(attrs={'class': 'form-control form-select mb-3',}),
             'shapefile_name': forms.TextInput(attrs={'class': 'form-control mb-3', }),
-            'private_comment': forms.Textarea(attrs={'class': 'form-control', 'style': 'height: 100px', 'placeholder':'Add a private comment that will only be visible to seshat experts and RAs.\nUse this box to request edits to the polity map data.'}),
+            'private_comment': forms.Textarea(attrs={'class': 'form-control', 'style': 'height: 100px', 'placeholder':'Add a private comment that will only be visible to Seshat experts and RAs.\nUse this box to request edits to the polity border shapes. Enter the ID of the relevant shape in the box above (found by clicking on the map).'}),
             'general_description': forms.Textarea(attrs={'class': 'form-control  mb-3', 'style': 'height: 265px', 'placeholder':'Add a general description (optional)'}),
 
         }
