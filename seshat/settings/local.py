@@ -100,4 +100,5 @@ if not sys.platform.startswith('darwin'): # macOS
     GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'  
 
 # Cesium
-CESIUM_ION_ACCESS_TOKEN = env('CESIUM_ION_ACCESS')
+if os.getenv('GITHUB_ACTIONS') != 'true' and 'test' not in sys.argv:
+    CESIUM_ION_ACCESS_TOKEN = env('CESIUM_ION_ACCESS')
