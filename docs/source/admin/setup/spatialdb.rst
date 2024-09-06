@@ -12,11 +12,11 @@ Cliopatria shape dataset
 
    This will create a new file with the name "cliopatria_seshat_processed.geojson".
    Note: You can preview the file in the Jupyter notebook found in the `notebooks` directory. Instructions on how to run the notebook are found in the `README.md` file in the same directory.
-5. Go back to the Seshat repo on the machine the website code is running from (if you are running it on a remote server, upload the processed GeoJSON). With your Seshat Python environment activated, you can populate ``core_videoshapefile`` table using the following command:
+5. Go back to the Seshat repo on the machine the website code is running from (if you are running it on a remote server, upload the processed GeoJSON). With your Seshat Python environment activated, you can populate ``core_cliopatria`` table using the following command:
 
    .. code-block:: bash
 
-      $ python manage.py populate_videodata /path/to/cliopatria_seshat_processed.geojson
+      $ python manage.py populate_cliopatria /path/to/cliopatria_seshat_processed.geojson
 
 
 GADM
