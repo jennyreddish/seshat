@@ -29,8 +29,8 @@ function createGlobe(accessToken) {
     // Create the Cesium viewer with the defined container
     var viewer = new Cesium.Viewer('globe', {
         baseLayer: Cesium.ImageryLayer.fromProviderAsync(
-            Cesium.ArcGisMapServerImageryProvider.fromBasemapType(
-                Cesium.ArcGisBaseMapType.SATELLITE
+            Cesium.TileMapServiceImageryProvider.fromUrl(
+                Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII")
             )
         ),
         baseLayerPicker: false, // Disable base layer picker
