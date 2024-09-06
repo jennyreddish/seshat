@@ -244,7 +244,8 @@
             });
             map.fitBounds(L.geoJSON(fullGeojsonData).getBounds());
 
-            var viewer = createGlobe();
+            var accessToken = "{{ content.CESIUM_ION_ACCESS_TOKEN }}";
+            var viewer = createGlobe(accessToken);
 
             var baseLayers = createBaseLayers();
 

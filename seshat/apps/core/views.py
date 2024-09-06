@@ -3945,6 +3945,8 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         'latest_year': latest_year,
         'seshat_id_page_id': seshat_id_page_id
     }
+    if hasattr(settings, 'CESIUM_ION_ACCESS_TOKEN'):
+        content['CESIUM_ION_ACCESS_TOKEN'] = settings.CESIUM_ION_ACCESS_TOKEN  # This is used in the template to access Cesium Ion
 
     return content
 

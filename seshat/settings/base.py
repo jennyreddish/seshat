@@ -463,3 +463,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 """
 SECURE_CROSS_ORIGIN_OPENER_POLICY is set to None to disable the Cross-Origin Opener Policy.
 """
+
+# Cesium
+if not os.path.exists(local_env_path) and not os.getenv('GITHUB_ACTIONS') == 'true':
+    CESIUM_ION_ACCESS_TOKEN = config('CESIUM_ION_ACCESS')

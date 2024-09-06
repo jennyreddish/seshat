@@ -626,7 +626,8 @@
         });
 
         var map = createMap();
-        var viewer = createGlobe();
+        var accessToken = "{{ CESIUM_ION_ACCESS_TOKEN }}";
+        var viewer = createGlobe(accessToken);
 
         var baseLayers = createBaseLayers();
 
