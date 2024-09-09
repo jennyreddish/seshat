@@ -101,6 +101,10 @@ First things first, we need to get the latest packages from Ubuntu:
 
     sudo apt update
     sudo apt install python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl
+    sudo apt-get install -y gdal-bin
+    sudo apt-get install -y libgdal-dev
+    sudo apt install -y libgeos++-dev libgeos3.10.2
+    sudo apt install -y libgeos-c1v5 libgeos-dev libgeos-doc
 
 Bringing in the Codebase
 ------------------------
