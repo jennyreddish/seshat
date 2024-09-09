@@ -140,6 +140,7 @@ With our virtual environment active, we install the packages:
     (seshatprojectenv) $ sudo apt install build-essential
     (seshatprojectenv) $ pip install -r /home/ubuntu/seshatprojecthome/seshat/requirements.txt
     (seshatprojectenv) $ pip install django gunicorn psycopg2-binary
+    (seshatprojectenv) $ pip install "django-geojson [field]"
 
 .. note::
 
