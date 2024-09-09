@@ -332,6 +332,11 @@ Now you should be able to see the website through your browser on: http://PUBLIC
 
 This is serving the website, but this way of serving the website is not reliable in production. So, lets go on.
 
+Load the shape data
+----------------------------
+
+If the shape data tables are not yet populated in your copy of the Seshat core database and you have access to source data, populate one or more of them with the instructions `here <../spatialdb.rst>`_.
+
 Testing Gunicorn’s ability to serve our Project
 -----------------------------------------------
 
