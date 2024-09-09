@@ -10,4 +10,5 @@ We use Pulumi to manage our cloud infrastructure. To set up the infrastructure, 
 
    local/index
    cloud/pulumi
+   cloud/CSH_manual
    spatialdb
