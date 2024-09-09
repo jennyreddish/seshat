@@ -538,4 +538,4 @@ You should now be able to go to your server’s domain or IP address (without th
 Setting up a domain and SSL certificate
 ----------------------------------------
 
-*TODO: add instructions on how to set up a domain and SSL certificate for the server.**
+*TODO: add instructions on how to set up a domain and SSL certificate for the server.*
