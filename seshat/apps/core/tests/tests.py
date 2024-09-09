@@ -44,7 +44,7 @@ class ShapesTest(TestCase):
             start_year=-100,
             end_year=1100
         )
-        self.video_shapefile = Cliopatria.objects.create(
+        self.cliopatria_shapefile = Cliopatria.objects.create(
             id=1,
             geom=self.square,
             simplified_geom=self.square,
@@ -171,10 +171,10 @@ class ShapesTest(TestCase):
 
     # Model tests
 
-    def test_video_shapefile_creation(self):
+    def test_cliopatria_shapefile_creation(self):
         """Test the creation of a Cliopatria instance."""
-        self.assertIsInstance(self.video_shapefile, Cliopatria)
-        self.assertEqual(self.video_shapefile.name, "Testpolityname")
+        self.assertIsInstance(self.cliopatria_shapefile, Cliopatria)
+        self.assertEqual(self.cliopatria_shapefile.name, "Testpolityname")
 
     def test_gadm_shapefile_creation(self):
         """Test the creation of a GADMShapefile instance."""

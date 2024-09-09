@@ -78,31 +78,17 @@ You can use either Conda or Python's built-in ``venv`` module to create a virtua
 
          $ source seshat/bin/activate
 
-
-Step 2: Create a fork of the correct GitHub repo
-------------------------------------------------
-
-.. note::
-
-    Note: In the next step, you'll use the URL of the fork you choose to clone the repo.
-
-Choose which fork you want to work with.
-
-- If you want to work with the main development branch of Seshat, you should make note of Majid Benam's fork: https://github.com/MajidBenam/seshat
-- If you want to work with the spatial development branch of Seshat, you should make note of Ed Chalstrey's fork: https://github.com/edwardchalstrey1/seshat
-
-
-Step 3: Clone the repo
+Step 2: Clone the repo
 ----------------------
 
 Using your Terminal, clone the repository:
 
 .. code-block:: bash
 
-    $ git clone https://github.com/edwardchalstrey1/seshat
+    $ git clone https://github.com/Seshat-Global-History-Databank/seshat
 
 
-Step 4: Create an empty database and add the PostGIS extension
+Step 3: Create an empty database and add the PostGIS extension
 --------------------------------------------------------------
 
 .. hint::
@@ -140,7 +126,7 @@ Now, you can add the PostGIS extension to your database:
     CREATE EXTENSION postgis;
 
 
-Step 5: Configure GDAL and GEOS
+Step 4: Configure GDAL and GEOS
 -------------------------------
 
 .. hint::
@@ -157,7 +143,7 @@ Open :doc:`seshat/settings/base.py </api/seshat/settings/base/index>` and check 
 Note: there are hardcoded paths in ``base.py`` for the Mac and Ubuntu instructions above included.
 
 
-Step 6: Install the Python packages
+Step 5: Install the Python packages
 -----------------------------------
 
 Install the Python packages in your environment (some packages have these as dependencies).
@@ -170,7 +156,7 @@ From the top level of the ``seshat`` directory, run the following commands to in
     $ pip install "django-geojson [field]"
 
 
-Step 7: Seshat database setup
+Step 6: Seshat database setup
 -----------------------------
 
 Restore Seshat database from dump file:
@@ -180,7 +166,7 @@ Restore Seshat database from dump file:
     $ pg_restore -U postgres -d <seshat_db_name> /path/to/file.dump
 
 
-Step 8: Secure the database
+Step 7: Secure the database
 ---------------------------
 
 Add a password to the database for security.
@@ -205,10 +191,10 @@ Locate ``pg_hba.conf`` if you don't know where it is
 
 Update postgres to use md5 with ``nano /path/to/pg_hba.conf``
 
-.. image:: ../../../figures/pg_hba.conf.png
+.. image:: ../../../img/pg_hba.conf.png
 
 
-Step 9: Set up environment variables for connecting to the database
+Step 8: Set up environment variables for connecting to the database
 -------------------------------------------------------------------
 
 Create a configuration file with your database info for Django. The presence of this file will ensure Django connects to your local database.
@@ -226,7 +212,7 @@ The file should look like this:
     DB_PASSWORD=<db_password>
 
 
-Step 10: Migrate the database
+Step 9: Migrate the database
 -----------------------------
 
 Ensure that all Django database migrations have run:
@@ -234,6 +220,13 @@ Ensure that all Django database migrations have run:
 .. code-block:: bash
 
     $ python manage.py migrate
+
+Step 10: Collect static files
+-----------------------------
+
+.. code-block:: bash
+
+    $ python manage.py collectstatic
 
 
 Step 11: Load the shape data
