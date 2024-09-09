@@ -535,3 +535,7 @@ If no errors are reported, go ahead and restart Nginx by typing:
 You should now be able to go to your server’s domain or IP address (without the :8000 or other ports at the end and with http instead of https) to view your fully functioning application.
 
 
+Setting up a domain and SSL certificate
+----------------------------------------
+
+*TODO: add instructions on how to set up a domain and SSL certificate for the server.**
