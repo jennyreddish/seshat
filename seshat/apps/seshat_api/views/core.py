@@ -28,7 +28,7 @@ from ..filters.core import (
     SeshatCommentPartFilter,
     ScpThroughCtnFilter,
     ReligionFilter,
-    VideoShapefileFilter,
+    CliopatriaFilter,
     GADMShapefileFilter,
     GADMCountriesFilter,
     GADMProvincesFilter,
@@ -53,7 +53,7 @@ from ..models import (
     SeshatCommentPart,
     ScpThroughCtn,
     Religion,
-    VideoShapefile,
+    Cliopatria,
     GADMShapefile,
     GADMCountries,
     GADMProvinces,
@@ -337,7 +337,7 @@ class ReligionViewSet(
     filterset_class = ReligionFilter
 
 
-class VideoShapefileViewSet(
+class CliopatriaViewSet(
     FilterBackends,
     MixinSeshatAPISerializer,
     MixinSeshatAPIAuth,
@@ -347,9 +347,9 @@ class VideoShapefileViewSet(
     A viewset for viewing and editing Video Shapefiles.
     """
 
-    model = VideoShapefile
+    model = Cliopatria
     pagination_class = SeshatAPIRestrictedPagination
-    filterset_class = VideoShapefileFilter
+    filterset_class = CliopatriaFilter
 
 
 class GADMShapefileViewSet(

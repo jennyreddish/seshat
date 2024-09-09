@@ -17,15 +17,23 @@ function createMap() {
     return map;
 }
 
-function createGlobe() {
+function createGlobe(accessToken) {
     // Ensure Cesium is loaded
     if (typeof Cesium === 'undefined') {
         throw new Error('Cesium library is not loaded.');
     }
 
+    // Set the Cesium Ion default access token
+    Cesium.Ion.defaultAccessToken = accessToken;
+
     // Create the Cesium viewer with the defined container
-    var viewer = new Cesium.Viewer('map', {
-        imageryProvider: new Cesium.IonImageryProvider({ assetId: 2 }), // Default imagery provider
+    var viewer = new Cesium.Viewer('globe', {
+        baseLayer: Cesium.ImageryLayer.fromProviderAsync(
+            Cesium.TileMapServiceImageryProvider.fromUrl(
+                Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII")
+            )
+        ),
+        baseLayerPicker: false, // Disable base layer picker
         geocoder: false, // Disable geocoder
         homeButton: true, // Enable home button
         sceneModePicker: true, // Enable scene mode picker
@@ -58,9 +66,15 @@ function createBaseLayers() {
 
 function updateSliderOutput() {
     if (slider.value < 0) {
-        output.innerHTML = Math.abs(slider.value) + ' BCE';
+        sliderDate.innerHTML = Math.abs(slider.value) + ' BCE';
+        if (sliderDate2) { // Exists in world_map.html but not in polity_map.html
+            sliderDate2.innerHTML = Math.abs(slider.value) + ' BCE';
+        }
     } else {
-        output.innerHTML = slider.value + ' CE';
+        sliderDate.innerHTML = slider.value + ' CE';
+        if (sliderDate2) { // Exists in world_map.html but not in polity_map.html
+            sliderDate2.innerHTML = slider.value + ' CE';
+        }
     }
 }
 
@@ -143,29 +157,35 @@ function setSliderTicks (tickYears) {
     }
 };
 
-function startPlay() {
-    stopPlay(); // Clear existing interval before starting a new one
+function playBack() {
+
     var increment = Number(document.getElementById('increment').value);
-
     var milliseconds = 1 / (increment / 1000);
+    var symbol = document.getElementById('playButton').innerHTML;
+    if (symbol === '▶️') {
+        playInterval = setInterval(function () {
+            // Increment the slider value by 1
+            slider.value = Number(slider.value) + 1;
+            enterYearInput.value = slider.value; // Sync enterYear input with dateSlide value
+            updateSliderOutput(); // Update the displayed year
+            plotPolities(); // This function is defined differently in the world_map and polity_map templates
 
-    playInterval = setInterval(function () {
-        // Increment the slider value by 1
-        slider.value = Number(slider.value) + 1;
-        enterYearInput.value = slider.value; // Sync enterYear input with dateSlide value
-        updateSliderOutput(); // Update the displayed year
-        plotPolities(); // This function is defined differently in the world_map and polity_map templates
+            // Stop playing when the slider reaches its maximum value
+            if (slider.value >= parseInt(slider.max)) {
+                stopPlay();
+            }
+        }, milliseconds); // Interval based on user input
+        document.getElementById('playButton').innerHTML = '⏸';
+    } else {
+        stopPlay();
+    }
 
-        // Stop playing when the slider reaches its maximum value
-        if (slider.value >= parseInt(slider.max)) {
-            stopPlay();
-        }
-    }, milliseconds); // Interval based on user input
 }
 
 function stopPlay() {
     clearInterval(playInterval);
-}
+    document.getElementById('playButton').innerHTML = '▶️';
+};
 
 function storeYear() {
     var year = document.getElementById('enterYear').value;
@@ -180,13 +200,11 @@ function switchBaseMap() {
     var base = document.getElementById("baseMapGADM").value
 
     if (selectedMap === 'cesium') {
-        // Disable the play button and stop button when switching to the globe view
+        // Disable the play button when switching to the globe view
         document.getElementById('playButton').disabled = true;
-        document.getElementById('stopButton').disabled = true;
     } else {
-        // Enable the play button and stop button when switching to the map view
+        // Enable the play button when switching to the map view
         document.getElementById('playButton').disabled = false;
-        document.getElementById('stopButton').disabled = false;
     }
 
     if (base == 'province') {
@@ -338,16 +356,6 @@ function updateLegend() {
 
             // Append the container to the legendDiv
             legendDiv.appendChild(polityContainer);
-
-            // Make the polityContainer scrollable if there are more than 7 polities
-            if (addedPolities.length > 7) {
-                polityContainer.style.maxHeight = '420px'; // Adjust based on actual item height
-                polityContainer.style.overflowY = 'scroll';
-            } else {
-                // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
-                polityContainer.style.maxHeight = '';
-                polityContainer.style.overflowY = '';
-            }
         }
 
     } else if (variable in categorical_variables) {
@@ -427,16 +435,42 @@ function updateLegend() {
 
         legendDiv.appendChild(legendItem);
     }
+
+    if (variable == 'polity') {
+        if (addedPolities.length > 0) {
+            // Add clear selection button
+            var clearSelectionButton = document.createElement('button');
+            clearSelectionButton.textContent = 'Clear selection';
+            clearSelectionButton.onclick = clearSelection;
+            legendDiv.appendChild(clearSelectionButton);
+
+            // Make the polityContainer scrollable if there are more than 7 polities
+            if (addedPolities.length > 7) {
+                polityContainer.style.maxHeight = '420px';
+                polityContainer.style.overflowY = 'scroll';
+            } else {
+                // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
+                polityContainer.style.maxHeight = '';
+                polityContainer.style.overflowY = '';
+            }
+        }
+    }
 }
 
 function updateComponentLegend() {
 
     var legendDiv = document.getElementById('componentLegend');
+    var legendDiv2 = document.getElementById('componentLegend2');
     var displayComponent = document.getElementById('switchPolitiesComponents').value;
     var selectedYearInteger = parseInt(document.getElementById('dateSlide').value);
+    // Create a container for polity items
+    var polityContainer = document.createElement('div');
 
-    // Clear the current legend
+    // Clear current legend and ensure it is displayed
     legendDiv.innerHTML = '';
+    legendDiv2.innerHTML = '';
+    legendDiv.style.display = 'block';
+    legendDiv2.style.display = 'block';
 
     var addedPolities = [];
     var addedPolityNames = [];
@@ -464,6 +498,7 @@ function updateComponentLegend() {
         var legendTitle = document.createElement('h3');
         legendTitle.textContent = 'Components';
         legendDiv.appendChild(legendTitle);
+        legendDiv2.appendChild(legendTitle.cloneNode(true));
         for (var i = 0; i < addedPolities.length; i++) {
             var legendItem = document.createElement('p');
             var colorBox = document.createElement('span');
@@ -475,13 +510,38 @@ function updateComponentLegend() {
             colorBox.style.marginRight = '10px';
             legendItem.appendChild(colorBox);
             legendItem.appendChild(document.createTextNode(addedPolities[i].polity));
-            legendDiv.appendChild(legendItem);
+            polityContainer.appendChild(legendItem); // Append to the container
         }
-    };
+
+        // Append the container to the legendDiv
+        legendDiv.appendChild(polityContainer);
+        polityContainer2 = polityContainer.cloneNode(true);
+        legendDiv2.appendChild(polityContainer2);
+
+        // Make the polityContainer scrollable if there are more than 7 polities
+        if (addedPolities.length > 7) {
+            polityContainer.style.maxHeight = '300px';
+            polityContainer.style.overflowY = 'scroll';
+            polityContainer2.style.maxHeight = '300px';
+            polityContainer2.style.overflowY = 'scroll';
+        } else {
+            // Reset to default if fewer than 7 polities to ensure it behaves correctly on subsequent updates
+            polityContainer.style.maxHeight = '';
+            polityContainer.style.overflowY = '';
+            polityContainer2.style.maxHeight = '';
+            polityContainer2.style.overflowY = '';
+        }
+    } else {
+        // Hide the component legend if there are no components to display
+        legendDiv.style.display = 'none';
+        legendDiv2.style.display = 'none';
+    }
 }
 
 function clearSelection() {
-    document.getElementById('popup').innerHTML = '';
+    var popup = document.getElementById('popup');
+    popup.innerHTML = '';
+    popup.style.display = 'none';
     shapesData.forEach(function (shape) {
         shape['weight'] = 0;
     });
@@ -583,4 +643,13 @@ function populateVariableDropdown(variables) {
             chooseVariableDropdown.appendChild(optgroup);
         }
     });
+}
+
+function toggleTips() {
+    var dropdown = document.getElementById("tips");
+    if (dropdown.style.display === "none" || dropdown.style.display === "") {
+        dropdown.style.display = "block";
+    } else {
+        dropdown.style.display = "none";
+    }
 }

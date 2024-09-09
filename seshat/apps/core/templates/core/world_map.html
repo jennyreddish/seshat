@@ -79,7 +79,7 @@
         position: absolute;
         bottom: 90;
         right: 10;
-        background-color: rgba(255, 253, 242, 0.8);
+        background-color: rgba(255, 253, 242, 1);
         padding: 10px;
         border-radius: 5px;
         max-width: 200px;
@@ -95,7 +95,7 @@
     #sliderdiv {
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
-        background-color: rgba(255, 253, 242, 0.8);
+        background-color: rgba(255, 253, 242, 1);
         padding: 10px;
         display: block;
         position: absolute;
@@ -115,30 +115,187 @@
         font-size: 90px;
     }
 
-    #sliderDate {
+    .sliderDate {
         position: absolute;
         top: 79%;
         left: 16%;
         transform: translate(-50%, -50%);
         z-index: 1000;
-        background-color: rgba(255, 253, 242, 0.8);
+        background-color: rgba(255, 253, 242, 1);
         border-radius: 5px; /* Adds rounded edges */
     }
 
-    #popup {
+    .topleftcontainer {
+        display: flex;
         position: absolute;
         top: 1%;
         left: 4%;
         z-index: 1000;
+    }
+    .helpcontainer {
+        display: flex;
+        position: absolute;
+        top: 30%;
+        left: 30%;
+        z-index: 1000;
+    }
+
+    #popup{
         overflow: auto;
         border-style: solid;
         border-width: 0px;
-        background-color: rgba(255, 253, 242, 0.8);
+        background-color: rgba(255, 253, 242, 1);
         border-radius: 5px; /* Adds rounded edges */
+    }
+
+    #help {
+        overflow: auto;
+        border-style: solid;
+        border-width: 0px;
+        background-color: none;
+        border-radius: 5px; /* Adds rounded edges */
+        display: flex;
+        align-items: center;
     }
 
     input {
         accent-color: teal;
+    }
+
+    .tips-content {
+        display: none;
+        margin-top: 10px;
+        background-color: rgba(255, 253, 242, 1);
+        border-color: #782823;
+        border-radius: 5px;
+        border-style: solid;
+        border-width: 4px;
+        padding: 10px;
+    }
+    .tips-content p {
+        margin: 0;
+    }
+    .transparent-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        color: teal;
+    }
+
+    .transparent-button:hover {
+        color: orange;
+    }
+
+    .display-info-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+    
+    .display-info-container::after {
+        content: "Many polities have component sub-polities with their own polygons on the map. Switching to 'Polity components' assigns a unique color to each polity component. 'Full polities' shows components from the same polity in the same color.";
+        visibility: hidden;
+        width: 200px;
+        background-color: #782823;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        position: absolute;
+        z-index: 9999;
+        top: 50%;
+        right: 125%;
+        margin-top: -20px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .display-info-container:hover::after {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .variable-info-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+    
+    .variable-info-container::after {
+        content: "Polity polygons on the map are colored based on the selected variable. Select 'Polity' to assign a unique color to each polity.";
+        visibility: hidden;
+        width: 200px;
+        background-color: #782823;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        position: absolute;
+        z-index: 9999;
+        top: 50%;
+        right: 125%;
+        margin-top: -20px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .variable-info-container:hover::after {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    #previouslySelectedVariable {
+        text-overflow: ellipsis;
+        display: none;
+        background: none;
+        border: none;
+    }
+
+    .previouslySelectedVariable-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .previouslySelectedVariable-container::after {
+        content: "Click to switch quickly between the two most recently selected variables.";
+        visibility: hidden;
+        width: 200px;
+        background-color: #782823;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        position: absolute;
+        z-index: 9999;
+        top: 50%;
+        right: 125%;
+        margin-top: -20px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .previouslySelectedVariable-container:hover::after {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .spinner {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #782823;
+        width: 15px;
+        height: 15px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    #crossButton {
+        background-color: rgba(255, 253, 242, 1);
+        right: 4%;
+        position: absolute;
+        border-color: #782823;
     }
 
 </style>
@@ -156,85 +313,111 @@
                 <div id="loadingIndicator">
                     <div class="spinner"></div>                   
                 </div>
-
-                <div class="slidecontainer">
-                    <label for="chooseVariable">Variable: </label>
-                    <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;" disabled>
-                        <option value="polity">Polity</option>
-                    </select><br>
-                    <fieldset id="previouslySelectedVariableFieldset" style="display: none">
-                        <label for="previouslySelectedVariable">Variable: </label>
-                        <button id="previouslySelectedVariable" type="button" onclick="previouslySelectedVariableButton()" style="width: 150px; text-overflow: ellipsis;">Previous variable</button><br>
-                    </fieldset>
-                    <fieldset id="chooseCategoricalVariableSelectionFieldset">
-                        <label for="chooseCategoricalVariableSelection"></label>
-                        <select name="chooseCategoricalVariableSelection" id="chooseCategoricalVariableSelection" onchange="plotPolities()" style="width: 150px; text-overflow: ellipsis;">            
-                        </select>
-                    </fieldset>
-                    <div id="variablesLoadingIndicator">
-                        <p>Loading Seshat variables...</p>
+                <div style="display: none; text-align: center;" id="cliopatria-link">
+                    <p>
+                        <a href="../cliopatria" target="_blank">🔹 Learn more about this dataset.</a>
+                    </p>
+                    <p>
+                        <button class="transparent-button" onclick="toggleTips()">🔹 How to navigate this map.</button>
+                    </p>
+                </div>
+                <label for="chooseVariable">Variable: </label>
+                <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;" disabled>
+                    <option value="polity">Polity</option>
+                </select>
+                <div class="variable-info-container">
+                    ℹ️
+                </div>
+                <div class="previouslySelectedVariable-container">
+                    <button id="previouslySelectedVariable" type="button" onclick="previouslySelectedVariableButton()">🔄</button>
+                </div><br>
+                <fieldset id="chooseCategoricalVariableSelectionFieldset">
+                    <label for="chooseCategoricalVariableSelection"></label>
+                    <select name="chooseCategoricalVariableSelection" id="chooseCategoricalVariableSelection" onchange="plotPolities()" style="width: 150px; text-overflow: ellipsis;">            
+                    </select>
+                </fieldset>
+                <div id="variablesLoadingIndicator">
+                    <p>Loading Seshat variables...</p>
+                </div>
+                <fieldset id="switchPolitiesComponentsFieldset" style="display: block">
+                    <label for="switchPolitiesComponents">Display:</label>
+                    <select name="switchPolitiesComponents" id="switchPolitiesComponents" onchange="plotPolities()">
+                        <option value="polities">Full polities</option>
+                        <option value="components">Polity components</option>
+                    </select>
+                    <div class="display-info-container">
+                        ℹ️
                     </div>
-                    <fieldset id="switchPolitiesComponentsFieldset" style="display: block">
-                        <label for="switchPolitiesComponents">Display:</label>
-                        <select name="switchPolitiesComponents" id="switchPolitiesComponents" onchange="plotPolities()">
-                            <option value="polities">Full polities</option>
-                            <option value="components">Polity components</option>
-                        </select>
-                    </fieldset>
-                    <label for="opacitySlide">Opacity:</label>
-                    <input type="range" name="opacitySlide" id="opacitySlide" min="0.1" max="1" step="0.1" value="0.7" class="slider"
-                        onchange="plotPolities()" style="width: 150px;"><br><br>
-                    <!-- TODO: Uncomment this when there are more capitals with coordinates in the database -->
-                    <!-- <label for="showCapitals">Show capital cities</label>
-                    <input type="checkbox" id="showCapitals" name="showCapitals" onclick=plotPolities()><br><br> -->
+                </fieldset>
+                <label for="opacitySlide">Opacity:</label>
+                <input type="range" name="opacitySlide" id="opacitySlide" min="0.1" max="1" step="0.1" value="0.7" class="slider"
+                    onchange="plotPolities()" style="width: 150px;"><br><br>
+                <!-- TODO: Uncomment this when there are more capitals with coordinates in the database -->
+                <!-- <label for="showCapitals">Show capital cities</label>
+                <input type="checkbox" id="showCapitals" name="showCapitals" onclick=plotPolities()><br><br> -->
+                <label for="enterYear">Enter year:</label>
+                <input type="number" id="enterYear" name="enterYear" value="{{ display_year }}" style="width: 75px;" onchange="storeYear()">
+                <p>🗣️ <i>Hit enter to set year.</i></p>
+                <label for="increment">Play rate (years/second):</label>
+                <input type="number" id="increment" name="increment" value="10" style="width: 50px;" onchange="playRateValue()">
+                <p style="width: 250px;">🗣️ <i>Hit enter to set play rate (inaccurate at high speeds).</i></p>
+                <div style="text-align: center;">
+                    <button id="startButton" type="button" onclick="adjustSliderStartYear()">⏮️</button>
+                    <button id="minusButton" type="button" onclick="adjustSliderDown()">⏪</button>
+                    <button id="playButton" type="button" onclick="playBack()">▶️</button>
+                    <button id="plusButton" type="button" onclick="adjustSliderUp()">⏩</button>
+                    <button id="endButton" type="button" onclick="adjustSliderEndYear()">⏭️</button><br>
                 </div>
             </fieldset>
-            <p>🗣️ <i>Double click to reach polity pages.</i></p>
-            <button id="clearSelection" type="button" onclick="clearSelection()">Clear selected polities</button><br><br>
-            <fieldset>
-                <label for="baseMapOnly">Base map only</label>
-                <input type="checkbox" id="baseMapOnly" name="baseMapOnly" onclick=plotPolities()><br>
-                <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMapWorldMap()" checked>Esri World Imagery</label><br>
-                <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Cesium Globe</label><br>
-                <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMapWorldMap()">CartoDB (no labels)</label><br>
-                <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMapWorldMap()">OpenStreetMap</label><br>
-                <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMapWorldMap()" disabled>Current borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
-                <div id="baseMapCurrentLoadingIndicator">
-                    <p>Loading current borders...</p>
-                </div><br>
-            </fieldset>
-            <fieldset id="baseMapGADMFieldset">
-                <label for="baseMapGADM">Current borders:</label>
-                <select name="baseMapGADM" id="baseMapGADM" onchange="switchBaseMapWorldMap()">
-                    <option value="country">Countries</option>
-                    <option value="province">Provinces</option>
-                </select><br>
-                <p>Click a country or province.</p>
-            </fieldset>
-            <div id="yearControls" style="position: absolute; bottom: 0px; display: flex; flex-direction: column; justify-content: flex-end;">
+            <div id="baseMapControls" style="position: absolute; bottom: 0px; display: flex; flex-direction: column; justify-content: flex-end;">
                 <fieldset>
-                    <label for="enterYear">Enter year:</label>
-                    <input type="number" id="enterYear" name="enterYear" value="{{ display_year }}" style="width: 75px;"
-                        onchange="storeYear()">
-                    <button id="startButton" type="button" onclick="adjustSliderStartYear()">Start</button>
-                    <button id="endButton" type="button" onclick="adjustSliderEndYear()">End</button><br><br>
-                    <label for="enterYear">Increment (years):</label>
-                    <input type="number" id="increment" name="increment" value="100" style="width: 50px;"
-                        onchange="playRateValue();">
-                    <button id="minusButton" type="button" onclick="adjustSliderDown()">-</button>
-                    <button id="plusButton" type="button" onclick="adjustSliderUp()">+</button><br><br>
-                    <label for="playRate">Play rate: </label>
-                    <span id="playRate">100 y/s</span><br>
-                    <label for="playButton">Run animation:</label>
-                    <button id="playButton" type="button" onclick="startPlay()">▶️</button>
-                    <button id="stopButton" type="button" onclick="stopPlay()">⏸</button><br><br>
+                    <legend id="background-map-header" style="display: none">
+                        <h1 class="text-teal federicka-big">Background map</h1>
+                    </legend>
+                    <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMapWorldMap()" checked>Satellite (<a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a>)</label><br>
+                    <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Globe (<a href="https://cesium.com/" target="_blank">Cesium</a>)</label><br>
+                    <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMapWorldMap()">Steet Maps (<a href="https://www.openstreetmap.org/" target="_blank">OSM</a>)</label><br>
+                    <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMapWorldMap()">Basic unlabelled (<a href="https://carto.com/basemaps" target="_blank">CARTO</a>)</label><br>
+                    <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMapWorldMap()" disabled>Clickable borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
+                    <div id="baseMapCurrentLoadingIndicator">
+                        <p>Loading current borders...</p>
+                    </div><br>
+                </fieldset>
+                <fieldset id="baseMapGADMFieldset">
+                    <label for="baseMapGADM">Current borders:</label>
+                    <select name="baseMapGADM" id="baseMapGADM" onchange="switchBaseMapWorldMap()">
+                        <option value="country">Countries</option>
+                        <option value="province">Provinces</option>
+                    </select><br>
+                    <label for="baseMapOnly">Base map only</label>
+                    <input type="checkbox" id="baseMapOnly" name="baseMapOnly" onclick=plotPolities()><br>
                 </fieldset>
             </div>
         </div>
         <div style="position: relative; height: 85vh; width: 80%">
             <div id="map" style="height: 100%; width: 100%; z-index: 0; position: relative;">
+                <div class="topleftcontainer">
                     <div id="popup" class="p-1"></div>
-		    <h1 class="text-teal" id="sliderDate"></h1>
+                </div>
+                <div class="helpcontainer">
+                    <div id="help" class="p-1">
+                        <div id="tips" class="tips-content">
+                            <button id="crossButton" onclick="toggleTips()">❌</button>
+                            <p><b>🔹 Hover the mouse over polity shapes on the map to reveal information.</b></p>
+                            <p><b>🔹 Clicking polity shapes adds them to the legend.</b></p>
+                            <p><b>🔹 Some polities have Seshat pages reachable with double click.</b></p>
+                            <p><b>🔹 Enter a year of interest to jump to it, or use the slider at the bottom of the page.</b></p>
+                            <p><b>🔹 Use the variable dropdown to color polities by different Seshat variables.</b></p>
+                            <p><b>🔹 Use the opacity slider to adjust the transparency of the polity shapes.</b></p>
+                            <p><b>🔹 Use the play controls to quickly increment the year and animate the map through time.</b></p>
+                            <p><b>🔹 Use the background map controls to switch between different base maps.</b></p>
+                        </div>
+                    </div>
+                </div>
+		        <h1 class="text-teal sliderDate" id="sliderDate"></h1>
+            </div>
+            <div id="globe" style="height: 100%; width: 100%; z-index: 0; position: relative; max-height: 85vh; display: none">
+                <h1 class="text-teal sliderDate" id="sliderDate2"></h1>
             </div>
             <div id="sliderdiv">
                 <fieldset>
@@ -388,6 +571,7 @@
                         plotPolities();
                         allPolitiesLoaded = true;
                         document.getElementById('loadingIndicator').style.display = 'none';
+                        document.getElementById('cliopatria-link').style.display = 'block';
 
                         return fetch('/core/world_map_all_with_vars');
                     })
@@ -407,6 +591,8 @@
                         allVariablesLoaded = true;
                         plotPolities();
                         document.getElementById('variablesLoadingIndicator').style.display = 'none';
+                        document.getElementById('background-map-header').style.display = 'block';
+                        document.getElementById('cliopatria-link').style.display = 'block';
 
                         return fetch('/core/provinces_and_countries');
                     })
@@ -429,6 +615,7 @@
                         });
 
                         document.getElementById('baseMapCurrentLoadingIndicator').style.display = 'none';
+                        document.getElementById('cliopatria-link').style.display = 'block';
                         document.getElementById('baseMapCurrent').disabled = false;
 
                     });
@@ -439,7 +626,8 @@
         });
 
         var map = createMap();
-        var viewer = createGlobe();
+        var accessToken = "{{ CESIUM_ION_ACCESS_TOKEN }}";
+        var viewer = createGlobe(accessToken);
 
         var baseLayers = createBaseLayers();
 
@@ -491,12 +679,14 @@
             var opacity = document.getElementById('opacitySlide').value;
             var atLeastOnePolityHighlighted = false;
             var selectedMap = document.querySelector('input[name="baseMap"]:checked').value;
+            var popup = document.getElementById('popup');
 
             // If not all polities loaded and the url year does not match the selected year, restore the loading indicator
             if (!allPolitiesLoaded) {
                 var initialDisplayYear = {{ display_year }};
                 if (selectedYear != initialDisplayYear) {
                     document.getElementById('loadingIndicator').style.display = 'block';
+                    document.getElementById('cliopatria-link').style.display = 'none';
                 }
             }
 
@@ -505,7 +695,7 @@
                 // Update previously selected variable button
                 document.getElementById('previouslySelectedVariable').setAttribute('variableSelection', localStorage.getItem('variable'));
                 if(allVariablesLoaded){
-                    document.getElementById('previouslySelectedVariableFieldset').style.display = 'block';
+                    document.getElementById('previouslySelectedVariable').style.display = 'inline-block';
                 }
             }
 
@@ -543,6 +733,15 @@
                     map.removeLayer(layer);
                 }
             });
+
+            // Hide the viewer or map div depending on the selected base map
+            if (selectedMap !== 'cesium') {
+                document.getElementById('globe').style.display = 'none';
+                document.getElementById('map').style.display = 'block';
+            } else {
+                document.getElementById('map').style.display = 'none';
+                document.getElementById('globe').style.display = 'block';
+            }
 
             // Convert to int, because for some reason JS converts it to a string
             var selectedYearInt = parseInt(selectedYear);
@@ -675,14 +874,14 @@
                             if (selectedMap == 'cesium'){
                                 popupContent = popupContent + `
                                     <tr>
-                                        <td>Seshat Page</td>
+                                        <td>Seshat page</td>
                                         <td>${longName} (${shape.seshat_id})</td>
                                     </tr>
                                 `;
                             } else {
                                 popupContent = popupContent + `
                                         <tr>
-                                            <td>Seshat Page</td>
+                                            <td>Seshat page</td>
                                             <td><a href="/core/polity/${polityId}" target="_blank">${longName} (${shape.seshat_id})</a></td>
                                         </tr>
                                     `;
@@ -706,22 +905,31 @@
                             }
                             popupContent = popupContent + `
                                     <tr>
-                                        <td>Seshat Pages</td>
+                                        <td>Seshat pages</td>
                                         <td>${polityLinks}</td>
                                     </tr>
                                 `;
                         }
+
+                        let wiki_page = 'https://en.wikipedia.org/wiki/' + shape.wikipedia_name.replace(/ /g, '_');
                         popupContent = popupContent + `
-                                    <tr>
-                                        <td>Duration</td>
-                                        <td>${displaystart_year} to ${displayend_year}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Area (est.)</td>
-                                        <td>${formattedArea} Km<sup>2</sup></td>
-                                    </tr>
-                            `;
-                            // Absent/present variables
+                            <tr>
+                                <td>Wikipedia page</td>
+                                <td><a href="${wiki_page}" target="_blank">${shape.wikipedia_name}</a></td>
+                            </tr>
+                        `;
+
+                        popupContent = popupContent + `
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>${displaystart_year} to ${displayend_year}</td>
+                                </tr>
+                                <tr>
+                                    <td>Area (est.)</td>
+                                    <td>${formattedArea} Km<sup>2</sup></td>
+                                </tr>
+                        `;
+                        // Absent/present variables
                         if (variable != 'polity' && !categorical_variables.hasOwnProperty(variable)) {
                             if (shape[variable + '_dict']) {
                                 // Iterate through key/values in the dictionary
@@ -852,8 +1060,8 @@
 
                         if (selectedMap === 'cesium') {
 
-                            document.getElementById('popup').innerHTML = '';
-                            document.getElementById('popup').style.borderWidth = '0px';
+                            popup.innerHTML = '';
+                            popup.style.display = 'none';
 
                             if (variable == 'polity') {
                                 document.getElementById('variableLegend').innerHTML = '';
@@ -919,39 +1127,68 @@
                         
                                     // Add the popup for the initially selected polity
                                     if (shape.weight > 0) {
+                                        popup.style.display = 'block';
                                         // Add the popup to the popup div
-                                        document.getElementById('popup').innerHTML = popupContent;
+                                        popup.innerHTML = popupContent;
                                         // Set the border colour of the popup div
-                                        document.getElementById('popup').style.borderColor = layer.feature.properties.colour;
+                                        popup.style.borderColor = layer.feature.properties.colour;
                                         // Increase the border width of the popup div
-                                        document.getElementById('popup').style.borderWidth = '4px';
+                                        popup.style.borderWidth = '4px';
                                     };
-                        
-                                    // Listen for the click event on the layer
-                                    layer.on('click', function (e) {        
-                        
-                                        if (variable == 'polity'){
+
+                                    var isClicked = false; // Flag to track if the layer was clicked
+                                    var previousPopupContent = '';
+                                    var previousPopupBorderColor = '';
+                                    var previousPopupBorderWidth = '';
+
+                                    function handleMouseover(e, layer, popupContent) {
+                                        // Store the previous state of the popup
+                                        previousPopupContent = popup.innerHTML;
+                                        previousPopupBorderColor = popup.style.borderColor;
+                                        previousPopupBorderWidth = popup.style.borderWidth;
+
+                                        // Update the popup with new content
+                                        popup.style.display = 'block';
+                                        popup.innerHTML = popupContent;
+                                        popup.style.borderColor = layer.feature.properties.colour;
+                                        popup.style.borderWidth = '4px';
+                                    }
+
+                                    function handleMouseout() {
+                                        // Revert the popup to the previous state only if the layer was not clicked
+                                        if (!isClicked) {
+                                            popup.innerHTML = previousPopupContent;
+                                            popup.style.borderColor = previousPopupBorderColor;
+                                            popup.style.borderWidth = previousPopupBorderWidth;
+                                        }
+                                    }
+
+                                    function handleLayerInteraction(e, layer, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend, isClick) {
+                                        let newWeight;
+                                        if (variable == 'polity') {
                                             if (shape.weight === 0) {
                                                 // Increase the weight of the clicked layer
                                                 newWeight = polityBorderWeightSelected;
-                                                this.setStyle({
+                                                layer.setStyle({
                                                     weight: newWeight
                                                 });
+                                                popup.style.display = 'block';
                                                 // Add the popup to the popup div
-                                                document.getElementById('popup').innerHTML = popupContent;
+                                                popup.innerHTML = popupContent;
                                                 // Set the border colour of the popup div
-                                                document.getElementById('popup').style.borderColor = layer.feature.properties.colour;
+                                                popup.style.borderColor = layer.feature.properties.colour;
                                                 // Increase the border width of the popup div
-                                                document.getElementById('popup').style.borderWidth = '4px';                        
+                                                popup.style.borderWidth = '4px';
                                             } else {
                                                 // Decrease the weight of the clicked layer
                                                 newWeight = polityBorderWeight;
                                                 // Remove the popup from the popup div
-                                                document.getElementById('popup').innerHTML = '';
-                                            };
+                                                popup.innerHTML = '';
+                                                popup.style.display = 'none';
+                                            }
                                             // Update weights in this layer and others of the same polity
                                             map.eachLayer(function (layer) {
-                                                if (layer.feature && layer.feature.properties && layer.feature.properties.name === shape.name ) {
+                                                if (layer.feature && layer.feature.properties && layer.feature.properties.name === shape.name) {
                                                     layer.setStyle({
                                                         weight: newWeight
                                                     });
@@ -960,21 +1197,37 @@
                                             // Update weights in shapesData
                                             var i = 0;
                                             shapesData.forEach(function (shape2) {
-                                                if (shape2.name === shape.name) {                                           
+                                                if (shape2.name === shape.name) {
                                                     shapesData[i]['weight'] = newWeight;
                                                 }
                                                 i++;
                                             });
                                             updateLegend();
                                         } else {
+                                            popup.style.display = 'block';
                                             // Add the popup to the popup div
-                                            document.getElementById('popup').innerHTML = popupContent;
+                                            popup.innerHTML = popupContent;
                                             // Set the border colour of the popup div
-                                            document.getElementById('popup').style.borderColor = layer.feature.properties.colour;
+                                            popup.style.borderColor = layer.feature.properties.colour;
                                             // Increase the border width of the popup div
-                                            document.getElementById('popup').style.borderWidth = '4px';
+                                            popup.style.borderWidth = '4px';
+                                        }
+                                        if (isClick) {
+                                            isClicked = true; // Set the flag if the interaction is a click
                                         }
                                         L.DomEvent.stopPropagation(e);
+                                    }
+
+                                    layer.on('click', function (e) {
+                                        handleLayerInteraction(e, this, shape, variable, popupContent, polityBorderWeightSelected, polityBorderWeight, shapesData, updateLegend, true);
+                                    });
+
+                                    layer.on('mouseover', function (e) {
+                                        handleMouseover(e, this, popupContent);
+                                    });
+
+                                    layer.on('mouseout', function () {
+                                        handleMouseout();
                                     });
                                 }
                             }).addTo(map);
@@ -1009,7 +1262,8 @@
             adjustScroll();
 
             if (!atLeastOnePolityHighlighted){
-                document.getElementById('popup').innerHTML = '';
+                popup.innerHTML = '';
+                popup.style.display = 'none';
             }
 
         }
@@ -1019,12 +1273,14 @@
         allPolitiesLoaded = true;
         plotPolities()
         document.getElementById('loadingIndicator').style.display = 'none';
+        document.getElementById('cliopatria-link').style.display = 'block';
         allPolitiesLoaded = false;
 
         // Display slider value
         var slider = document.getElementById("dateSlide");
         var enterYearInput = document.getElementById("enterYear");
-        var output = document.getElementById("sliderDate");  // Used in updateSliderOutput()
+        var sliderDate = document.getElementById("sliderDate");  // Used in updateSliderOutput()
+        var sliderDate2 = document.getElementById("sliderDate2");  // Used in updateSliderOutput()
         updateSliderOutput(); // Display the default slider value
 
         // Update the current slider value (each time you drag the slider handle)
@@ -1035,16 +1291,9 @@
         }
 
         var playInterval;
-        var playRateInput = document.getElementById("playRate");
 
         // Add event listener to stop playing when adjusting the slider manually
         slider.addEventListener("input", stopPlay);
-
-        // Add event listener to update play rate when the input changes
-        playRateInput.addEventListener("change", function () {
-            stopPlay(); // Stop current play if ongoing
-            startPlay(); // Start with the updated play rate
-        });
 
         // Make sure Radio selection is kept on page refresh
         document.addEventListener("DOMContentLoaded", function () {

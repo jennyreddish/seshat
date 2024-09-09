@@ -65,7 +65,7 @@ from ..general.models import Polity_research_assistant, Polity_duration, Polity_
 
 from ..crisisdb.models import Power_transition
 
-from .models import Citation, Polity, Section, Subsection, Variablehierarchy, Reference, SeshatComment, SeshatCommentPart, Nga, Ngapolityrel, Capital, Seshat_region, Macro_region, VideoShapefile, GADMCountries, GADMProvinces, SeshatCommon, ScpThroughCtn, SeshatPrivateComment, SeshatPrivateCommentPart, Religion
+from .models import Citation, Polity, Section, Subsection, Variablehierarchy, Reference, SeshatComment, SeshatCommentPart, Nga, Ngapolityrel, Capital, Seshat_region, Macro_region, Cliopatria, GADMCountries, GADMProvinces, SeshatCommon, ScpThroughCtn, SeshatPrivateComment, SeshatPrivateCommentPart, Religion
 import pprint
 import requests
 from requests.structures import CaseInsensitiveDict
@@ -3873,7 +3873,7 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
     Only one of displayed_year or seshat_id should be set; not both.
 
     Note:
-        seshat_id in VideoShapefile is new_name in Polity.
+        seshat_id in Cliopatria is new_name in Polity.
 
     Args:
         displayed_year (str): The year to display the polities for. "all" will return all polities. Any given year will return polities that were active in that year.
@@ -3887,17 +3887,17 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         raise ValueError("Only one of displayed_year or seshat_id should be set not both.")
 
     if displayed_year != "all":
-        rows = VideoShapefile.objects.filter(polity_start_year__lte=displayed_year, polity_end_year__gte=displayed_year)
+        rows = Cliopatria.objects.filter(polity_start_year__lte=displayed_year, polity_end_year__gte=displayed_year)
     elif seshat_id != "all":
         # Note: this query assumes that some polities have multiple seshat_ids separated by a semicolon, but none are included inside a different longer seshat_id
-        rows = VideoShapefile.objects.filter(seshat_id__contains=seshat_id)
+        rows = Cliopatria.objects.filter(seshat_id__contains=seshat_id)
     else:
-        rows = VideoShapefile.objects.all()
+        rows = Cliopatria.objects.all()
 
     # Convert 'geom' to GeoJSON in the database query
     rows = rows.annotate(geom_json=AsGeoJSON('geom'))
     # Filter the rows to return
-    rows = rows.values('id', 'seshat_id', 'name', 'start_year', 'end_year', 'polity_start_year', 'polity_end_year', 'colour', 'area', 'geom_json', 'components', 'member_of')
+    rows = rows.values('id', 'seshat_id', 'name', 'start_year', 'end_year', 'polity_start_year', 'polity_end_year', 'colour', 'area', 'geom_json', 'components', 'member_of', 'wikipedia_name')
     shapes = list(rows)
 
     seshat_ids = [shape['seshat_id'] for shape in shapes if shape['seshat_id']]
@@ -3909,7 +3909,7 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
     seshat_id_page_id = {new_name: {'id': id, 'long_name': long_name or ""} for new_name, id, long_name in polity_info}
 
     if 'migrate' not in sys.argv:
-        result = VideoShapefile.objects.aggregate(
+        result = Cliopatria.objects.aggregate(
             min_year=Min('polity_start_year'), 
             max_year=Max('polity_end_year')
         )
@@ -3917,9 +3917,10 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         latest_year = result['max_year']
         initial_displayed_year = earliest_year
     else:
-        earliest_year, latest_year = 2014, 2014
+        earliest_year, latest_year = 2024, 2024  # These are not used in the web app, but are set to avoid errors when running migrations
         initial_displayed_year = -3400
 
+    # Overrides can be set to restrict the years shown on the map
     if override_earliest_year is not None:
         earliest_year = override_earliest_year
     if override_latest_year is not None:
@@ -3944,6 +3945,8 @@ def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=
         'latest_year': latest_year,
         'seshat_id_page_id': seshat_id_page_id
     }
+    if hasattr(settings, 'CESIUM_ION_ACCESS_TOKEN'):
+        content['CESIUM_ION_ACCESS_TOKEN'] = settings.CESIUM_ION_ACCESS_TOKEN  # This is used in the template to access Cesium Ion
 
     return content
 
@@ -4315,12 +4318,12 @@ def random_polity_shape(from_selection=True):
         ]
         # Select a random polity from the list
         seshat_id = random.choice(selected_polities)
-        shape = VideoShapefile.objects.filter(seshat_id=seshat_id).first()
+        shape = Cliopatria.objects.filter(seshat_id=seshat_id).first()
     else:
-        max_id = VideoShapefile.objects.filter(seshat_id__isnull=False).aggregate(max_id=Max("id"))['max_id']
+        max_id = Cliopatria.objects.filter(seshat_id__isnull=False).aggregate(max_id=Max("id"))['max_id']
         while True:
             pk = random.randint(1, max_id)
-            shape = VideoShapefile.objects.filter(seshat_id__isnull=False, id=pk).first()
+            shape = Cliopatria.objects.filter(seshat_id__isnull=False, id=pk).first()
             if shape:
                 if shape.seshat_id and shape.area > 600000:  # Big empires only
                     break
@@ -4353,7 +4356,7 @@ def common_map_view_content(content):
     content['world_map_initial_polity'] = world_map_initial_polity
 
     # Set the last year in history we ever want to display, which will be used to determine when we should say "present"
-    content['last_history_year'] = last_history_year
+    content['last_history_year'] = content['latest_year']  # Set this to the latest year in the data or a value of choice
 
     return content
 
@@ -4375,13 +4378,12 @@ def dummy_map_view_content(content):
     content['world_map_initial_polity'] = world_map_initial_polity
 
     # Set the last year in history we ever want to display, which will be used to determine when we should say "present"
-    content['last_history_year'] = last_history_year
+    content['last_history_year'] = content['latest_year']  # Set this to the latest year in the data or a value of choice
     return content
 
 # World map default settings
 world_map_initial_displayed_year = 117
 world_map_initial_polity = 'it_roman_principate'
-last_history_year = 2014
 
 def map_view_initial(request):
     global world_map_initial_displayed_year, world_map_initial_polity
@@ -4407,7 +4409,7 @@ def map_view_initial(request):
             world_map_initial_displayed_year, world_map_initial_polity = random_polity_shape()
         return redirect('{}?year={}'.format(request.path, world_map_initial_displayed_year))
 
-    content = get_polity_shape_content(displayed_year=world_map_initial_displayed_year, override_latest_year=last_history_year)
+    content = get_polity_shape_content(displayed_year=world_map_initial_displayed_year)
 
     content = dummy_map_view_content(content)
 
@@ -4428,7 +4430,7 @@ def map_view_all(request):
         JsonResponse: The HTTP response with serialized JSON.
     """
 
-    content = get_polity_shape_content(override_latest_year=last_history_year)
+    content = get_polity_shape_content()
 
     content = dummy_map_view_content(content)
 
@@ -4446,7 +4448,7 @@ def map_view_all_with_vars(request):
         JsonResponse: The HTTP response with serialized JSON.
     """
 
-    content = get_polity_shape_content(override_latest_year=last_history_year)
+    content = get_polity_shape_content()
 
     content = common_map_view_content(content)
 
@@ -5218,3 +5220,5 @@ def xxyyzz(request, com_id):
 
     return redirect(reverse('seshatprivatecomment-update', kwargs={'pk': com_id}))
 
+def cliopatria(request):
+    return render(request, 'core/cliopatria.html')

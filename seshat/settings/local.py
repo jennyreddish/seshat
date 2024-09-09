@@ -98,3 +98,7 @@ if 'test' in sys.argv:
 if not sys.platform.startswith('darwin'): # macOS
     # Linux (note: this overrides the path in base.py used by the production environment and may be related to a difference in the way the GDAL library is installed on the ATI and CSH servers, rather than a general difference between local and production environments)
     GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'  
+
+# Cesium
+if os.getenv('GITHUB_ACTIONS') != 'true' and 'test' not in sys.argv:
+    CESIUM_ION_ACCESS_TOKEN = env('CESIUM_ION_ACCESS')

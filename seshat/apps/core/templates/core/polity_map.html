@@ -21,6 +21,21 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+        flex: 1;
+    }
+    #globeParent {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        flex: 1;
+        display: none;
+    }
+    #globe {
+        position: absolute;
+        width: 125vh;
+        height: 55vh;
     }
     body, html {
         width: 100%;
@@ -30,13 +45,51 @@
     }
     #componentLegend {
         position: absolute;
-        bottom: 0;
-        left: 0;
-        background-color: rgba(255, 253, 242, 0.8);
+        top: 50%;
+        right: 1%;
+        transform: translateY(-50%);
+        background-color: rgba(255, 253, 242, 1);
         padding: 10px;
         border-radius: 5px;
         max-width: 200px;
         z-index: 999;
+    }
+    #componentLegend2 {
+        position: relative;
+        top: 1%;
+        left: 1%;
+        background-color: rgba(255, 253, 242, 1);
+        padding: 10px;
+        border-radius: 5px;
+        max-width: 200px;
+        z-index: 999;
+    }
+    .display-info-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+    
+    .display-info-container::after {
+        content: "Many polities have component sub-polities with their own polygons on the map. Switching to 'Polity components' assigns a unique color to each polity component. 'Full polities' shows components from the same polity in the same color.";
+        visibility: hidden;
+        width: 200px;
+        background-color: #782823;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        position: absolute;
+        z-index: 9999;
+        top: 50%;
+        right: 125%;
+        margin-top: -20px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .display-info-container:hover::after {
+        visibility: visible;
+        opacity: 1;
     }
 </style>
 
@@ -48,38 +101,44 @@
                 <fieldset>
 		            <div>
 			            <h2 class="h1 text-teal federicka-big" id="sliderDate"></h2>
-                        <label for="enterYear">Enter year:</label>
-                        <input type="number" id="enterYear" name="enterYear" value="{{ content.display_year }}" style="width: 75px;""><br>
-                        <label for="enterYear">Increment (years):</label>
-                        <input type="number" id="increment" name="increment" value="10" style="width: 50px;" onchange="playRateValue()">
-                        <button id=" minusButton" type="button" onclick="adjustSliderDown()">-</button>
-                        <button id="plusButton" type="button" onclick="adjustSliderUp()">+</button><br>
-                        <label for="playRate">Play rate: </label>
-                        <span id="playRate">10 y/s</span><br>
-                        <label for="playButton">Run animation:</label>
-                        <button id="playButton" type="button" onclick="startPlay()">▶️</button>
-                        <button id="stopButton" type="button" onclick="stopPlay()">⏸</button><br>
+                        <p><a href="../cliopatria">Learn more about this dataset.</a></p>
                         <label for="switchPolitiesComponents">Display:</label>
                         <select name="switchPolitiesComponents" id="switchPolitiesComponents" onchange="plotPolities()">
                             <option value="components">Polity components</option>
                             <option value="polities">Full polity</option>
-                        </select><br>
+                        </select>
+                        <div class="display-info-container">
+                            ℹ️
+                        </div><br>
                         <label for="opacitySlide">Opacity:</label>
                         <input type="range" name="opacitySlide" id="opacitySlide" min="0.1" max="1" step="0.1" value="0.7" class="slider"
                             onchange="plotPolities()" style="width: 150px;">
+                        <label for="enterYear">Enter year:</label>
+                        <input type="number" id="enterYear" name="enterYear" value="{{ content.display_year }}" style="width: 75px;">
+                        <p>🗣️ <i>Hit enter to set year.</i></p>
+                        <label for="increment">Play rate (years/second):</label>
+                        <input type="number" id="increment" name="increment" value="10" style="width: 50px;" onchange="playRateValue()">
+                        <p style="width: 250px;">🗣️ <i>Hit enter to set play rate (inaccurate at high speeds).</i></p>
+                        <div style="text-align: center;">
+                            <button id="startButton" type="button" onclick="adjustSliderStartYear()">⏮️</button>
+                            <button id="minusButton" type="button" onclick="adjustSliderDown()">⏪</button>
+                            <button id="playButton" type="button" onclick="playBack()">▶️</button>
+                            <button id="plusButton" type="button" onclick="adjustSliderUp()">⏩</button>
+                            <button id="endButton" type="button" onclick="adjustSliderEndYear()">⏭️</button><br>
+                        </div>
                         <fieldset>
                             <br>
-                            <label for="baseMapOnly">Base map only</label>
-                            <input type="checkbox" id="baseMapOnly" name="baseMapOnly" onclick=plotPolities()><br><br>
-                            <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMap()" checked>Esri World Imagery</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Cesium Globe</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMap()">CartoDB (no labels)</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMap()">OpenStreetMap</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMap()" disabled>Current borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
+                            <legend>
+                                <h2 class="text-teal federicka-medium">Background map</h2>
+                            </legend>
+                            <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMap()" checked>Satellite (<a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Globe (<a href="https://cesium.com/" target="_blank">Cesium</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMap()">Steet Maps (<a href="https://www.openstreetmap.org/" target="_blank">OSM</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMap()">Basic unlabelled (<a href="https://carto.com/basemaps" target="_blank">CARTO</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMap()" disabled>Clickable borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
                             <!-- Add a loading indicator for Current borders -->
                             <div id="baseMapCurrentLoadingIndicator">
                                 <p><sub>Loading current borders...</sub></p>
-                                <!-- <div class="spinner"></div> -->
                             </div><br>
                         </fieldset>
                         <fieldset id="baseMapGADMFieldset">
@@ -88,12 +147,20 @@
                                 <option value="country">Countries</option>
                                 <option value="province">Provinces</option>
                             </select><br>
+                            <label for="baseMapOnly">Base map only</label>
+                            <input type="checkbox" id="baseMapOnly" name="baseMapOnly" onclick=plotPolities()><br><br>
                         </fieldset>
                     </div>
                 </fieldset>
             </div>
             <div style="display: flex; flex-direction: column; width: 80%; height: 60vh;">
-                <div id="map" style="flex: 1; width: 100%"><div id="componentLegend"></div></div>
+                <div id="map">
+                    <div id="componentLegend"></div>
+                </div>
+                <div id="globeParent">
+                    <div id="globe"></div>
+                    <div id="componentLegend2"></div>
+                </div>
                 <div style="display: block; width: 100%">
                     <fieldset>
                         <div class="slider-container" style="position: relative;">
@@ -109,6 +176,12 @@
         </div>
         <script src="{% static 'core/js/map_functions.js' %}"></script>
         <script>
+
+            // Allows scrolling on the componentLegend div
+            const componentLegend = document.getElementById('componentLegend');
+            componentLegend.addEventListener('wheel', function (event) {
+                event.stopPropagation();
+            });
 
             window.onload = setSliderTicks({{ content.tick_years }});
 
@@ -162,8 +235,17 @@
                     });
             });
 
+            // Create the map
             var map = createMap();
-            var viewer = createGlobe();
+
+            // Set the initial map zoom level to fit everything in polityMapShapesData
+            var fullGeojsonData = polityMapShapesData.map(function (shape) {
+                return JSON.parse(shape.geom_json);
+            });
+            map.fitBounds(L.geoJSON(fullGeojsonData).getBounds());
+
+            var accessToken = "{{ content.CESIUM_ION_ACCESS_TOKEN }}";
+            var viewer = createGlobe(accessToken);
 
             var baseLayers = createBaseLayers();
 
@@ -189,6 +271,15 @@
                         map.removeLayer(layer);
                     }
                 });
+
+                // Hide the viewer or map div depending on the selected base map
+                if (selectedMap !== 'cesium') {
+                    document.getElementById('globeParent').style.display = 'none';
+                    document.getElementById('map').style.display = 'block';
+                } else {
+                    document.getElementById('map').style.display = 'none';
+                    document.getElementById('globeParent').style.display = 'block';
+                }
 
                 // Convert to int, because for some reason JS converts it to a string
                 var selectedYearInt = parseInt(selectedYear);
@@ -224,11 +315,28 @@
                                 displayend_year = shape.polity_end_year + ' CE';
                             }
 
+                            if (parseInt(shape.start_year) < 0) {
+                                shapestart_year = Math.abs(parseInt(shape.start_year)) + ' BCE';
+                            } else {
+                                shapestart_year = shape.start_year + ' CE';
+                            }
+
+                            if (parseInt(shape.end_year) < 0) {
+                                shapeend_year = Math.abs(parseInt(shape.end_year)) + ' BCE';
+                            } else {
+                                shapeend_year = shape.end_year + ' CE';
+                            }
+
+                            let wiki_page = 'https://en.wikipedia.org/wiki/' + shape.wikipedia_name.replace(/ /g, '_');
                             var popupContent = `
                                 <table>
                                     <tr>
                                         <th>${shape.name}</th>
                                         <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td>Wikipedia page</td>
+                                        <td><a href="${wiki_page}" target="_blank">${shape.wikipedia_name}</a></td>
                                     </tr>
                                     <tr>
                                         <td>Duration</td>
@@ -237,6 +345,14 @@
                                     <tr>
                                         <td>Area (est.)</td>
                                         <td>${formattedArea} Km<sup>2</sup></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shapefile ID</td>
+                                        <td>${parseInt(shape.id).toLocaleString()}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shapefile years</td>
+                                        <td>${shapestart_year} to ${shapeend_year}</td>
                                     </tr>
                                 </table>
                             `;
@@ -264,14 +380,12 @@
                                     if (displayedShapes.indexOf(shape.name) === -1) {
                                         displayedShapes.push(shape.name);
                                     }
-                                
-                                    // Adjust the viewer view to cover the geoJSON layer
-                                    // but not if there is > 1 shape dataset polity on this polity page
-                                    if (displayedShapes.length == 1) {
-                                        viewer.flyTo(dataSource, {
-                                            offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-90), 0)
-                                        });
-                                    }
+
+                                    // Adjust the viewer so we get a nice spin of the globe
+                                    viewer.flyTo(dataSource, {
+                                        offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-90), viewer.camera.positionCartographic.height)
+                                    });
+
                                 }).catch(function (error) {
                                     console.error('Error loading GeoJSON data: ', error);
                                 });
@@ -331,15 +445,10 @@
                                     displayedShapes.push(shape.name);
                                 }
 
-                                // adjust the map view to cover the geoJSON layer
-                                // but not if there is > 1 shape dataset polity on this polity page
-                                if (displayedShapes.length == 1) {
-                                    map.fitBounds(geoJSONLayer.getBounds());
-                                }
-
                             }
                         }
                     });
+
                 };
                 updateComponentLegend();
             }
@@ -350,7 +459,8 @@
             // Display slider value
             var slider = document.getElementById("dateSlide");
             var enterYearInput = document.getElementById("enterYear");
-            var output = document.getElementById("sliderDate");
+            var sliderDate = document.getElementById("sliderDate");
+            var sliderDate2 = document.getElementById("sliderDate2");  // This is undefined in the polity_map template, but is set to not break updateSliderOutput() in map_functions.js
             updateSliderOutput(); // Display the default slider value
 
             // Update the current slider value (each time you drag the slider handle)
@@ -361,16 +471,9 @@
             }
 
             var playInterval;
-            var playRateInput = document.getElementById("playRate");
 
             // Add event listener to stop playing when adjusting the slider manually
             slider.addEventListener("input", stopPlay);
-
-            // Add event listener to update play rate when the input changes
-            playRateInput.addEventListener("change", function () {
-                stopPlay(); // Stop current play if ongoing
-                startPlay(); // Start with the updated play rate
-            });
 
             // Make sure Radio selection is kept on page refresh
             document.addEventListener("DOMContentLoaded", function () {

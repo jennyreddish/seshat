@@ -2,7 +2,7 @@ import json
 from django.contrib.gis.geos import MultiPolygon, Polygon, GEOSGeometry
 from django.test import TestCase, Client
 from django.urls import reverse
-from ..models import VideoShapefile, GADMShapefile, GADMCountries, GADMProvinces, Polity, Capital
+from ..models import Cliopatria, GADMShapefile, GADMCountries, GADMProvinces, Polity, Capital
 from ...general.models import Polity_capital, Polity_peak_years, Polity_language, Polity_religious_tradition
 from ...sc.models import Judge
 from ...rt.models import Gov_res_pub_pros
@@ -44,7 +44,7 @@ class ShapesTest(TestCase):
             start_year=-100,
             end_year=1100
         )
-        self.video_shapefile = VideoShapefile.objects.create(
+        self.video_shapefile = Cliopatria.objects.create(
             id=1,
             geom=self.square,
             simplified_geom=self.square,
@@ -57,9 +57,10 @@ class ShapesTest(TestCase):
             polity_end_year=2020,
             colour="#FFFFFF",
             components="Test components",
-            member_of="Test member_of"
+            member_of="Test member_of",
+            wikipedia_name="Test Wikipedia"
         )
-        VideoShapefile.objects.create(
+        Cliopatria.objects.create(
             id=2,
             geom=self.square,
             simplified_geom=self.square,
@@ -72,7 +73,8 @@ class ShapesTest(TestCase):
             polity_end_year=1000,
             colour="#FFFFFF",
             components="Test components",
-            member_of="Test member_of"
+            member_of="Test member_of",
+            wikipedia_name="Test Wikipedia 2"
         )
         self.gadm_shapefile = GADMShapefile.objects.create(
             geom=self.square,
@@ -170,8 +172,8 @@ class ShapesTest(TestCase):
     # Model tests
 
     def test_video_shapefile_creation(self):
-        """Test the creation of a VideoShapefile instance."""
-        self.assertIsInstance(self.video_shapefile, VideoShapefile)
+        """Test the creation of a Cliopatria instance."""
+        self.assertIsInstance(self.video_shapefile, Cliopatria)
         self.assertEqual(self.video_shapefile.name, "Testpolityname")
 
     def test_gadm_shapefile_creation(self):
@@ -223,6 +225,7 @@ class ShapesTest(TestCase):
                     'id': 1,
                     'components': 'Test components',
                     'member_of': 'Test member_of',
+                    'wikipedia_name': 'Test Wikipedia'
                 },
                 {
                     'seshat_id': 'Cn5Dyna',
@@ -237,6 +240,7 @@ class ShapesTest(TestCase):
                     'id': 2,
                     'components': 'Test components',
                     'member_of': 'Test member_of',
+                    'wikipedia_name': 'Test Wikipedia 2'
                 }
             ],
             'earliest_year': 0,
@@ -272,6 +276,7 @@ class ShapesTest(TestCase):
                     'id': 1,
                     'components': 'Test components',
                     'member_of': 'Test member_of',
+                    'wikipedia_name': 'Test Wikipedia'
                 }
             ],
             'earliest_year': 0,  # This is the earliest year in the database, not the earliest year of the polity
@@ -306,6 +311,7 @@ class ShapesTest(TestCase):
                     'id': 1,
                     'components': 'Test components',
                     'member_of': 'Test member_of',
+                    'wikipedia_name': 'Test Wikipedia'
                 }
             ],
             'earliest_year': 2000,  # This is the earliest year of the polity
@@ -363,6 +369,7 @@ class ShapesTest(TestCase):
                         'id': 1,
                         'components': 'Test components',
                         'member_of': 'Test member_of',
+                        'wikipedia_name': 'Test Wikipedia'
                     }
                 ],
                 'earliest_year': 2000,
@@ -400,6 +407,7 @@ class ShapesTest(TestCase):
                         'id': 2,
                         'components': 'Test components',
                         'member_of': 'Test member_of',
+                        'wikipedia_name': 'Test Wikipedia 2'
                     }
                 ],
                 'earliest_year': 0,
@@ -462,6 +470,7 @@ class ShapesTest(TestCase):
                         'id': 2,
                         'components': 'Test components',
                         'member_of': 'Test member_of',
+                        'wikipedia_name': 'Test Wikipedia'
                     }
                 ]
         app_map = {
@@ -503,6 +512,7 @@ class ShapesTest(TestCase):
                         'id': 2,
                         'components': 'Test components',
                         'member_of': 'Test member_of',
+                        'wikipedia_name': 'Test Wikipedia'
                     }
                 ]
         result_shapes, result_variables = assign_categorical_variables_to_shapes(shapes, {})
