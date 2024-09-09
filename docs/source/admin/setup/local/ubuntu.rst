@@ -214,7 +214,7 @@ Locate ``pg_hba.conf`` if you don't know where it is:
 
 Update postgres to use md5 with ``nano /path/to/pg_hba.conf``
 
-.. image:: ../../../figures/pg_hba.conf.png
+.. image:: ../../../img/pg_hba.conf.png
 
 Restart postgres:
 
