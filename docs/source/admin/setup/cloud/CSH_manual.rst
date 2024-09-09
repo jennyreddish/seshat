@@ -155,6 +155,14 @@ With our virtual environment active, we install the packages:
 
     Make sure that psycopg and django-heroku are installed properly.
 
+Configure GDAL and GEOS
+---
+
+Open :doc:`seshat/settings/base.py </api/seshat/settings/base/index>` and check (or update) the paths in the following variables, which should be to the paths to your local ``gdal`` and ``geos`` installations:
+
+- ``GDAL_LIBRARY_PATH``
+- ``GEOS_LIBRARY_PATH``
+
 Preparing the Database Arrival
 -------------------------------
 
