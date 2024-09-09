@@ -1,5 +1,5 @@
-Azure cloud setup with Pulumi
-=============================
+MS Azure cloud setup with Pulumi (Alan Turing Institute)
+=======================================================
 
 .. note::
 
@@ -14,6 +14,8 @@ Azure cloud setup with Pulumi
 .. warning::
 
     The setup is only partially automated with Pulumi currently. As you'll see below, subsequent steps are required to that involve SSH-ing into the created VM.
+
+    This setup guide is specific to Azure, but can be followed outside The Alan Turing Institute with a credited Azure subscription.
 
 
 Prerequisites
