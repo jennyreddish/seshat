@@ -100,7 +100,7 @@ sudo apt install -y libgeos++-dev libgeos3.10.2
 sudo apt install -y libgeos-c1v5 libgeos-dev libgeos-doc
 
 # Clone Seshat
-git clone https://github.com/edwardchalstrey1/seshat /home/webadmin/seshat
+git clone https://github.com/Seshat-Global-History-Databank/seshat /home/webadmin/seshat
 cd /home/webadmin/seshat
 python3.8 -m venv venv
 source venv/bin/activate
