@@ -298,19 +298,19 @@ The content of the .env file should look something like this:
     DB_HOST = "localhost"
     DB_PORT = 5432
 
-    SECRET_KEY = 'django-insecure-g&ax*@qz6hcsmf)-&k75gm=)^cx33vm%t6pslid+*v$v7bw6@2'
+    SECRET_KEY = '<secret_key>'
 
     EMAIL_FROM_USER = 'seshatdb@gmail.com'
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = 'seshatdb@gmail.com'
-    EMAIL_HOST_PASSWORD = '5tr4%TR$6zt5&ZT%'
+    EMAIL_HOST_PASSWORD = '<email_password>'
 
-    GOOGLE_APP_CLIENT_ID = '77017415274-u1f5efvo1ubkmp1uqc4h7otic27d5qmc.apps.googleusercontent.com'
-    GOOGLE_APP_SECRET_KEY = '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'
+    GOOGLE_APP_CLIENT_ID = '<client_id>'
+    GOOGLE_APP_SECRET_KEY = '<secret_key>'
 
-    ZOTERO_API_KEY = 'u25OofjR8CUPr9RI99LEZW17'
+    ZOTERO_API_KEY = '<api_key>'
     # For future use
-    EMAIL_APP_PASS = "jfbgdlwrmpkysnsn"
+    EMAIL_APP_PASS = '<email_password>'
 
 We now need to ask Django to bring all the static files of the project (CSS files, images, etc.) together. Inside the virtual environment and in the same path as manage.py:
 
