@@ -109,7 +109,7 @@ Make sure you know where the codebase lies on GitHub and from inside **seshatpro
 
 .. code-block:: bash
 
-    git clone https://github.com/MajidBenam/seshat.git
+    git clone https://Seshat-Global-History-Databank/seshat.git
 
 Among the files brought in via the **git clone** command, there is an important file called: requirements.txt, which includes all the more specific packages and libraries we need for our Django project to run properly. But before that, we need to start a virtual environment specific to the Django project and make sure that we install everything in there. We do so inside the seshatprojecthome directory, where the seshat folder also resides:
 
