@@ -56,17 +56,17 @@ Development workflow
     - Add a descriptive title and description to the pull request.
     - You can include "Closes #<issue number>" in the pull request description if you want to automatically close the issue when the pull request is merged.
 
-9. Review and address any feedback on your pull request.
+5. Review and address any feedback on your pull request.
 
     - Make changes to your code based on the feedback, adding new commits to the branch and pushing them to the remote repository.
     - Once the feedback is addressed, request a review from the maintainer(s) again.
 
-10. Once your pull request is approved, it can be merged into the `dev` branch.
+6. Once your pull request is approved, it can be merged into the `dev` branch.
 
     - Remember to close the issue associated with the pull request manually if it wasn't already closed by the merge.
     - The closed issue will be automatically moved to the "Done" column on the project board.
 
-11. Pull the latest changes from the `dev` branch to any remote servers running the Seshat application.
+7. Pull the latest changes from the `dev` branch to any remote servers running the Seshat application.
 
     - Ensure any new migrations added in the pull request are applied to the database.
     .. TODO: add link to unwritten production deployment guide
