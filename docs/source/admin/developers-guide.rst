@@ -40,37 +40,53 @@ Development workflow
 
 2. Create a new branch from the `dev` branch.
 
+    - You should have cloned the Seshat repository to your local machine when setting up your development environment. See `Setting up Seshat in a local environment <../getting-started/setup/local/index.rst>`_ for more information on running the Seshat application locally.
     - Ensure you have run `git pull` to get the latest changes from the `dev` branch.
+    - Create a new branch for your changes based on the `dev` branch. The branch name could be descriptive of the issue you are working on, e.g. `fix-1234` or `feature-5678`.
 
 3. Implement your code changes.
 
     - Commit each change with a descriptive commit message.
-    - Add tests if appropriate.
-    - [Optional] You can run tests locally to ensure your changes do not break existing functionality. See the `Testing <../contribute/testing.rst>`_ guide for more information. Tests will also be run automatically on GitHub actions when you open a pull request.
+    - Push your branch to GitHub as you work on it or when you have completed the changes.
 
-4. Open a pull request on GitHub.
+4. Test your changes locally.
 
-    - Push your branch to the remote repository.
-    - Open the pull request from the new branch to the `dev` branch.
-    - Assign the pull request to maintainer(s) for review.
+    - Ensure your changes work as expected in your local development environment. 
+    - If you have added new migrations, apply them to the database.
+    - [Optional] Add tests if appropriate.
+    - [Optional] You can run tests locally to ensure your changes do not break existing functionality. See the `Testing <testing.rst>`_ guide for more information. Tests will also be run automatically on GitHub actions when you open a pull request.
+
+5. [Optional] Test your changes on the staging server if needed.
+
+    - *ssh* into the staging server. See `websites <websites.rst>`_ for details on current servers maintained by the project.
+    - Run `git fetch` and then `git checkout <new branch name>`.
+    - You may also need to restart Gunicorn to see the changes. See the `setup docs <setup/index.rst>`_ for guidance.
+    - If you have added new migrations, apply them to the database.
+    - Make sure your changes work as expected on the staging server.
+
+6. Open a pull request on GitHub.
+
+    - On GitHub, open a pull request from the new branch to the `dev` branch. Make sure the base repository is set to `Seshat-Global-History-Databank/seshat`.
     - Add a descriptive title and description to the pull request.
     - You can include "Closes #<issue number>" in the pull request description if you want to automatically close the issue when the pull request is merged.
+    - [Optional] Assign the pull request to maintainer(s) for review if needed.
 
-5. Review and address any feedback on your pull request.
+7. Review and address any feedback or problems on the pull request.
 
-    - Make changes to your code based on the feedback, adding new commits to the branch and pushing them to the remote repository.
+    - If any of the GitHub actions fail, check the logs to see what went wrong. You may need to make changes to your code and push them to the branch.
+    - If reviewers have added comments, make changes to your code based on the feedback, adding new commits to the branch and pushing them to the remote repository.
     - Once the feedback is addressed, request a review from the maintainer(s) again.
 
-6. Once your pull request is approved, it can be merged into the `dev` branch.
+8. Once your pull request is ready (and approved by any reviewers), it can be merged into the `dev` branch.
 
     - Remember to close the issue associated with the pull request manually if it wasn't already closed by the merge.
     - The closed issue will be automatically moved to the "Done" column on the project board.
 
-7. Pull the latest changes from the `dev` branch to any remote servers running the Seshat application.
+9. Pull the latest changes from the `dev` branch to the production server hosting the Seshat website.
 
-    - Ensure any new migrations added in the pull request are applied to the database.
-    .. TODO: add link to unwritten production deployment guide
-    .. TODO: add link to another page with Django notes
+    - *ssh* into the production server. See `websites <websites.rst>`_ for details on current servers maintained by the project.
+    - Ensure any new migrations are applied to the database.
+    - You may also need to restart Gunicorn to see the changes. See the `setup docs <setup/index.rst>`_ for guidance.
 
 
 GitHub workflow visualised
