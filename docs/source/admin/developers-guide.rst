@@ -99,3 +99,28 @@ As described above, development on Seshat follows a basic GitHub workflow. The d
     :alt: Seshat development workflow
 
 Image taken from `The GitHub Flow <https://guides.github.com/introduction/flow/>`_ by Dev Genius
+
+Updating this documentation
+---------------------------
+
+If you are making changes to the Seshat project that require updates to the documentation, you can do so by following these steps:
+
+1. [Optional] Follow the developers guide above and open a GitHub issue using the *Documentation Improvement* template.
+
+2. Make your changes to the documentation in the `docs/source` directory. The pages are written in reStructuredText format.
+
+3. Build the documentation locally to check that your changes are rendering correctly.
+
+.. code-block:: bash
+
+    pip install -r docs/requirements.txt
+    cd docs
+    make html
+
+4. In your browser, open the `docs/build/html/index.html` file to view the updated documentation.
+
+5. Make a pull request with your changes to the `dev` branch. Follow the steps in the *Development workflow* section above.
+
+6. GitHub actions will automatically build the documentation when you open a pull request. Fix any errors that are flagged.
+
+7. Once your pull request is merged, the documentation will be automatically updated on the `Seshat documentation site <https://seshat-documentation.readthedocs.io/en/latest/>`_.
