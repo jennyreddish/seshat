@@ -230,6 +230,17 @@ Create a configuration file with your database info for Django. The presence of 
 
 Within the repo, create a file called ``seshat/settings/.env`` with the database connection variables.
 
+.. admonition:: Get a Cesium access token
+    :class: dropdown
+
+    You will also need to generate an access token for Cesium in order for the globe to render on Seshat pages that include maps.
+
+    Visit the `Cesium website <https://ion.cesium.com/>`_ and create an account.
+
+    Once you have an account, navigate to the "Access Tokens" tab and create a new token.
+
+    Add this token to the ``.env`` file as shown below.
+
 The file should look like this:
 
 .. code-block::
@@ -239,6 +250,7 @@ The file should look like this:
     DB_HOST=localhost
     DB_PORT=5432
     DB_PASSWORD=<db_password>
+    CESIUM_ION_ACCESS=<cesium_access_token>
 
 
 Step 9: Migrate the database
