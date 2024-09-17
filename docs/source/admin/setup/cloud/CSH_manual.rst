@@ -288,6 +288,17 @@ To create the .env file in the same directory as the manage.py file: (/home/ubun
 
     vim .env
 
+.. admonition:: Get a Cesium access token
+    :class: dropdown
+
+    You will also need to generate an access token for Cesium in order for the globe to render on Seshat pages that include maps.
+
+    Visit the `Cesium website <https://ion.cesium.com/>`_ and create an account.
+
+    Once you have an account, navigate to the "Access Tokens" tab and create a new token.
+
+    Add this token to the ``.env`` file as shown below.
+
 The content of the .env file should look something like this:
 
 .. code-block:: none
@@ -311,6 +322,7 @@ The content of the .env file should look something like this:
     ZOTERO_API_KEY = '<api_key>'
     # For future use
     EMAIL_APP_PASS = '<email_password>'
+    CESIUM_ION_ACCESS='<cesium_access_token>''
 
 We now need to ask Django to bring all the static files of the project (CSS files, images, etc.) together. Inside the virtual environment and in the same path as manage.py:
 
