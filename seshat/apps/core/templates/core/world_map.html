@@ -478,6 +478,9 @@
             {% endfor %}
         ];
 
+        // Show me the size of the shapesData in MB (for debugging)
+        console.log('Initial shapesData size: ' + (JSON.stringify(shapesData).length / 1024 / 1024).toFixed(2) + ' MB');
+
         // Iterate through shapesData and ensure that fields that are lists are interpreted properly
         // TODO: find a way to avoid having to do this
         shapesData.forEach(function (shape) {
@@ -561,6 +564,7 @@
                                 shape.weight = polityBorderWeight;
                                 shapesData.push(shape);
                             });
+                        console.log('shapesDataAll size: ' + (JSON.stringify(shapesData).length / 1024 / 1024).toFixed(2) + ' MB');
 
                         seshat_id_page_id = data.seshat_id_page_id;
                         allCapitalsInfo = data.all_capitals_info;
@@ -584,6 +588,7 @@
                             return shape;
                         });
                         shapesData = shapesDataWithVars;
+                        console.log('shapesDataWithVars size: ' + (JSON.stringify(shapesData).length / 1024 / 1024).toFixed(2) + ' MB');
                         populateVariableDropdown(data.variables);
                         document.getElementById('chooseVariable').disabled = false;
                         categorical_variables = data.categorical_variables;
