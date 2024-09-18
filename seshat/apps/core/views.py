@@ -4385,6 +4385,8 @@ def dummy_map_view_content(content):
 world_map_initial_displayed_year = 117
 world_map_initial_polity = 'it_roman_principate'
 
+import time
+
 def map_view_initial(request):
     global world_map_initial_displayed_year, world_map_initial_polity
     """
@@ -4398,6 +4400,9 @@ def map_view_initial(request):
     Returns:
         HttpResponse: The HTTP response.
     """
+    
+    # Start a timer to measure the time taken to load the page
+    start_time = time.time()
 
     # Check if 'year' parameter is different from the world_map_initial_displayed_year or not present then redirect
     if 'year' in request.GET:
@@ -4412,6 +4417,9 @@ def map_view_initial(request):
     content = get_polity_shape_content(displayed_year=world_map_initial_displayed_year)
 
     content = dummy_map_view_content(content)
+
+    # Print the time taken to load the page
+    print(f"Time taken to load the initial view: {time.time() - start_time} seconds")
 
     return render(request,
                   'core/world_map.html',
@@ -4430,9 +4438,15 @@ def map_view_all(request):
         JsonResponse: The HTTP response with serialized JSON.
     """
 
+    # Start a timer to measure the time taken to load the page
+    start_time = time.time()
+
     content = get_polity_shape_content()
 
     content = dummy_map_view_content(content)
+
+    # Print the time taken to load the page
+    print(f"Time taken to load the all view: {time.time() - start_time} seconds")
 
     return JsonResponse(content)
 
@@ -4448,9 +4462,15 @@ def map_view_all_with_vars(request):
         JsonResponse: The HTTP response with serialized JSON.
     """
 
+    # Start a timer to measure the time taken to load the page
+    start_time = time.time()
+
     content = get_polity_shape_content()
 
     content = common_map_view_content(content)
+
+    # Print the time taken to load the page
+    print(f"Time taken to load the vars view: {time.time() - start_time} seconds")
 
     return JsonResponse(content)
 
