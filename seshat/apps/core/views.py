@@ -4332,58 +4332,6 @@ def random_polity_shape(from_selection=True):
                     break
     return shape.start_year, shape.seshat_id
 
-def common_map_view_content(content):
-    """
-    Set of functions that update content and run in each map view function.
-
-    Args:
-        content (dict): The content for the polity shapes.
-
-    Returns:
-        dict: The updated content for the polity shapes.
-    """
-
-    # Add in the present/absent variables to view for the shapes
-    content['shapes'], content['variables'] = assign_variables_to_shapes(content['shapes'], app_map)
-
-    # Add in the categorical variables to view for the shapes
-    content['shapes'], content['variables'] = assign_categorical_variables_to_shapes(content['shapes'], content['variables'])
-
-    # Load the capital cities for polities that have them
-    content['all_capitals_info'] = get_all_polity_capitals()
-    
-    # Add categorical variable choices to content for dropdown selection
-    content['categorical_variables'] = categorical_variables
-
-    # Set the initial polity to highlight
-    content['world_map_initial_polity'] = world_map_initial_polity
-
-    # Set the last year in history we ever want to display, which will be used to determine when we should say "present"
-    content['last_history_year'] = content['latest_year']  # Set this to the latest year in the data or a value of choice
-
-    return content
-
-def dummy_map_view_content(content):
-    """
-    Dummy version of common_map_view_content that adds blank dicts.
-
-    Args:
-        content (dict): The content for the polity shapes.
-
-    Returns:
-        dict: The updated content for the polity shapes.
-    """
-    content['all_capitals_info'] = {}
-    content['categorical_variables'] = {}
-    content['variables'] = {}
-
-    # Set the initial polity to highlight
-    content['world_map_initial_polity'] = world_map_initial_polity
-
-    # Set the last year in history we ever want to display, which will be used to determine when we should say "present"
-    content['last_history_year'] = content['latest_year']  # Set this to the latest year in the data or a value of choice
-    return content
-
 # World map default settings
 world_map_initial_displayed_year = 117
 world_map_initial_polity = 'it_roman_principate'
@@ -4416,7 +4364,16 @@ def map_view_initial(request):
 
     content = get_polity_shape_content(displayed_year=world_map_initial_displayed_year)
 
-    content = dummy_map_view_content(content)
+    # Set default values for these which are set properly in the subsequent map views
+    content['categorical_variables'] = {}
+    content['variables'] = {}
+    content['all_capitals_info'] = {}
+
+    # Set the initial polity to highlight
+    content['world_map_initial_polity'] = world_map_initial_polity
+
+    # Set the last year in history we ever want to display, which will be used to determine when we should say "present"
+    content['last_history_year'] = content['latest_year']  # Set this to the latest year in the data or a value of choice
 
     return render(request,
                   'core/world_map.html',
@@ -4437,7 +4394,19 @@ def map_view_all(request):
 
     content = get_polity_shape_content()
 
-    content = dummy_map_view_content(content)
+    # Set default values for these which are set properly in map_view_all_with_vars
+    content['variables'] = {}
+    content['categorical_variables'] = {}
+
+    # Load the capital cities for polities that have them
+    content['all_capitals_info'] = {}
+    # content['all_capitals_info'] = get_all_polity_capitals()  # This is currently disabled as it is not used in the frontend
+
+    # Set the initial polity to highlight
+    content['world_map_initial_polity'] = world_map_initial_polity
+
+    # Set the last year in history we ever want to display, which will be used to determine when we should say "present"
+    content['last_history_year'] = content['latest_year']  # Set this to the latest year in the data or a value of choice
 
     return JsonResponse(content)
 
@@ -4455,7 +4424,24 @@ def map_view_all_with_vars(request):
 
     content = get_polity_shape_content(geometries=False)
 
-    content = common_map_view_content(content)
+    # Add in the present/absent variables to view for the shapes
+    content['shapes'], content['variables'] = assign_variables_to_shapes(content['shapes'], app_map)
+
+    # Add in the categorical variables to view for the shapes
+    content['shapes'], content['variables'] = assign_categorical_variables_to_shapes(content['shapes'], content['variables'])
+
+    # Load the capital cities for polities that have them
+    content['all_capitals_info'] = {}
+    # content['all_capitals_info'] = get_all_polity_capitals()  # This is currently disabled as it is not used in the frontend
+    
+    # Add categorical variable choices to content for dropdown selection
+    content['categorical_variables'] = categorical_variables
+
+    # Set the initial polity to highlight
+    content['world_map_initial_polity'] = world_map_initial_polity
+
+    # Set the last year in history we ever want to display, which will be used to determine when we should say "present"
+    content['last_history_year'] = content['latest_year']  # Set this to the latest year in the data or a value of choice
 
     return JsonResponse(content)
 
