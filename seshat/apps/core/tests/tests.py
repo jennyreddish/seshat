@@ -256,6 +256,52 @@ class ShapesTest(TestCase):
 
         self.assertEqual(result, expected_result)
 
+    def test_get_polity_shape_content_no_geometries(self):
+        """Test the get_polity_shape_content function with geometries=False."""
+        expected_result = {
+            'shapes': [
+                {
+                    'seshat_id': 'IqAbbs1',
+                    'name': 'Testpolityname',
+                    'start_year': 2000,
+                    'end_year': 2020,
+                    'polity_start_year': 2000,
+                    'polity_end_year': 2020,
+                    'colour': "#FFFFFF",
+                    'area': 100.0,
+                    'id': 1,
+                    'components': 'Test components',
+                    'member_of': 'Test member_of',
+                    'wikipedia_name': 'Test Wikipedia'
+                },
+                {
+                    'seshat_id': 'Cn5Dyna',
+                    'name': 'Testpolityname2',
+                    'start_year': 0,
+                    'end_year': 1000,
+                    'polity_start_year': 0,
+                    'polity_end_year': 1000,
+                    'colour': "#FFFFFF",
+                    'area': 100.0,
+                    'id': 2,
+                    'components': 'Test components',
+                    'member_of': 'Test member_of',
+                    'wikipedia_name': 'Test Wikipedia 2'
+                }
+            ],
+            'earliest_year': 0,
+            'display_year': 0,
+            'tick_years': json.dumps([0, 1010, 2020]),
+            'latest_year': 2020,
+            'seshat_id_page_id': {
+                'IqAbbs1': {'id': 1, 'long_name': 'TestPolity'},
+                'Cn5Dyna': {'id': 2, 'long_name': 'TestPolity2'}
+            }
+        }
+        result = get_polity_shape_content(tick_number=3, geometries=False)
+
+        self.assertEqual(result, expected_result)
+
     def test_get_polity_shape_content_single_year(self):
         """
             Test the get_polity_shape_content function for a single year.

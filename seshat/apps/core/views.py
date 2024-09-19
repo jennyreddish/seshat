@@ -3867,7 +3867,7 @@ def get_provinces(selected_base_map_gadm='province'):
 
     return provinces
 
-def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=80, override_earliest_year=None, override_latest_year=None):
+def get_polity_shape_content(displayed_year="all", seshat_id="all", tick_number=80, override_earliest_year=None, override_latest_year=None, geometries=True):
     """
     This function returns the polity shapes and other content for the map.
     Only one of displayed_year or seshat_id should be set; not both.
@@ -4465,7 +4465,7 @@ def map_view_all_with_vars(request):
     # Start a timer to measure the time taken to load the page
     start_time = time.time()
 
-    content = get_polity_shape_content()
+    content = get_polity_shape_content(geometries=False)
 
     content = common_map_view_content(content)
 
