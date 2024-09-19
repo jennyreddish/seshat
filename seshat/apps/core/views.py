@@ -4429,6 +4429,9 @@ def map_view_initial(request):
                   content
                   )
 
+import gzip
+from io import BytesIO
+
 def map_view_all(request):
     """
     This view is used to display a map with polities plotted on it. The view
@@ -4445,13 +4448,22 @@ def map_view_all(request):
     start_time = time.time()
 
     content = get_polity_shape_content()
-
     content = dummy_map_view_content(content)
+
+    # Compress the content using gzip
+    buffer = BytesIO()
+    with gzip.GzipFile(fileobj=buffer, mode='wb') as f:
+        f.write(json.dumps(content).encode('utf-8'))
+
+    compressed_content = buffer.getvalue()
 
     # Print the time taken to load the page
     print(f"Time taken to load the all view: {time.time() - start_time} seconds")
 
-    return JsonResponse(content)
+    response = HttpResponse(compressed_content, content_type='application/json')
+    response['Content-Encoding'] = 'gzip'
+
+    return response
 
 def map_view_all_with_vars(request):
     """
@@ -4462,20 +4474,29 @@ def map_view_all_with_vars(request):
         request: The request object.
 
     Returns:
-        JsonResponse: The HTTP response with serialized JSON.
+        HttpResponse: The HTTP response with compressed JSON.
     """
 
     # Start a timer to measure the time taken to load the page
     start_time = time.time()
 
     content = get_polity_shape_content(geometries=False)
-
     content = common_map_view_content(content)
+
+    # Compress the content using gzip
+    buffer = BytesIO()
+    with gzip.GzipFile(fileobj=buffer, mode='wb') as f:
+        f.write(json.dumps(content).encode('utf-8'))
+
+    compressed_content = buffer.getvalue()
 
     # Print the time taken to load the page
     print(f"Time taken to load the vars view: {time.time() - start_time} seconds")
 
-    return JsonResponse(content)
+    response = HttpResponse(compressed_content, content_type='application/json')
+    response['Content-Encoding'] = 'gzip'
+
+    return response
 
 def provinces_and_countries_view(request):
     """
