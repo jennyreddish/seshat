@@ -598,6 +598,13 @@
                             shape.weight = existingShape ? existingShape.weight : polityBorderWeight;
                             return shape;
                         });
+
+                        // Add the geom_json field from each shape in shapesData to the corresponding shape in shapesDataWithVars
+                        shapesDataWithVars.forEach(shape => {
+                            let existingShape = shapesData.find(existing => existing.id === shape.id);
+                            shape.geom_json = existingShape ? existingShape.geom_json : null;
+                        });
+
                         shapesData = shapesDataWithVars;
                         console.log('shapesDataWithVars size: ' + (JSON.stringify(shapesData).length / 1024 / 1024).toFixed(2) + ' MB');
                         console.timeEnd('Vars load time');
