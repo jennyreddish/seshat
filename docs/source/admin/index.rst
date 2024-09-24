@@ -1,4 +1,4 @@
-Seshat Admin
+Seshat Databank Admin
 ============
 
 .. toctree::
