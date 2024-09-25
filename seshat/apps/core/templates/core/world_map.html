@@ -61,24 +61,22 @@
 
     .wrapper {
         min-height: 100vh;
-        /* Minimum height to cover the full viewport height */
         display: flex;
         flex-direction: column;
     }
 
     .inner-content {
         flex-grow: 1;
-        /* Allow content to grow and fill remaining space */
-        /* Add any additional styles for your content here */
     }
+
     .leaflet-popup-content-wrapper {
         width: 320px;
     }
 
     #variableLegend {
         position: absolute;
-        bottom: 90;
-        right: 10;
+        bottom: 90px;
+        right: 10px;
         background-color: rgba(255, 253, 242, 1);
         padding: 10px;
         border-radius: 5px;
@@ -86,15 +84,13 @@
         z-index: 999;
     }
 
-    /* Hide scrollbar for WebKit browsers */
     #sliderdiv::-webkit-scrollbar {
         display: none;
     }
 
-    /* Hide scrollbar for IE, Edge, and Firefox */
     #sliderdiv {
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
         background-color: rgba(255, 253, 242, 1);
         padding: 10px;
         display: block;
@@ -122,7 +118,7 @@
         transform: translate(-50%, -50%);
         z-index: 1000;
         background-color: rgba(255, 253, 242, 1);
-        border-radius: 5px; /* Adds rounded edges */
+        border-radius: 5px;
     }
 
     .topleftcontainer {
@@ -132,6 +128,7 @@
         left: 4%;
         z-index: 1000;
     }
+
     .helpcontainer {
         display: flex;
         position: absolute;
@@ -140,12 +137,12 @@
         z-index: 1000;
     }
 
-    #popup{
+    #popup {
         overflow: auto;
         border-style: solid;
         border-width: 0px;
         background-color: rgba(255, 253, 242, 1);
-        border-radius: 5px; /* Adds rounded edges */
+        border-radius: 5px;
     }
 
     #help {
@@ -153,7 +150,7 @@
         border-style: solid;
         border-width: 0px;
         background-color: none;
-        border-radius: 5px; /* Adds rounded edges */
+        border-radius: 5px;
         display: flex;
         align-items: center;
     }
@@ -172,9 +169,11 @@
         border-width: 4px;
         padding: 10px;
     }
+
     .tips-content p {
         margin: 0;
     }
+
     .transparent-button {
         background-color: transparent;
         border: none;
@@ -191,7 +190,7 @@
         display: inline-block;
         cursor: pointer;
     }
-    
+
     .display-info-container::after {
         content: "Many polities have component sub-polities with their own polygons on the map. Switching to 'Polity components' assigns a unique color to each polity component. 'Full polities' shows components from the same polity in the same color.";
         visibility: hidden;
@@ -208,7 +207,7 @@
         opacity: 0;
         transition: opacity 0.3s;
     }
-    
+
     .display-info-container:hover::after {
         visibility: visible;
         opacity: 1;
@@ -219,7 +218,7 @@
         display: inline-block;
         cursor: pointer;
     }
-    
+
     .variable-info-container::after {
         content: "Polity polygons on the map are colored based on the selected variable. Select 'Polity' to assign a unique color to each polity.";
         visibility: hidden;
@@ -236,7 +235,7 @@
         opacity: 0;
         transition: opacity 0.3s;
     }
-    
+
     .variable-info-container:hover::after {
         visibility: visible;
         opacity: 1;
@@ -271,7 +270,7 @@
         opacity: 0;
         transition: opacity 0.3s;
     }
-    
+
     .previouslySelectedVariable-container:hover::after {
         visibility: visible;
         opacity: 1;
@@ -298,139 +297,194 @@
         border-color: #782823;
     }
 
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+        #controlPanel {
+            display: none;
+        }
+
+        .sliderDate {
+            top: 70%;
+            left: 50%;
+            font-size: 24px;
+        }
+
+        .topleftcontainer, .helpcontainer {
+            top: 5%;
+            left: 5%;
+        }
+
+        #variableLegend, #sliderdiv {
+            width: 90%;
+            left: 5%;
+        }
+
+        .display-info-container::after, .variable-info-container::after, .previouslySelectedVariable-container::after {
+            width: 150px;
+            right: 100%;
+        }
+
+        .federicka-big {
+            font-size: 24px;
+        }
+
+        .federicka-huge {
+            font-size: 60px;
+        }
+
+        #map, #globe {
+            height: 60vh;
+        }
+
+        fieldset {
+            padding: 10px;
+        }
+
+        input[type="range"], select {
+            width: 100%;
+        }
+
+        .spinner {
+            width: 10px;
+            height: 10px;
+            border-width: 8px;
+        }
+    }
 </style>
 <body style="background-color: #fffdf2;">
     <div class="wrapper">
-    <div class="inner-content">
-    {% include "core/partials/_navbar_home.html" %}
-    {% block content %}
-    <div style="display: flex; height: 85vh;">
-        <div style="width: auto; position: relative; height: 100%; padding: 10px; overflow: hidden;" id="controlPanel">
-            <fieldset>
-                <legend>
-                    <h1 class="text-teal federicka-big">Seshat World Map</h1>
-                </legend>
-                <div id="loadingIndicator">
-                    <div class="spinner"></div>                   
-                </div>
-                <div style="display: none; text-align: center;" id="cliopatria-link">
-                    <p>
-                        <a href="../cliopatria" target="_blank">🔹 Learn more about this dataset.</a>
-                    </p>
-                    <p>
-                        <button class="transparent-button" onclick="toggleTips()">🔹 How to navigate this map.</button>
-                    </p>
-                </div>
-                <label for="chooseVariable">Variable: </label>
-                <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;" disabled>
-                    <option value="polity">Polity</option>
-                </select>
-                <div class="variable-info-container">
-                    ℹ️
-                </div>
-                <div class="previouslySelectedVariable-container">
-                    <button id="previouslySelectedVariable" type="button" onclick="previouslySelectedVariableButton()">🔄</button>
-                </div><br>
-                <fieldset id="chooseCategoricalVariableSelectionFieldset">
-                    <label for="chooseCategoricalVariableSelection"></label>
-                    <select name="chooseCategoricalVariableSelection" id="chooseCategoricalVariableSelection" onchange="plotPolities()" style="width: 150px; text-overflow: ellipsis;">            
-                    </select>
-                </fieldset>
-                <div id="variablesLoadingIndicator">
-                    <p>Loading Seshat variables...</p>
-                </div>
-                <fieldset id="switchPolitiesComponentsFieldset" style="display: block">
-                    <label for="switchPolitiesComponents">Display:</label>
-                    <select name="switchPolitiesComponents" id="switchPolitiesComponents" onchange="plotPolities()">
-                        <option value="polities">Full polities</option>
-                        <option value="components">Polity components</option>
-                    </select>
-                    <div class="display-info-container">
-                        ℹ️
-                    </div>
-                </fieldset>
-                <label for="opacitySlide">Opacity:</label>
-                <input type="range" name="opacitySlide" id="opacitySlide" min="0.1" max="1" step="0.1" value="0.7" class="slider"
-                    onchange="plotPolities()" style="width: 150px;"><br><br>
-                <!-- TODO: Uncomment this when there are more capitals with coordinates in the database -->
-                <!-- <label for="showCapitals">Show capital cities</label>
-                <input type="checkbox" id="showCapitals" name="showCapitals" onclick=plotPolities()><br><br> -->
-                <label for="enterYear">Enter year:</label>
-                <input type="number" id="enterYear" name="enterYear" value="{{ display_year }}" style="width: 75px;" onchange="storeYear()">
-                <p>🗣️ <i>Hit enter to set year.</i></p>
-                <label for="increment">Play rate (years/second):</label>
-                <input type="number" id="increment" name="increment" value="10" style="width: 50px;" onchange="playRateValue()">
-                <p style="width: 250px;">🗣️ <i>Hit enter to set play rate (inaccurate at high speeds).</i></p>
-                <div style="text-align: center;">
-                    <button id="startButton" type="button" onclick="adjustSliderStartYear()">⏮️</button>
-                    <button id="minusButton" type="button" onclick="adjustSliderDown()">⏪</button>
-                    <button id="playButton" type="button" onclick="playBack()">▶️</button>
-                    <button id="plusButton" type="button" onclick="adjustSliderUp()">⏩</button>
-                    <button id="endButton" type="button" onclick="adjustSliderEndYear()">⏭️</button><br>
-                </div>
-            </fieldset>
-            <div id="baseMapControls" style="position: absolute; bottom: 0px; display: flex; flex-direction: column; justify-content: flex-end;">
-                <fieldset>
-                    <legend id="background-map-header" style="display: none">
-                        <h1 class="text-teal federicka-big">Background map</h1>
-                    </legend>
-                    <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMapWorldMap()" checked>Satellite (<a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a>)</label><br>
-                    <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Globe (<a href="https://cesium.com/" target="_blank">Cesium</a>)</label><br>
-                    <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMapWorldMap()">Steet Maps (<a href="https://www.openstreetmap.org/" target="_blank">OSM</a>)</label><br>
-                    <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMapWorldMap()">Basic unlabelled (<a href="https://carto.com/basemaps" target="_blank">CARTO</a>)</label><br>
-                    <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMapWorldMap()" disabled>Clickable borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
-                    <div id="baseMapCurrentLoadingIndicator">
-                        <p>Loading current borders...</p>
-                    </div><br>
-                </fieldset>
-                <fieldset id="baseMapGADMFieldset">
-                    <label for="baseMapGADM">Current borders:</label>
-                    <select name="baseMapGADM" id="baseMapGADM" onchange="switchBaseMapWorldMap()">
-                        <option value="country">Countries</option>
-                        <option value="province">Provinces</option>
-                    </select><br>
-                    <label for="baseMapOnly">Base map only</label>
-                    <input type="checkbox" id="baseMapOnly" name="baseMapOnly" onclick=plotPolities()><br>
-                </fieldset>
-            </div>
-        </div>
-        <div style="position: relative; height: 85vh; width: 80%" id="mapAndGlobe">
-            <div id="map" style="height: 100%; width: 100%; z-index: 0; position: relative;">
-                <div class="topleftcontainer">
-                    <div id="popup" class="p-1"></div>
-                </div>
-                <div class="helpcontainer">
-                    <div id="help" class="p-1">
-                        <div id="tips" class="tips-content">
-                            <button id="crossButton" onclick="toggleTips()">❌</button>
-                            <p><b>🔹 Hover the mouse over polity shapes on the map to reveal information.</b></p>
-                            <p><b>🔹 Clicking polity shapes adds them to the legend.</b></p>
-                            <p><b>🔹 Some polities have Seshat pages reachable with double click.</b></p>
-                            <p><b>🔹 Enter a year of interest to jump to it, or use the slider at the bottom of the page.</b></p>
-                            <p><b>🔹 Use the variable dropdown to color polities by different Seshat variables.</b></p>
-                            <p><b>🔹 Use the opacity slider to adjust the transparency of the polity shapes.</b></p>
-                            <p><b>🔹 Use the play controls to quickly increment the year and animate the map through time.</b></p>
-                            <p><b>🔹 Use the background map controls to switch between different base maps.</b></p>
+        <div class="inner-content">
+            {% include "core/partials/_navbar_home.html" %}
+            {% block content %}
+            <div style="display: flex; height: 85vh;">
+                <div style="width: auto; position: relative; height: 100%; padding: 10px; overflow: hidden;" id="controlPanel">
+                    <fieldset>
+                        <legend>
+                            <h1 class="text-teal federicka-big">Seshat World Map</h1>
+                        </legend>
+                        <div id="loadingIndicator">
+                            <div class="spinner"></div>                   
                         </div>
+                        <div style="display: none; text-align: center;" id="cliopatria-link">
+                            <p>
+                                <a href="../cliopatria" target="_blank">🔹 Learn more about this dataset.</a>
+                            </p>
+                            <p>
+                                <button class="transparent-button" onclick="toggleTips()">🔹 How to navigate this map.</button>
+                            </p>
+                        </div>
+                        <label for="chooseVariable">Variable: </label>
+                        <select name="chooseVariable" id="chooseVariable" onchange="clearSelection();" style="width: 150px; text-overflow: ellipsis;" disabled>
+                            <option value="polity">Polity</option>
+                        </select>
+                        <div class="variable-info-container">
+                            ℹ️
+                        </div>
+                        <div class="previouslySelectedVariable-container">
+                            <button id="previouslySelectedVariable" type="button" onclick="previouslySelectedVariableButton()">🔄</button>
+                        </div><br>
+                        <fieldset id="chooseCategoricalVariableSelectionFieldset">
+                            <label for="chooseCategoricalVariableSelection"></label>
+                            <select name="chooseCategoricalVariableSelection" id="chooseCategoricalVariableSelection" onchange="plotPolities()" style="width: 150px; text-overflow: ellipsis;">            
+                            </select>
+                        </fieldset>
+                        <div id="variablesLoadingIndicator">
+                            <p>Loading Seshat variables...</p>
+                        </div>
+                        <fieldset id="switchPolitiesComponentsFieldset" style="display: block">
+                            <label for="switchPolitiesComponents">Display:</label>
+                            <select name="switchPolitiesComponents" id="switchPolitiesComponents" onchange="plotPolities()">
+                                <option value="polities">Full polities</option>
+                                <option value="components">Polity components</option>
+                            </select>
+                            <div class="display-info-container">
+                                ℹ️
+                            </div>
+                        </fieldset>
+                        <label for="opacitySlide">Opacity:</label>
+                        <input type="range" name="opacitySlide" id="opacitySlide" min="0.1" max="1" step="0.1" value="0.7" class="slider"
+                            onchange="plotPolities()" style="width: 150px;"><br><br>
+                        <!-- TODO: Uncomment this when there are more capitals with coordinates in the database -->
+                        <!-- <label for="showCapitals">Show capital cities</label>
+                        <input type="checkbox" id="showCapitals" name="showCapitals" onclick=plotPolities()><br><br> -->
+                        <label for="enterYear">Enter year:</label>
+                        <input type="number" id="enterYear" name="enterYear" value="{{ display_year }}" style="width: 75px;" onchange="storeYear()">
+                        <p>🗣️ <i>Hit enter to set year.</i></p>
+                        <label for="increment">Play rate (years/second):</label>
+                        <input type="number" id="increment" name="increment" value="10" style="width: 50px;" onchange="playRateValue()">
+                        <p style="width: 250px;">🗣️ <i>Hit enter to set play rate (inaccurate at high speeds).</i></p>
+                        <div style="text-align: center;">
+                            <button id="startButton" type="button" onclick="adjustSliderStartYear()">⏮️</button>
+                            <button id="minusButton" type="button" onclick="adjustSliderDown()">⏪</button>
+                            <button id="playButton" type="button" onclick="playBack()">▶️</button>
+                            <button id="plusButton" type="button" onclick="adjustSliderUp()">⏩</button>
+                            <button id="endButton" type="button" onclick="adjustSliderEndYear()">⏭️</button><br>
+                        </div>
+                    </fieldset>
+                    <div id="baseMapControls" style="position: absolute; bottom: 0px; display: flex; flex-direction: column; justify-content: flex-end;">
+                        <fieldset>
+                            <legend id="background-map-header" style="display: none">
+                                <h1 class="text-teal federicka-big">Background map</h1>
+                            </legend>
+                            <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMapWorldMap()" checked>Satellite (<a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Globe (<a href="https://cesium.com/" target="_blank">Cesium</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMapWorldMap()">Steet Maps (<a href="https://www.openstreetmap.org/" target="_blank">OSM</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMapWorldMap()">Basic unlabelled (<a href="https://carto.com/basemaps" target="_blank">CARTO</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMapWorldMap()" disabled>Clickable borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
+                            <div id="baseMapCurrentLoadingIndicator">
+                                <p>Loading current borders...</p>
+                            </div><br>
+                        </fieldset>
+                        <fieldset id="baseMapGADMFieldset">
+                            <label for="baseMapGADM">Current borders:</label>
+                            <select name="baseMapGADM" id="baseMapGADM" onchange="switchBaseMapWorldMap()">
+                                <option value="country">Countries</option>
+                                <option value="province">Provinces</option>
+                            </select><br>
+                            <label for="baseMapOnly">Base map only</label>
+                            <input type="checkbox" id="baseMapOnly" name="baseMapOnly" onclick=plotPolities()><br>
+                        </fieldset>
                     </div>
                 </div>
-		        <h1 class="text-teal sliderDate" id="sliderDate"></h1>
-            </div>
-            <div id="globe" style="height: 100%; width: 100%; z-index: 0; position: relative; max-height: 85vh; display: none">
-                <h1 class="text-teal sliderDate" id="sliderDate2"></h1>
-            </div>
-            <div id="sliderdiv">
-                <fieldset>
-                    <div class="slider-container" style="position: relative; width: 400%;">
-                        <datalist id="yearTickmarks"></datalist>
-                        <div id="yearTickmarkValues"></div><br>
-                        <input type="range" name="dateSlide" id="dateSlide" min="{{ earliest_year }}" max="{{ latest_year }}"
-                            value="{{ display_year }}" class="slider" onchange="plotPolities(); adjustScroll();"
-                            style="width: 100%;" list="yearTickmarks">
+                <div style="position: relative; height: 85vh; width: 80%" id="mapAndGlobe">
+                    <div id="map" style="height: 100%; width: 100%; z-index: 0; position: relative;">
+                        <div class="topleftcontainer">
+                            <div id="popup" class="p-1"></div>
+                        </div>
+                        <div class="helpcontainer">
+                            <div id="help" class="p-1">
+                                <div id="tips" class="tips-content">
+                                    <button id="crossButton" onclick="toggleTips()">❌</button>
+                                    <p><b>🔹 Hover the mouse over polity shapes on the map to reveal information.</b></p>
+                                    <p><b>🔹 Clicking polity shapes adds them to the legend.</b></p>
+                                    <p><b>🔹 Some polities have Seshat pages reachable with double click.</b></p>
+                                    <p><b>🔹 Enter a year of interest to jump to it, or use the slider at the bottom of the page.</b></p>
+                                    <p><b>🔹 Use the variable dropdown to color polities by different Seshat variables.</b></p>
+                                    <p><b>🔹 Use the opacity slider to adjust the transparency of the polity shapes.</b></p>
+                                    <p><b>🔹 Use the play controls to quickly increment the year and animate the map through time.</b></p>
+                                    <p><b>🔹 Use the background map controls to switch between different base maps.</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <h1 class="text-teal sliderDate" id="sliderDate"></h1>
                     </div>
-                </fieldset>
+                    <div id="globe" style="height: 100%; width: 100%; z-index: 0; position: relative; max-height: 85vh; display: none">
+                        <h1 class="text-teal sliderDate" id="sliderDate2"></h1>
+                    </div>
+                    <div id="sliderdiv">
+                        <fieldset>
+                            <div class="slider-container" style="position: relative; width: 400%;">
+                                <datalist id="yearTickmarks"></datalist>
+                                <div id="yearTickmarkValues"></div><br>
+                                <input type="range" name="dateSlide" id="dateSlide" min="{{ earliest_year }}" max="{{ latest_year }}"
+                                    value="{{ display_year }}" class="slider" onchange="plotPolities(); adjustScroll();"
+                                    style="width: 100%;" list="yearTickmarks">
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div id="variableLegend"></div>
+                </div>
             </div>
-            <div id="variableLegend"></div>
         </div>
     </div>
     <script src="{% static 'core/js/map_functions.js' %}"></script>
