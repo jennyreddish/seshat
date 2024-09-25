@@ -473,12 +473,16 @@
                     </div>
                     <div id="sliderdiv">
                         <fieldset>
-                            <div class="slider-container" style="position: relative; width: 400%;">
+                            <div class="slider-container" id="slider-container" style="position: relative; width: 400%; display: block">
                                 <datalist id="yearTickmarks"></datalist>
                                 <div id="yearTickmarkValues"></div><br>
                                 <input type="range" name="dateSlide" id="dateSlide" min="{{ earliest_year }}" max="{{ latest_year }}"
                                     value="{{ display_year }}" class="slider" onchange="plotPolities(); adjustScroll();"
                                     style="width: 100%;" list="yearTickmarks">
+                            </div>
+                            <div class="enterYearMobileContainer" id="enterYearMobileContainer" style="display: none">
+                                <label for="enterYearMobile">Enter year:</label>
+                                <input type="number" id="enterYearMobile" name="enterYearMobile" value="{{ display_year }}" onchange="storeYearMobile()">
                             </div>
                         </fieldset>
                     </div>
@@ -494,10 +498,8 @@
         // Also place the enter year input field where the slider normally is
         document.addEventListener("DOMContentLoaded", function () {
             if (window.innerWidth <= 768) {
-                document.getElementById("sliderdiv").innerHTML = `
-                    <label for="enterYear">Enter year:</label>
-                    <input type="number" id="enterYear" name="enterYear" value="{{ display_year }}" style="width: 75px;" onchange="storeYear()">
-                `;
+                document.getElementById("slider-container").style.display = "none";
+                document.getElementById("enterYearMobileContainer").style.display = "block";
             } else {
                 // It might have made more sense to set Esri as default and change to Cesium on mobile, but...
                 // the above if statement bizzarely won't let me update the sliderdiv *and* set document.getElementById("cesium").checked = true;
@@ -1356,6 +1358,7 @@
         // Display slider value
         var slider = document.getElementById("dateSlide");
         var enterYearInput = document.getElementById("enterYear");
+        var enterYearMobileInput = document.getElementById("enterYearMobile");
         var sliderDate = document.getElementById("sliderDate");  // Used in updateSliderOutput()
         var sliderDate2 = document.getElementById("sliderDate2");  // Used in updateSliderOutput()
         updateSliderOutput(); // Display the default slider value
@@ -1365,6 +1368,7 @@
             updateSliderOutput();
             // Sync enterYear input with dateSlide value
             enterYearInput.value = slider.value;
+            enterYearMobileInput.value = slider.value;
         }
 
         var playInterval;
@@ -1387,6 +1391,14 @@
             if (event.key === "Enter") {
                 // Update the slider value
                 slider.value = enterYearInput.value;
+                updateSliderOutput();
+                plotPolities();
+            }
+        });
+        enterYearMobileInput.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                // Update the slider value
+                slider.value = enterYearMobileInput.value;
                 updateSliderOutput();
                 plotPolities();
             }

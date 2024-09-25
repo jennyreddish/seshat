@@ -195,6 +195,10 @@ function storeYear() {
     }
 }
 
+function storeYearMobile() {
+    document.getElementById('enterYear').value = document.getElementById('enterYearMobile').value;
+}
+
 function switchBaseMap() {
     var selectedMap = document.querySelector('input[name="baseMap"]:checked').value;
     var base = document.getElementById("baseMapGADM").value
