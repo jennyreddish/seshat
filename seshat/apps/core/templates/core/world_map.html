@@ -490,6 +490,13 @@
     <script src="{% static 'core/js/map_functions.js' %}"></script>
     <script>
 
+        // Set the default base map to Cesium Globe on mobile devices
+        document.addEventListener("DOMContentLoaded", function () {
+            if (window.innerWidth <= 768) {
+                document.getElementById("baseMapCesium").checked = true;
+            }
+        });
+
         function adjustScroll() {
             const slider = document.getElementById('dateSlide');
             const sliderDiv = document.getElementById('sliderdiv');
