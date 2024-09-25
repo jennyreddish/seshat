@@ -305,7 +305,7 @@
     {% include "core/partials/_navbar_home.html" %}
     {% block content %}
     <div style="display: flex; height: 85vh;">
-        <div style="width: auto; position: relative; height: 100%; padding: 10px; overflow: hidden;">
+        <div style="width: auto; position: relative; height: 100%; padding: 10px; overflow: hidden;" id="controlPanel">
             <fieldset>
                 <legend>
                     <h1 class="text-teal federicka-big">Seshat World Map</h1>
@@ -394,7 +394,7 @@
                 </fieldset>
             </div>
         </div>
-        <div style="position: relative; height: 85vh; width: 80%">
+        <div style="position: relative; height: 85vh; width: 80%" id="mapAndGlobe">
             <div id="map" style="height: 100%; width: 100%; z-index: 0; position: relative;">
                 <div class="topleftcontainer">
                     <div id="popup" class="p-1"></div>
