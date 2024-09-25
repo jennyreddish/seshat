@@ -426,8 +426,8 @@
                             <legend id="background-map-header" style="display: none">
                                 <h1 class="text-teal federicka-big">Background map</h1>
                             </legend>
-                            <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMapWorldMap()" checked>Satellite (<a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a>)</label><br>
-                            <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()">Globe (<a href="https://cesium.com/" target="_blank">Cesium</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapEsri" value="arcgis" onclick="switchBaseMapWorldMap()">Satellite (<a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a>)</label><br>
+                            <label><input type="radio" name="baseMap" id="baseMapCesium" value="cesium" onclick="switchBaseMap()" checked>Globe (<a href="https://cesium.com/" target="_blank">Cesium</a>)</label><br>
                             <label><input type="radio" name="baseMap" id="baseMapOSM" value="osm" onclick="switchBaseMapWorldMap()">Steet Maps (<a href="https://www.openstreetmap.org/" target="_blank">OSM</a>)</label><br>
                             <label><input type="radio" name="baseMap" id="baseMapBasic" value="carto" onclick="switchBaseMapWorldMap()">Basic unlabelled (<a href="https://carto.com/basemaps" target="_blank">CARTO</a>)</label><br>
                             <label><input type="radio" name="baseMap" id="baseMapCurrent" value="gadm" onclick="switchBaseMapWorldMap()" disabled>Clickable borders (<a href="https://gadm.org/maps.html" target="_blank">GADM</a>)</label>
@@ -491,9 +491,18 @@
     <script>
 
         // Set the default base map to Cesium Globe on mobile devices
+        // Also place the enter year input field where the slider normally is
         document.addEventListener("DOMContentLoaded", function () {
             if (window.innerWidth <= 768) {
-                document.getElementById("baseMapCesium").checked = true;
+                document.getElementById("sliderdiv").innerHTML = `
+                    <label for="enterYear">Enter year:</label>
+                    <input type="number" id="enterYear" name="enterYear" value="{{ display_year }}" style="width: 75px;" onchange="storeYear()">
+                `;
+            } else {
+                // It might have made more sense to set Esri as default and change to Cesium on mobile, but...
+                // the above if statement bizzarely won't let me update the sliderdiv *and* set document.getElementById("cesium").checked = true;
+                document.getElementById("baseMapEsri").checked = true;
+                switchBaseMap();
             }
         });
 
