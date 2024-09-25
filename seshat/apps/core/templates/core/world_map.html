@@ -500,6 +500,7 @@
             if (window.innerWidth <= 768) {
                 document.getElementById("slider-container").style.display = "none";
                 document.getElementById("enterYearMobileContainer").style.display = "block";
+                document.getElementById("mapAndGlobe").style.width = "100%";
             } else {
                 // It might have made more sense to set Esri as default and change to Cesium on mobile, but...
                 // the above if statement bizzarely won't let me update the sliderdiv *and* set document.getElementById("cesium").checked = true;
