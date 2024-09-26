@@ -497,8 +497,10 @@
 
         // Set the default base map to Cesium Globe on mobile devices
         // Also place the enter year input field where the slider normally is
+        var onMobile = false;
         document.addEventListener("DOMContentLoaded", function () {
             if (window.innerWidth <= 768) {
+                onMobile = true;
                 document.getElementById("sliderdiv").style.display = "none";
                 document.getElementById("enterYearMobileContainer").style.display = "block";
                 document.getElementById("controls-and-maps").style.height = "80vh";
@@ -1153,6 +1155,11 @@
                         
                             // Parse the GeoJSON data
                             var geoJsonData = JSON.parse(shape.geom_json);
+
+                            // Just use the name for the popup content on mobile
+                            if(onMobile){
+                                popupContent = shape.name;
+                            };
                         
                             // Load the GeoJSON data
                             Cesium.GeoJsonDataSource.load(geoJsonData, {
