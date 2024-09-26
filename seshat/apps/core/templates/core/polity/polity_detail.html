@@ -288,7 +288,7 @@
 
                     </div>
 
-                    <div>
+                    <div id="polityMap">
                         {% polity_map pk %}
                         <br><p></p><br>
                     </div>
@@ -1940,6 +1940,12 @@
 </div>
 
 <script>
+
+    // Don't show map template if on mobile
+    if (window.innerWidth < 768) {
+      document.getElementById('polityMap').style.display = 'none';
+    }
+
     // Function to handle smooth scrolling to an element with offset
     function scrollToElementWithOffset(elementId, offset) {
       var targetElement = $(elementId);

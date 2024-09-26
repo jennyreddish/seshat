@@ -195,6 +195,22 @@ function storeYear() {
     }
 }
 
+function storeYearMobile() {
+    document.getElementById('enterYear').value = document.getElementById('enterYearMobile').value;
+    if(document.getElementById('enterYearMobile').value >= 0) {
+        document.getElementById('switchToBCE').innerHTML = 'To BCE';
+    };
+}
+
+function switchToBCE() {
+    if (document.getElementById('enterYearMobile').value < 0) {
+        document.getElementById('switchToBCE').innerHTML = 'To BCE';
+    } else {
+        document.getElementById('switchToBCE').innerHTML = 'To CE';
+    }
+    document.getElementById('enterYearMobile').value = 0 - document.getElementById('enterYearMobile').value;
+}
+
 function switchBaseMap() {
     var selectedMap = document.querySelector('input[name="baseMap"]:checked').value;
     var base = document.getElementById("baseMapGADM").value
