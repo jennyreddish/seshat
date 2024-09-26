@@ -199,11 +199,12 @@ function storeYearMobile() {
     document.getElementById('enterYear').value = document.getElementById('enterYearMobile').value;
 }
 
-function switchToCE() {
-    document.getElementById('enterYearMobile').value = Math.abs(document.getElementById('enterYearMobile').value);
-}
-
 function switchToBCE() {
+    if (document.getElementById('enterYearMobile').value < 0) {
+        document.getElementById('switchToBCE').innerHTML = 'To BCE';
+    } else {
+        document.getElementById('switchToBCE').innerHTML = 'To CE';
+    }
     document.getElementById('enterYearMobile').value = 0 - document.getElementById('enterYearMobile').value;
 }
 
