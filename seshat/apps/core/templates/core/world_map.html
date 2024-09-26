@@ -356,7 +356,7 @@
         <div class="inner-content">
             {% include "core/partials/_navbar_home.html" %}
             {% block content %}
-            <div style="display: flex; height: 85vh;">
+            <div style="display: flex; height: 85vh;" id="controls-and-maps">
                 <div style="width: auto; position: relative; height: 100%; padding: 10px; overflow: hidden;" id="controlPanel">
                     <fieldset>
                         <legend>
@@ -501,8 +501,9 @@
             if (window.innerWidth <= 768) {
                 document.getElementById("sliderdiv").style.display = "none";
                 document.getElementById("enterYearMobileContainer").style.display = "block";
+                document.getElementById("controls-and-maps").style.height = "80vh";
                 document.getElementById("mapAndGlobe").style.width = "100%";
-                document.getElementById("globe").style.height = "95%";
+                document.getElementById("globe").style.height = "90%";
                 document.getElementById("variableLegend").style.display = "none";
             } else {
                 // It might have made more sense to set Esri as default and change to Cesium on mobile, but...
