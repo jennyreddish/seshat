@@ -61,22 +61,24 @@
 
     .wrapper {
         min-height: 100vh;
+        /* Minimum height to cover the full viewport height */
         display: flex;
         flex-direction: column;
     }
 
     .inner-content {
         flex-grow: 1;
+        /* Allow content to grow and fill remaining space */
+        /* Add any additional styles for your content here */
     }
-
     .leaflet-popup-content-wrapper {
         width: 320px;
     }
 
     #variableLegend {
         position: absolute;
-        bottom: 90px;
-        right: 10px;
+        bottom: 90;
+        right: 10;
         background-color: rgba(255, 253, 242, 1);
         padding: 10px;
         border-radius: 5px;
@@ -84,13 +86,15 @@
         z-index: 999;
     }
 
+    /* Hide scrollbar for WebKit browsers */
     #sliderdiv::-webkit-scrollbar {
         display: none;
     }
 
+    /* Hide scrollbar for IE, Edge, and Firefox */
     #sliderdiv {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
         background-color: rgba(255, 253, 242, 1);
         padding: 10px;
         display: block;
@@ -118,7 +122,7 @@
         transform: translate(-50%, -50%);
         z-index: 1000;
         background-color: rgba(255, 253, 242, 1);
-        border-radius: 5px;
+        border-radius: 5px; /* Adds rounded edges */
     }
 
     .topleftcontainer {
@@ -128,7 +132,6 @@
         left: 4%;
         z-index: 1000;
     }
-
     .helpcontainer {
         display: flex;
         position: absolute;
@@ -137,12 +140,12 @@
         z-index: 1000;
     }
 
-    #popup {
+    #popup{
         overflow: auto;
         border-style: solid;
         border-width: 0px;
         background-color: rgba(255, 253, 242, 1);
-        border-radius: 5px;
+        border-radius: 5px; /* Adds rounded edges */
     }
 
     #help {
@@ -150,7 +153,7 @@
         border-style: solid;
         border-width: 0px;
         background-color: none;
-        border-radius: 5px;
+        border-radius: 5px; /* Adds rounded edges */
         display: flex;
         align-items: center;
     }
@@ -169,11 +172,9 @@
         border-width: 4px;
         padding: 10px;
     }
-
     .tips-content p {
         margin: 0;
     }
-
     .transparent-button {
         background-color: transparent;
         border: none;
@@ -190,7 +191,7 @@
         display: inline-block;
         cursor: pointer;
     }
-
+    
     .display-info-container::after {
         content: "Many polities have component sub-polities with their own polygons on the map. Switching to 'Polity components' assigns a unique color to each polity component. 'Full polities' shows components from the same polity in the same color.";
         visibility: hidden;
@@ -207,7 +208,7 @@
         opacity: 0;
         transition: opacity 0.3s;
     }
-
+    
     .display-info-container:hover::after {
         visibility: visible;
         opacity: 1;
@@ -218,7 +219,7 @@
         display: inline-block;
         cursor: pointer;
     }
-
+    
     .variable-info-container::after {
         content: "Polity polygons on the map are colored based on the selected variable. Select 'Polity' to assign a unique color to each polity.";
         visibility: hidden;
@@ -235,7 +236,7 @@
         opacity: 0;
         transition: opacity 0.3s;
     }
-
+    
     .variable-info-container:hover::after {
         visibility: visible;
         opacity: 1;
@@ -270,7 +271,7 @@
         opacity: 0;
         transition: opacity 0.3s;
     }
-
+    
     .previouslySelectedVariable-container:hover::after {
         visibility: visible;
         opacity: 1;
