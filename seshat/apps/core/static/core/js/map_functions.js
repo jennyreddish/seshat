@@ -197,6 +197,9 @@ function storeYear() {
 
 function storeYearMobile() {
     document.getElementById('enterYear').value = document.getElementById('enterYearMobile').value;
+    if(document.getElementById('enterYearMobile').value >= 0) {
+        document.getElementById('switchToBCE').innerHTML = 'To BCE';
+    };
 }
 
 function switchToBCE() {
