@@ -24,7 +24,8 @@ The documentation is divided into sections based on the role of the reader, whic
    public_user/index
    api/index
    code-of-conduct
-   help
+   team
+   resources
 
 
 
