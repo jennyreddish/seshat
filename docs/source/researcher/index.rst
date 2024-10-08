@@ -1,4 +1,4 @@
-Research Assistant
+Researcher
 ============
 
 .. toctree::

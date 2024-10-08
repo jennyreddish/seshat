@@ -11,7 +11,7 @@ On this site you will find documentation for the Seshat project, such as how-to 
 The documentation is divided into sections based on the role of the reader, which match the access level of your account on the Seshat website. These roles are defined as follows:
 
 1. Seshat Databank Admin: A member of the Seshat team responsible for the maintenance and development of the Seshat codebase, database and website.
-2. Research Assistant: A researcher contributing to the Seshat data as part of an ongoing Seshat affiliated project.
+2. Researcher: Any researcher contributing to, or consuming, the Seshat data as part of an ongoing Seshat affiliated project.
 3. Seshat Expert: A collaborator with the necessary expertise and permission to approve or reject changes to the Seshat data.
 4. Public User: An academic or other interested party who has created an account on the Seshat website to suggest data edits.
 
@@ -19,7 +19,7 @@ The documentation is divided into sections based on the role of the reader, whic
    :maxdepth: 2
 
    admin/index
-   research_assistant/index
+   researcher/index
    expert/index
    public_user/index
    api/index
