@@ -32,7 +32,7 @@ GADM
 How to add new shape datasets to the maps
 ------------------------------------------
 
-Ensure that the database and Django are already set up (see :doc:`local instructions </getting-started/setup/local/index>` for more detail) and all migrations have been run for the "core" Django app (``python manage.py migrate core``).
+Ensure that the database and Django are already set up (see the relevant `setup <index.rst>`_ page for more detail) and all migrations have been run for the "core" Django app (``python manage.py migrate core``).
 
 To create a new shape dataset for use in the Seshat map explorer, you can do the following:
 
