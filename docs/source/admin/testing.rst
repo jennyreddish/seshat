@@ -40,3 +40,8 @@ To set up pushing the docker image using the GH action workflow, I first did the
 
 - Generated a new GitHub token with the ``read:packages`` and ``write:packages`` scopes. Under my ``Settings > Developer settings > Personal access tokens`` (classic token).
 - Stored the GitHub token as a secret in the Seshat GitHub repository, ``Settings > Secrets``, named ``GH_TOKEN``.
+
+Adding new tests
+----------------
+
+*TODO: Add instructions for adding new tests.*
