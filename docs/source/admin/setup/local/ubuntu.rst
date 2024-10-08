@@ -129,7 +129,7 @@ In the database, run the following SQL command to create a new database. Note th
 
 Exit out of the ``psql`` program:
 
-.. code-block:: sql
+.. code-block::
 
     \q
 

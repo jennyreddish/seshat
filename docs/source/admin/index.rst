@@ -1,5 +1,5 @@
 Seshat Databank Admin
-============
+=====================
 
 This section of the documentation is for the Seshat Databank Admins: members of the Seshat team responsible for the maintenance and development of the Seshat codebase, database and website.
 
@@ -17,7 +17,6 @@ You may also wish to review the `team <../team.rst>`_ page, which includes a hel
    backup
    schema
    testing
-   api/index
    websites
    setup/index
 
