@@ -1,5 +1,5 @@
-Cliopatria 
-=========
+How to edit the Cliopatria borders dataset
+===========================================
 
 Cliopatria is a comprehensive open-source geospatial dataset of worldwide states, political groups, events, and rulers from 3400BCE to 2024CE.
 It is part of the Seshat Global History Databank project.
