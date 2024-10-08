@@ -9,11 +9,17 @@ Getting started as a Seshat Databank Admin
 .. toctree::
    :maxdepth: 3
 
-   setup/index
    developers-guide
+   repo_structure
+   django
+   bulk_updates
+   backup
+   schema
    testing
    api/index
    websites
+   setup/index
+
 
 
 
