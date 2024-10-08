@@ -1,5 +1,5 @@
 Seshat Databank Admin
-============
+=====================
 
 This section of the documentation is for the Seshat Databank Admins: members of the Seshat team responsible for the maintenance and development of the Seshat codebase, database and website.
 
