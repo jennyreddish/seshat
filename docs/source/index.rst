@@ -27,10 +27,3 @@ The documentation is divided into sections based on the role of the reader, whic
    api/index
    code-of-conduct
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
