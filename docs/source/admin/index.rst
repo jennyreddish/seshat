@@ -17,7 +17,6 @@ You may also wish to review the `team <../team.rst>`_ page, which includes a hel
    backup
    schema
    testing
-   api/index
    websites
    setup/index
 
