@@ -1,10 +1,9 @@
 Seshat Databank Admin
 ============
 
-Getting started as a Seshat Databank Admin
-------------------------------------------
+This section of the documentation is for the Seshat Databank Admins: members of the Seshat team responsible for the maintenance and development of the Seshat codebase, database and website.
 
-*TODO: Add instructions for getting started as a Seshat Databank Admin.*
+If you are new to the Seshat project, you should review these pages, in particular the Getting Started section of the Developers Guide.
 
 .. toctree::
    :maxdepth: 3
