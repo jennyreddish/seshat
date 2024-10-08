@@ -23,7 +23,7 @@ import seshat
 # -- Project information -----------------------------------------------------
 
 project = 'Seshat'
-copyright = '2024, Ed Chalstrey, Kalle Westerling, Majid Benam'
+copyright = '2024, Seshat: Global History Databank'
 author = 'Ed Chalstrey, Kalle Westerling, Majid Benam'
 
 release = seshat.__version__
