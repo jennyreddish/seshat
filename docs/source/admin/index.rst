@@ -5,6 +5,8 @@ This section of the documentation is for the Seshat Databank Admins: members of 
 
 If you are new to the Seshat project, you should review these pages, in particular the Getting Started section of the Developers Guide.
 
+You may also wish to review the `help <../help.rst>`_ page to see who on the Seshat team can help you with various tasks.
+
 .. toctree::
    :maxdepth: 3
 
