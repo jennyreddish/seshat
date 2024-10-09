@@ -13,17 +13,40 @@ Python & Anaconda
     .. tab:: Mac/Linux
 
         1. Python is installed on your computer by default.
-        2. Open Terminal and type `python --version` to check the version of Python you have installed.
+        2. Open Terminal and type the following to check the version of Python you have installed:
+
+            ```bash
+                python --version
+            ```
+
             - Note: if you are not familiar with using the command line, you can find Terminal in the Applications folder on your Mac. Pin it to your dock for easy access.
-        3. We recommend installing `Homebrew <https://brew.sh/>`_ a useful package manager for macOS and Linux.
-            - Note: check if homebrew is already installed by typing `brew --version` in Terminal.
-        4. Install Anaconda via Homebrew by typing `brew install --cask anaconda` in Terminal.
+
+        3. We recommend installing `Homebrew <https://brew.sh/>`_, a useful package manager for macOS and Linux.
+
+            - Check if Homebrew is already installed by typing the following in Terminal:
+
+            ```bash
+                brew --version
+            ```
+
+        4. Install Anaconda via Homebrew by typing:
+
+            ```bash
+                brew install --cask anaconda
+            ```
 
     .. tab:: Windows
 
         1. Install Anaconda with this `guide <https://docs.anaconda.com/anaconda/install/windows/>`_.
+
             - Note: to download the installer from the Anaconda website it will ask you to create an account.
-        2. Once installed, open the Anaconda command prompt and type `python --version` to check the version of Python you have installed.
+
+        2. Once installed, open the Anaconda command prompt and type the following to check the version of Python you have installed:
+            
+            ```bash
+                python --version
+            ```
+
             - Note: you can find the Anaconda command prompt in the Start menu on your Windows computer. Pin it to your taskbar for easy access.
 
 
@@ -35,15 +58,31 @@ Git & GitHub
     .. tab:: Mac/Linux
 
         1. Create an account on `GitHub <https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github>`_.
-        2. Ensure Git installed on your computer:
-            - On a Mac or Linux computer, open Terminal and type `git --version` to check if Git is installed.
-        3. If Git is not installed already:
-            - On a Mac or Linux computer, install Git via Homebrew by typing `brew install git` in Terminal.
+
+        2. Check if Git is installed on your computer by opening Terminal and typing:
+
+            ```bash
+                git --version
+            ```
+
+        3. If Git is not installed already, install Git via Homebrew by typing:
+
+            ```bash
+                brew install git
+            ```
 
     .. tab:: Windows
 
         1. Create an account on `GitHub <https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github>`_.
-        2. Ensure Git installed on your computer:
-            - On a Windows computer, open the Anaconda command prompt and type `git --version` to check if Git is installed.
-        3. If Git is not installed already:
-            - On a Windows computer, install Git by typing `conda install -c conda-forge git` in the Anaconda command prompt.
+
+        2. Check if Git is installed on your computer by opening the Anaconda command prompt and typing:
+            
+            ```bash
+                git --version
+            ```
+
+        3. If Git is not installed already, install Git by typing:
+
+            ```bash
+                conda install -c conda-forge git
+            ```
