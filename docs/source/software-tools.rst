@@ -31,4 +31,4 @@ Git & GitHub
     - On a Windows computer, open the Anaconda command prompt and type `git --version` to check if Git is installed.
 3. If Git is not installed already:
     - On a Mac or Linux computer, install Git via Homebrew by typing `brew install git` in Terminal.
-    - On a Windows computer, install Git by typing `conda install anaconda::git` in the Anaconda command prompt.
+    - On a Windows computer, install Git by typing `conda install -c conda-forge git` in the Anaconda command prompt.
