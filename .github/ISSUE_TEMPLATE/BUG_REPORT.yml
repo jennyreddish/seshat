@@ -87,4 +87,4 @@ body:
       options:
         - label: A fix for the bug has been developed on a branch.
         - label: The bug fix branch has been tested in the Staging website.
-        - label: A pull request has been created for the new branch to be merged into the main branch.
+        - label: A pull request has been created for the new branch to be merged into the dev branch.

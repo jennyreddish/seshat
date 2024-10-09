@@ -50,4 +50,4 @@ body:
       options:
         - label: The feature has been developed on a feature branch.
         - label: The feature branch has been tested in the Staging website.
-        - label: A pull request has been created for the feature branch to be merged into the main branch.
+        - label: A pull request has been created for the feature branch to be merged into the dev branch.
