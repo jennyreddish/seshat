@@ -4,11 +4,11 @@ Seshat: Global History Databank
 Project Documentation
 ---------------------
 
-The Seshat Global History Databank website can be found at `Seshat DB <https://seshat-db.com/>`_. Seshat has a user login system, with different levels of access depending on the user's role.
+This site includes documentation for the Seshat project, such as how-to guides and technical guidance applicable to those working on, or contributing to Seshat.
 
-On this site you will find documentation for the Seshat project, such as how-to guides and technical guidance applicable to those working on, or contributing to Seshat.
+The purpose is to provide a comprehensive knowledge sharing resource for all aspects of Seshat, including tools for working with the Seshat website and database, as well as reproducible research methods and code.
 
-The documentation is divided into sections based on the role of the reader, which match the access level of your account on the Seshat website. These roles are defined as follows:
+The documentation is divided into sections based on the role of the reader, which match the access level of accounts on the Seshat website. These roles are defined as follows:
 
 1. Seshat Databank Admin: A member of the Seshat team responsible for the maintenance and development of the Seshat codebase, database and website.
 2. Researcher: Any researcher contributing to, or consuming, the Seshat data as part of an ongoing Seshat affiliated project.
