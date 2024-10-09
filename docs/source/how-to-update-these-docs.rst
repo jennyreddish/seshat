@@ -24,16 +24,13 @@ Choose the "Documentation Improvement" issue template and provide as much detail
 
 Once the issue is created, you may wish to add a specific person under the "Assignees" section, or leave it blank if you're happy for anyone to pick it up.
 
+How to update these docs yourself
+---------------------------------
 
-How to update these docs
-------------------------
+In order to update these documentation pages, first you'll need to ensure you are set up with an account on GitHub and have Git, Python and Anaconda installed on your computer.
 
-In order to update these documentation pages, you will need to the following pre-requisites:
+If you lack any of these, follow the steps on the `Software tools <software-tools>`_ page to get set up.
 
-1. An account on `GitHub <https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github>`_.
-2. Git installed on your computer. See `Setting up Git <https://docs.github.com/en/get-started/quickstart/set-up-git>`_.
-3. Python installed on your computer. If you don't already have this, we reccomend installing `Anaconda <https://www.anaconda.com/download>`_.
-
-Once you have the above pre-requisites, you can follow the steps below to update the documentation:
+Once you have these pre-requisites, you can follow the steps below to update the documentation:
 
 
