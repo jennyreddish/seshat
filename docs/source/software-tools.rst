@@ -21,13 +21,15 @@ Python & Anaconda
 
             - Note: if you are not familiar with using the command line, you can find Terminal in the Applications folder on your Mac. Pin it to your dock for easy access.
 
-        3. We recommend installing `Homebrew <https://brew.sh/>`_, a useful package manager for macOS and Linux.
+        3. We recommend installing Homebrew, a useful package manager for macOS and Linux.
 
             - Check if Homebrew is already installed by typing the following in Terminal:
 
             .. code-block:: bash
 
                 brew --version
+
+            - If not, follow the instructions on the `Homebrew <https://brew.sh/>`_ website to install it.
 
         4. Install Anaconda via Homebrew by typing:
 
