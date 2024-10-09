@@ -24,7 +24,8 @@ The documentation is divided into sections based on the role of the reader, whic
    public_user/index
    team
    resources
+   software-tools
+   how-to-update-these-docs
    api/index
    code-of-conduct
-   how-to-update-these-docs
 
