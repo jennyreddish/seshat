@@ -26,4 +26,5 @@ The documentation is divided into sections based on the role of the reader, whic
    resources
    api/index
    code-of-conduct
+   how-to-update-these-docs
 
