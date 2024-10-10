@@ -35,4 +35,15 @@ The README file in the `examples` folder provides instructions on how to install
 Working with the Cliopatria borders dataset
 --------------------------------------------
 
-You may want to start by reading the `Software tools <software-tools>`_ page to ensure you have Python and Git installed on your computer.
+The Cliopatria borders dataset is available as part of the Seshat database and API. It is used on the `World Map <https://seshat-db.com/core/world_map>`_ and polity pages of the Seshat website.
+
+Cliopatria is also available as a stand-alone dataset which is stored and documented at `github.com/Seshat-Global-History-Databank/cliopatria <https://github.com/Seshat-Global-History-Databank/cliopatria>`_.
+The data takes the form of a single GeoJSON file, a format that can be loaded by a wide variety of software for handling geospatial data.
+
+A great way to get started exploring the Cliopatria dataset is to open it in the Jupyter notebook example found inside the `github.com/Seshat-Global-History-Databank/cliopatria <https://github.com/Seshat-Global-History-Databank/cliopatria>`_ GitHub repo.
+The `notebooks` folder contains a processing script to add colors to the dataset, alongside a notebook which loads the data in GeoPandas and includes an interactive Folium plot.
+Follow the README instructions in the `notebooks` folder.
+
+.. tip::
+
+    You may want to start by reading the `Software tools <software-tools>`_ page to ensure you have Python and Git installed on your computer.
