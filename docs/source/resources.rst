@@ -34,7 +34,7 @@ There is a second GitHub organisation at `github.com/seshatdb <https://github.co
 Data downloads
 --------------
 
-A list of datasets associated with the Seshat project and download links is maintained on the Seshat website at `seshat-db.com/downloads_page <https://seshat-db.com/downloads_page>`_.
+Navigate to the `datasets <researcher/datasets.rst>`_ page for a list of datasets associated with the Seshat project and download links.
 
 Zenodo
 ------
