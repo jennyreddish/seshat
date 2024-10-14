@@ -3,6 +3,8 @@ Seshat Expert
 
 This page includes help for our Seshat Experts: collaborators with the necessary expertise and permission to approve or reject changes to the Seshat data.
 
+A list of experts is maintained on `our project info site <https://seshatdatabank.info/seshat-about-us/contributor-database>`_.
+
 
 Creating a login on the Seshat website
 ---------------------------------------
