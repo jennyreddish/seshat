@@ -4,12 +4,22 @@ Complete list of project resources and where to find them
 This page provides a list of resources related to the Seshat project, what they are and where to find them.
 This includes publications, code repositories, datasets, websites and shared drives.
 
-Websites
---------
+Seshat websites explained
+-------------------------
 
-1. `seshat-db.com <https://seshat-db.com>`_ is the Seshat data website. Here you can log in as an admin, researcher, Seshat expert or public user to access Seshat data via the website or API.
-2. `seshatdata.com <https://seshatdata.com>`_ is a test website which looks and behaves like the main Seshat website, but is used for testing new features before they are deployed to the main website.
-3. `seshatdatabank.info <https://seshatdatabank.info>`_ is the project information website, which provides information about the Seshat project, its goals, and the team behind it. It also inclues a list of `academic publications <https://seshatdatabank.info/academic-publications>`_ associated with the project.
+1. `seshat-db.com <https://seshat-db.com>`_ is the Seshat data website.
+
+    - Here you can log in as an admin, researcher, Seshat expert or public user to access Seshat data via the website or API.
+
+    - This site is managed by the Seshat Databank Admins; primarily Majid Benam. See the `team <team.rst>`_ page for more info.
+
+2. `seshatdata.com <https://seshatdata.com>`_ is a test website which looks and behaves like the Seshat data website, but is used for testing new features before they are deployed to the main website.
+
+3. `seshatdatabank.info <https://seshatdatabank.info>`_ is the project information website.
+
+    - This provides external facing information about the Seshat project, its goals, and the team behind it.
+
+    - This site is managed by Elizabeth Hempstead at the University of Oxford. Contact Pieter Francois to make changes to this site. See the `team <team.rst>`_ page for more info.
 
 
 Academic publications
