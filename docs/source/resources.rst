@@ -1,17 +1,20 @@
 List of Seshat project resources
 ===============================
 
+This page provides a list of resources related to the Seshat project, including papers, GitHub repositories, Zenodo datasets, websites, codebooks, and shared drives.
 
 Websites
 --------
 
 1. `seshat-db.com <https://seshat-db.com>`_ is the Seshat data website. Here you can log in as an admin, researcher, Seshat expert or public user to access Seshat data via the website or API.
 2. `seshatdata.com <https://seshatdata.com>`_ is a test website which looks and behaves like the main Seshat website, but is used for testing new features before they are deployed to the main website.
-3. `seshatdatabank.info <https://seshatdatabank.info>`_ is the project information website, which provides information about the Seshat project, its goals, and the team behind it.
+3. `seshatdatabank.info <https://seshatdatabank.info>`_ is the project information website, which provides information about the Seshat project, its goals, and the team behind it. It also inclues a list of `academic publications <https://seshatdatabank.info/academic-publications>`_ associated with the project.
 
-Papers
------
 
+Academic publications
+---------------------
+
+A full list of academic publications associated with the project is available at `seshatdatabank.info/academic-publications <https://seshatdatabank.info/academic-publications>`_.
 
 GitHub
 ------
