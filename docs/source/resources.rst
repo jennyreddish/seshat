@@ -53,6 +53,9 @@ Methods and codebook
 
 The `project information website <https://seshatdatabank.info/methods/world-sample-30>`_ contains information on the methods used to collect and encode data for the Seshat Global History Databank.
 
-
 Shared drives
 -------------
+
+...
+
+See the `backup <admin/backup.rst>`_ page for the shared drive used to store backups of the Seshat database.
