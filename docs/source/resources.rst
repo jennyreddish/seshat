@@ -1,4 +1,4 @@
-Project resources:where to find them
+Project resources: where to find them
 =========================================================
 
 This page provides a list of resources related to the Seshat project, what they are and where to find them.
