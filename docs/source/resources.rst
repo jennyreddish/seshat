@@ -1,7 +1,8 @@
-List of Seshat project resources
-===============================
+Complete list of project resources and where to find them
+=========================================================
 
-This page provides a list of resources related to the Seshat project, including papers, GitHub repositories, Zenodo datasets, websites, codebooks, and shared drives.
+This page provides a list of resources related to the Seshat project, what they are and where to find them.
+This includes publications, code repositories, datasets, websites and shared drives.
 
 Websites
 --------
