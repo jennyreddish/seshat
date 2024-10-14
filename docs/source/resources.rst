@@ -22,11 +22,18 @@ GitHub
 The Seshat project has it's own organisation on GitHub at `github.com/Seshat-Global-History-Databank <https://github.com/Seshat-Global-History-Databank>`_.
 Here you can find public repositories for the Seshat website and documenatation, the Seshat API Python package and the Cliopatria dataset.
 
+There is a second GitHub organisation at `github.com/seshatdb <https://github.com/seshatdb>`_ which contains some repositories containing data and/or scripts for generating data for Seshat publications and data downloads (see below).
+
 .. note::
 
     - For more information on the using Seshat website codbase, see the `Seshat Databank Admin <admin/index.rst>`_ pages.
     - For more information on using the Seshat API python package and the Cliopatria dataset, see the `Researcher <researcher/index.rst>`_ pages.
 
+
+Data downloads
+--------------
+
+A list of datasets associated with the Seshat project and download links is maintained on the Seshat website at `seshat-db.com/downloads_page <https://seshat-db.com/downloads_page>`_.
 
 Zenodo
 ------
