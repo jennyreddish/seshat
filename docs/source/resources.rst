@@ -41,14 +41,12 @@ There is a second GitHub organisation at `github.com/seshatdb <https://github.co
     - For more information on using the Seshat API python package and the Cliopatria dataset, see the `Researcher <researcher/index.rst>`_ pages.
 
 
-Data downloads
---------------
+Data downloads & Zenodo
+-----------------------
 
 Navigate to the `datasets <researcher/datasets.rst>`_ page for a list of datasets associated with the Seshat project and download links.
 
-Zenodo
-------
-
+There is not currently a Zenodo community for Seshat, but clicking through to those datasets will reveal Zenodo pages for some of the datasets.
 
 Methods and codebook
 --------------------
