@@ -29,7 +29,15 @@ Ed Chalstrey
 
 **Who am I?**
 
+- Research Software Engineer at the Alan Turing Institute.
+- Working on the Seshat project from November 2023 until March 2025.
+
 **What can I help with?**
+
+- Seshat website codebase, in particular the maps pages
+- Seshat API Python package
+- Cliopatria shape dataset
+- Software Engineering & Data Science skills
 
 **Administative privileges:** Admin
 
