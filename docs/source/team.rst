@@ -39,7 +39,9 @@ Ed Chalstrey
 - Cliopatria shape dataset
 - Software Engineering & Data Science skills
 
-**Administative privileges:** Admin
+**Administative privileges:**
+
+Seshat Admin
 
 Contact
 -------
