@@ -11,7 +11,7 @@ Follow the example of the existing bios, adding the following sections:
 
 - **Who am I?** A brief introduction to who you are.
 - **What can I help with?** A list of things you can help with.
-- **Administative privileges:** This is your access level on `seshat-db.com` which should be one of the following:
+- **Administrative privileges:** This is your access level on `seshat-db.com` which should be one of the following:
 
     - Seshat Admin
     - Research Assistant
@@ -29,8 +29,8 @@ Ed Chalstrey
 
 **Who am I?**
 
-- Research Software Engineer at the Alan Turing Institute.
-- Working on the Seshat project from November 2023 until March 2025.
+- Research Software Engineer at the Alan Turing Institute
+- Working on the Seshat project from November 2023 until March 2025
 
 **What can I help with?**
 
@@ -39,9 +39,7 @@ Ed Chalstrey
 - Cliopatria shape dataset
 - Software Engineering & Data Science skills
 
-**Administative privileges:**
-
-Seshat Admin
+**Administrative privileges:** Seshat Admin
 
 Contact
 -------
