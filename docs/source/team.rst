@@ -5,6 +5,34 @@ A full list of people who have contributed to the project can be found on the pr
 
 This page intends to be a useful place to find out who is currently working on the project, how to get in touch with them and what they can help you with.
 
+If you are new to the team, please add your details to the "Bios" section below.
+To do this follow the guide on `how to update these docs <how-to-update-these-docs.rst>`_.
+Follow the example of the existing bios, adding the following sections:
+
+- **Who am I?** A brief introduction to who you are.
+- **What can I help with?** A list of things you can help with.
+- **Administative privileges:** This is your access level on `seshat-db.com` which should be one of the following:
+
+    - Seshat Admin
+    - Research Assistant
+    - Seshat Expert
+    - Public User
+
+.. note::
+    Project roles that match the above access levels are defined `here <index.rst>`_.
+
+Bios
+----
+
+Ed Chalstrey
+~~~~~~~~~~~~
+
+**Who am I?**
+
+**What can I help with?**
+
+**Administative privileges:** Admin
+
 Contact
 -------
 
