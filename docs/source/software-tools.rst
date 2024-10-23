@@ -35,17 +35,17 @@ Python & Anaconda
 
             - If not, follow the instructions on the `Homebrew <https://brew.sh/>`_ website to install it.
 
-            - After running the install command, you may need to add Homebrew to your PATH. You can do this by **following the instructions in the Terminal after running the install command**. For example if you are using `zsh` (the default shell on macOS Catalina and later), it will ask you do something like:
+            .. admonition:: Note: A warning near the end of installation may ask you to add Homebrew to your PATH. In `zsh` it will look like this (`bash` shell instructions will differ):
+                :class: dropdown
 
-            .. code-block:: zsh
+                .. code-block:: zsh
 
-                echo >> /Users/<username>/.zprofile
-                echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/<username>/.zprofile
-                eval "$(/opt/homebrew/bin/brew shellenv)"
+                    echo >> /Users/<username>/.zprofile
+                    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/<username>/.zprofile
+                    eval "$(/opt/homebrew/bin/brew shellenv)"
 
-            - Note: if you are using bash shell, the instructions will be different. Follow the instructions in the Terminal after running the install command.
             
-            - Note: You may need to open a new Terminal window for the changes to take effect.
+            - Note: You may need to open a new Terminal window afterwards for brew to work.
 
         4. Install Anaconda via Homebrew and add it to your PATH by typing:
 
