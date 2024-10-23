@@ -17,6 +17,21 @@ For most researchers on the project, this will involve being given the "Research
 Making and approving data edits on the Seshat website
 -----------------------------------------------------
 
+Once you have created an account and been given the correct permissions, you can start making and approving data edits on the Seshat website.
+
+1. Navigate to a polity page and click either on the pen button near the top to edit general Polity details, or the **+** button on a particular variable of interest.
+
+    - Editing polity info:
+
+        .. image:: ../img/edit_polity.png
+            :alt: Edit Polity
+
+    - Editing a variable:
+
+        .. image:: ../img/edit_var.png
+            :alt: Edit Variable
+
+2. Fill out the edit page and submit for review.
 
 Discussing data edits via private comments on the Seshat website
 ----------------------------------------------------------------
