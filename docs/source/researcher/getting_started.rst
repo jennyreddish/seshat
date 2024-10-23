@@ -10,6 +10,13 @@ Creating an account on the Seshat website is the first step to accessing the Ses
 
 Follow the information on the screen to create your account.
 
+Making and approving data edits on the Seshat website
+-----------------------------------------------------
+
+
+Discussing data edits via private comments on the Seshat website
+----------------------------------------------------------------
+
 .. _API Getting Started:
 
 Loading Seshat data in Python via the Seshat API
