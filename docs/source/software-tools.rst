@@ -112,7 +112,9 @@ Git & GitHub
 
                 brew install git
 
-            - Note: If Homebrew is not installed, refer to the Python & Anaconda instructions above.
+            .. hint::
+                
+                If Homebrew is not installed, refer to the Python & Anaconda instructions above.
 
     .. tab:: Windows
 
@@ -130,4 +132,6 @@ Git & GitHub
 
                 conda install -c conda-forge git
 
-            - Note: If Anaconda is not installed, refer to the Python & Anaconda instructions above.
+            .. hint::
+                
+                If Anaconda is not installed, refer to the Python & Anaconda instructions above.
