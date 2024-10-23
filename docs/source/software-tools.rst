@@ -13,13 +13,17 @@ Python & Anaconda
     .. tab:: Mac/Linux
 
         1. Python is installed on your computer by default.
-        2. Open Terminal and type the following to check the version of Python you have installed:
+
+        2. Open Terminal and type the following to check the version of Python you have installed and which shell you are using:
 
             .. code-block:: zsh
 
                 python --version
+                echo $SHELL
 
             - Note: if you are not familiar with using the command line, you can find Terminal in the Applications folder on your Mac. Pin it to your dock for easy access.
+
+            - Note: If your shell is `/bin/zsh`, instructions below will work. If your shell is `/bin/bash` pay attention to the alternate bash instructions.
 
         3. We recommend installing Homebrew, a useful package manager for macOS and Linux.
 
@@ -39,13 +43,29 @@ Python & Anaconda
                 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/<username>/.zprofile
                 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-            - You may need to open a new Terminal window for the changes to take effect.
+            - Note: if you are using bash shell, the instructions will be different. Follow the instructions in the Terminal after running the install command.
+            
+            - Note: You may need to open a new Terminal window for the changes to take effect.
 
-        4. Install Anaconda via Homebrew by typing:
+        4. Install Anaconda via Homebrew and add it to your PATH by typing:
 
             .. code-block:: zsh
 
                 brew install --cask anaconda
+                echo 'export PATH=/usr/local/anaconda3/bin:$PATH' >> ~/.zshrc
+                echo 'export PATH=/opt/homebrew/anaconda3/bin:$PATH' >> ~/.zshrc
+                source ~/.zshrc
+                conda init zsh
+
+            - Note: If you are using bash shell, do the following instead
+
+                .. code-block:: bash
+
+                    brew install --cask anaconda
+                    echo 'export PATH=/usr/local/anaconda3/bin:$PATH' >> ~/.bash_profile
+                    echo 'export PATH=/opt/homebrew/anaconda3/bin:$PATH' >> ~/.bash_profile
+                    source ~/.bash_profile
+                    conda init bash
 
     .. tab:: Windows
 
