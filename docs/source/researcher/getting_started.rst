@@ -31,7 +31,9 @@ Once you have created an account and been given the correct permissions, you can
         .. image:: ../img/edit_var.png
             :alt: Edit Variable
 
-2. Fill out the edit page and submit for review.
+2. Fill out the edit page that opens and submit for review.
+
+    - *TODO: Explain the approval process for handling the edits after they are submitted for review*
 
 Discussing data edits via private comments
 ------------------------------------------
