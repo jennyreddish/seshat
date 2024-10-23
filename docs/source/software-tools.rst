@@ -15,7 +15,7 @@ Python & Anaconda
         1. Python is installed on your computer by default.
         2. Open Terminal and type the following to check the version of Python you have installed:
 
-            .. code-block:: bash
+            .. code-block:: zsh
 
                 python --version
 
@@ -25,11 +25,21 @@ Python & Anaconda
 
             - Check if Homebrew is already installed by typing the following in Terminal:
 
-            .. code-block:: bash
+            .. code-block:: zsh
 
                 brew --version
 
             - If not, follow the instructions on the `Homebrew <https://brew.sh/>`_ website to install it.
+
+            - After running the install command, you may need to add Homebrew to your PATH. You can do this by **following the instructions in the Terminal after running the install command**. For example if you are using `zsh` (the default shell on macOS Catalina and later), it will ask you do something like:
+
+            .. code-block:: zsh
+
+                echo >> /Users/<username>/.zprofile
+                echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/<username>/.zprofile
+                eval "$(/opt/homebrew/bin/brew shellenv)"
+
+            - You may need to open a new Terminal window for the changes to take effect.
 
         4. Install Anaconda via Homebrew by typing:
 
@@ -63,13 +73,13 @@ Git & GitHub
 
         2. Check if Git is installed on your computer by opening Terminal and typing:
 
-            .. code-block:: bash
+            .. code-block:: zsh
 
                 git --version
 
         3. If Git is not installed already, install Git via Homebrew by typing:
 
-            .. code-block:: bash
+            .. code-block:: zsh
 
                 brew install git
 
