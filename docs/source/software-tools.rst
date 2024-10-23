@@ -49,15 +49,18 @@ Python & Anaconda
 
         4. Install Anaconda via Homebrew and add it to your PATH by typing:
 
-            .. code-block:: zsh
+            .. admonition:: If using `zsh` shell:
+               :class: dropdown
 
-                brew install --cask anaconda
-                echo 'export PATH=/usr/local/anaconda3/bin:$PATH' >> ~/.zshrc
-                echo 'export PATH=/opt/homebrew/anaconda3/bin:$PATH' >> ~/.zshrc
-                source ~/.zshrc
-                conda init zsh
+                .. code-block:: zsh
 
-            .. admonition:: Note: If you are using bash shell, do the following instead:
+                    brew install --cask anaconda
+                    echo 'export PATH=/usr/local/anaconda3/bin:$PATH' >> ~/.zshrc
+                    echo 'export PATH=/opt/homebrew/anaconda3/bin:$PATH' >> ~/.zshrc
+                    source ~/.zshrc
+                    conda init zsh
+
+            .. admonition:: If using `bash` shell:
                :class: dropdown
             
                .. code-block:: bash
