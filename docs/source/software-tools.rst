@@ -43,7 +43,7 @@ Python & Anaconda
 
         4. Install Anaconda via Homebrew by typing:
 
-            .. code-block:: bash
+            .. code-block:: zsh
 
                 brew install --cask anaconda
 
