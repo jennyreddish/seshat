@@ -114,7 +114,8 @@ Git & GitHub
 
             .. hint::
                 
-                If Homebrew is not installed, refer to the Python & Anaconda instructions above.
+                - If you are not familiar with using the command line, you can find Terminal in the Applications folder on your Mac. Pin it to your dock for easy access.
+                - If Homebrew is not installed, refer to the Python & Anaconda instructions above.
 
     .. tab:: Windows
 
@@ -134,4 +135,5 @@ Git & GitHub
 
             .. hint::
                 
-                If Anaconda is not installed, refer to the Python & Anaconda instructions above.
+                - You can find the Anaconda command prompt in the Start menu on your Windows computer. Pin it to your taskbar for easy access.
+                - If Anaconda is not installed, refer to the Python & Anaconda instructions above.
