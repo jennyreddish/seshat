@@ -14,8 +14,8 @@ Ensure you are given the correct permissions for your account by contacting the 
 See the `team <../team.rst>`_ page for more information.
 For most researchers on the project, this will involve being given the "Research Assistant" role permissions, which allows you to make and discuss data edits.
 
-Making and approving data edits on the Seshat website
------------------------------------------------------
+Making data edits
+-----------------
 
 Once you have created an account and been given the correct permissions, you can start making and approving data edits on the Seshat website.
 
@@ -33,8 +33,8 @@ Once you have created an account and been given the correct permissions, you can
 
 2. Fill out the edit page and submit for review.
 
-Discussing data edits via private comments on the Seshat website
-----------------------------------------------------------------
+Discussing data edits via private comments
+------------------------------------------
 
 .. _API Getting Started:
 
