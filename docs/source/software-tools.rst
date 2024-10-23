@@ -21,9 +21,12 @@ Python & Anaconda
                 python --version
                 echo $SHELL
 
-            - Note: if you are not familiar with using the command line, you can find Terminal in the Applications folder on your Mac. Pin it to your dock for easy access.
 
-            - Note: If your shell is `/bin/zsh`, instructions below will work. If your shell is `/bin/bash` pay attention to the alternate bash instructions.
+            - Make a note as to whether your shell is `/bin/zsh` or `/bin/bash` to know which instructions to follow bellow.
+
+            .. hint::
+
+                If you are not familiar with using the command line, you can find Terminal in the Applications folder on your Mac. Pin it to your dock for easy access.
 
         3. We recommend installing Homebrew, a useful package manager for macOS and Linux.
 
@@ -75,7 +78,7 @@ Python & Anaconda
 
         1. Install Anaconda with this `guide <https://docs.anaconda.com/anaconda/install/windows/>`_.
 
-            - Note: to download the installer from the Anaconda website it will ask you to create an account.
+            - To download the installer from the Anaconda website it will ask you to create an account.
 
         2. Once installed, open the Anaconda command prompt and type the following to check the version of Python you have installed:
             
@@ -83,7 +86,9 @@ Python & Anaconda
 
                 python --version
 
-            - Note: you can find the Anaconda command prompt in the Start menu on your Windows computer. Pin it to your taskbar for easy access.
+            .. hint::
+                
+                You can find the Anaconda command prompt in the Start menu on your Windows computer. Pin it to your taskbar for easy access.
 
 
 Git & GitHub
