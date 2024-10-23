@@ -103,6 +103,8 @@ Git & GitHub
 
                 brew install git
 
+            - Note: If Homebrew is not installed, refer to the Python & Anaconda instructions above.
+
     .. tab:: Windows
 
         1. Create an account on `GitHub <https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github>`_.
@@ -118,3 +120,5 @@ Git & GitHub
             .. code-block:: bash
 
                 conda install -c conda-forge git
+
+            - Note: If Anaconda is not installed, refer to the Python & Anaconda instructions above.
