@@ -57,15 +57,16 @@ Python & Anaconda
                 source ~/.zshrc
                 conda init zsh
 
-            - Note: If you are using bash shell, do the following instead
-
-                .. code-block:: bash
-
-                    brew install --cask anaconda
-                    echo 'export PATH=/usr/local/anaconda3/bin:$PATH' >> ~/.bash_profile
-                    echo 'export PATH=/opt/homebrew/anaconda3/bin:$PATH' >> ~/.bash_profile
-                    source ~/.bash_profile
-                    conda init bash
+            .. admonition:: Note: If you are using bash shell, do the following instead:
+               :class: dropdown
+            
+               .. code-block:: bash
+            
+                   brew install --cask anaconda
+                   echo 'export PATH=/usr/local/anaconda3/bin:$PATH' >> ~/.bash_profile
+                   echo 'export PATH=/opt/homebrew/anaconda3/bin:$PATH' >> ~/.bash_profile
+                   source ~/.bash_profile
+                   conda init bash
 
     .. tab:: Windows
 
