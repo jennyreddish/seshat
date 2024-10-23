@@ -5,6 +5,10 @@ This section of the documentation provides information on some of the commonly u
 
 If you are participating in a Seshat workshop, run these steps sequentially before the workshop to ensure you have the necessary tools installed on your computer.
 
+.. important::
+
+    This guide involves installation of command line software. It's always a good idea to read the output of the commands you run to check for any warnings or additional steps you may need to take, which may not be documented here.
+
 Python & Anaconda
 -----------------
 
