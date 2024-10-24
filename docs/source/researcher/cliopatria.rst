@@ -23,7 +23,37 @@ Follow the README instructions in the `notebooks` folder.
     You may want to start by reading the `Software tools <software-tools>`_ page to ensure you have Python and Git installed on your computer.
 
 
-Cliopatria edit and release process
------------------------------------
+Requesting edits to the Cliopatria dataset
+------------------------------------------
 
-Instructions for downloading, using and making new releases the dataset are available at the `Cliopatria GitHub repository <https://github.com/Seshat-Global-History-Databank/cliopatria>`_.
+.. warning::
+        
+    - 🚧 *This process needs to be tested and may have missing steps.* 🚧
+    - 🚧 *This process involves multiple people.* 🚧
+
+You can request edits to Cliopatria border shapes in the same way as you would request other edits to the Seshat database.
+First, review the `Getting started with Seshat data <getting_started.rst>`_ page for more information on how to make and discuss data edits.
+
+To request a specific edit to the Cliopatria dataset, such as changing the shape of a border, do the following:
+
+1. Click the "Edit" button on the polity page of interest.
+
+    .. image:: ../img/edit_cliopatria.png
+        :alt: Edit Cliopatria
+
+2. Fill out the edit page that opens and use the Private Comment box to explain in detail the change you would like. Note the ID of the shape you would like to change. If the change you are requesting is to multiple shapes, please list all the IDs. Click the "Submit for Review" button.
+
+    .. image:: ../img/edit_cliopatria_part_2.png
+        :alt: Edit Cliopatria form
+
+3. This should open a private comment thread where you can discuss the edit with other researchers. See the `Discussing data edits via private comments <getting_started.rst#discussing-data-edits-via-private-comments>`_ section for more information. Assign the comment to the person who is best placed to review the edit, e.g. someone who works on Cliopatria (see the `team <../team.rst>`_ page for more information).
+
+4. The reviewer will check the edit request and either make it or ask for more information via the comment thread.
+
+    - To make the edit, the reviewer will need to download the Cliopatria dataset from the GitHub repository, make the change, and then upload the new dataset to the repository.
+
+    - Instructions for making new releases are available in the README of the `Cliopatria GitHub repository <https://github.com/Seshat-Global-History-Databank/cliopatria?tab=readme-ov-file#making-a-release>`_.
+
+    - After the reviewer has made the change, they will contact a Seshat Databank Admin to upload the new Cliopatria release to the Seshat database.
+
+5. Once the change has been made, the reviewer will close the private comment thread and the edit will be visible on the Seshat website.
