@@ -14,7 +14,6 @@ You may also wish to review the `team <../team.rst>`_ page, which includes a hel
    datasets
    cliopatria
    projects
-   website
 
 See also the `API documentation <../api/index.rst>`_.
 
