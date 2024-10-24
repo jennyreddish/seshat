@@ -44,8 +44,39 @@ Once you have created an account and been given the correct permissions, you can
 Discussing data edits via private comments
 ------------------------------------------
 
-In addition to editing the data directly, you can 
-See everything at https://seshat-db.com/core/polities_commented/
+In addition to editing the data directly, you can start a "private comment" discussion about a potential data edit, which other researchers can see and comment on.
+Users that lack sufficent permissions, and people not logged in, will not be able to see these comments.
+You can assign a specific person to the comment, if you know their particular expertise is needed.
+
+To create a new private comment:
+
+1. Navigate to a polity page and click the "Add a Private Comment" button.
+
+    .. image:: ../img/private_comment.png
+        :alt: Private comment button
+
+2. Write your comment and assign someone to look at it, if needed, then click the insert button.
+
+    .. image:: ../img/comments.png
+        :alt: Private comment submission
+
+If someone has assigned a comment to you:
+
+1. You will see a notification in the top right corner of the website. Click this to view all the comments assigned to you.
+
+    .. image:: ../img/notifications.png
+        :alt: Notifications
+
+2. Click on the comment to view it and respond. Once the discussion thread is completed, the comment can be marked as resolved by checking the checkbox next to the comment and then clicking the "Set Done" button.
+
+    .. image:: ../img/set_done.png
+        :alt: Set comment as done
+
+
+.. tip::
+
+    You can see all the polities with comments on them by visiting the `Polities with Comments <https://seshat-db.com/core/polities_commented/>`_ page.
+
 
 .. _API Getting Started:
 
