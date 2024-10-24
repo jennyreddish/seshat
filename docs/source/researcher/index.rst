@@ -11,6 +11,7 @@ You may also wish to review the `team <../team.rst>`_ page, which includes a hel
    :maxdepth: 3
 
    getting_started
+   api
    datasets
    cliopatria
    projects
