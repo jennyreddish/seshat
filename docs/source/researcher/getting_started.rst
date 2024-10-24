@@ -14,6 +14,10 @@ Ensure you are given the correct permissions for your account by contacting the 
 See the `team <../team.rst>`_ page for more information.
 For most researchers on the project, this will involve being given the "Research Assistant" role permissions, which allows you to make and discuss data edits.
 
+.. warning::
+
+    🚧 *TODO: We should add a video here showing how to make data edits and discuss them via private comments, since the below sections only cover the basics.* 🚧 
+
 Making data edits
 -----------------
 
@@ -33,10 +37,15 @@ Once you have created an account and been given the correct permissions, you can
 
 2. Fill out the edit page that opens and submit for review.
 
-    - *TODO: Explain the approval process for handling the edits after they are submitted for review*
+    .. warning::
+        
+        🚧 *TODO: We should add an explanation of the approval process for handling the edits after they are submitted for review.* 🚧 
 
 Discussing data edits via private comments
 ------------------------------------------
+
+In addition to editing the data directly, you can 
+See everything at https://seshat-db.com/core/polities_commented/
 
 .. _API Getting Started:
 
