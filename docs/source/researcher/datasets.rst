@@ -1,8 +1,5 @@
-Seshat datasets
-===============
-
 Replication datasets
---------------------
+====================
 
 A list of datasets associated with the Seshat project and download links is maintained on the Seshat website at `seshat-db.com/downloads_page <https://seshat-db.com/downloads_page>`_.
 
