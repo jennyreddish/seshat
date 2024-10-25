@@ -17,3 +17,7 @@ Code from papers that have attached code in data/supplementary materials:
 - Testing the Big Gods hypothesis with global historical data: a review and “retake”
     - [OSF](https://osf.io/b3fsg)
     - [Paper](https://www.tandfonline.com/doi/full/10.1080/2153599X.2022.2074085#abstract)
+- Retrodicting the rise, spread, and fall of large-scale states in the Old World
+    - [GitHub](https://github.com/jbennettgit/NADSM_PLOSONE/tree/v1.0.4)
+    - [Zenodo](https://zenodo.org/records/5748186)
+    - [Paper](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0261816#sec009)
