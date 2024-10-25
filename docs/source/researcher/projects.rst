@@ -14,3 +14,6 @@ Code from papers that have attached code in data/supplementary materials:
 - Disentangling the evolutionary drivers of social complexity: A comprehensive test of hypotheses
     - [OSF](https://osf.io/qtsza/)
     - [Paper](https://www.science.org/doi/10.1126/sciadv.abn3517#supplementary-materials)
+- Testing the Big Gods hypothesis with global historical data: a review and “retake”
+    - [OSF](https://osf.io/b3fsg)
+    - [Paper](https://www.tandfonline.com/doi/full/10.1080/2153599X.2022.2074085#abstract)
