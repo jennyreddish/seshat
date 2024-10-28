@@ -26,4 +26,7 @@ A full list of academic publications associated with the project is available at
    * - `GitHub <https://github.com/jbennettgit/NADSM_PLOSONE/tree/v1.0.4>`_, `Zenodo <https://zenodo.org/records/5748186>`_
      - Python
      - `Retrodicting the rise, spread, and fall of large-scale states in the Old World <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0261816#sec009>`_
+    * - `OSF <https://osf.io/mkhde/>`_
+     - R
+     - `Rise of the war machines: Charting the evolution of military technologies from the Neolithic to the Industrial Revolution <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0258161#sec012>`_
      
