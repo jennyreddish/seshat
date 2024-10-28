@@ -27,8 +27,8 @@ Academic publications
 
 A full list of academic publications associated with the project is available at `seshatdatabank.info/academic-publications <https://seshatdatabank.info/academic-publications>`_.
 
-GitHub
-------
+GitHub organisation
+-------------------
 
 The Seshat project has it's own organisation on GitHub at `github.com/Seshat-Global-History-Databank <https://github.com/Seshat-Global-History-Databank>`_.
 Here you can find public repositories for the Seshat website and documenatation, the Seshat API Python package and the Cliopatria dataset.
@@ -41,12 +41,12 @@ There is a second GitHub organisation at `github.com/seshatdb <https://github.co
     - For more information on using the Seshat API python package and the Cliopatria dataset, see the `Researcher <researcher/index.rst>`_ pages.
 
 
-Data downloads & Zenodo
+Data downloads & code
 -----------------------
 
-Navigate to the `datasets <researcher/datasets.rst>`_ page for a list of datasets associated with the Seshat project and download links.
+Navigate to the `Replication datasets <researcher/datasets.rst>`_ page for a list of datasets associated with the Seshat project, download links and links to code repositories that can reproduce the methodology used to generate the data downloads.
 
-There is not currently a Zenodo community for Seshat, but clicking through to those datasets will reveal Zenodo pages for some of the datasets.
+Navigate to the `Analysis code <researcher/projects.rst>`_ page for a list of Seshat projects which include re-usable anaylysis scripts hosted on GitHub, Zenodo and OSF.
 
 Methods and codebook
 --------------------
