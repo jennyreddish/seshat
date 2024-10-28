@@ -32,3 +32,6 @@ A full list of academic publications associated with the project is available at
     * - `OSF <https://osf.io/kjw8c/>`_
       - R
       - `An integrative approach to estimating productivity in past societies using Seshat: Global History Databank <https://journals.sagepub.com/doi/10.1177/0959683621994644>`_
+    * - `Harvard Dataverse <https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/8TP2S7>`_
+      - R
+      - `Duration of agriculture and distance from the steppe predict the evolution of large-scale human societies in Afro-Eurasia <https://www.nature.com/articles/s41599-020-0516-2#data-availability>`_
