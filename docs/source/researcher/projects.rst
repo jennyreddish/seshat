@@ -1,5 +1,5 @@
-Analysis code from Seshat publications
-======================================
+Code from Seshat publication supplementary materials
+====================================================
 
 This page includes a table of Seshat publications which have supplementary materials including links to re-usable anaylysis scripts hosted online (e.g. with GitHub, Zenodo, OSF).
 
