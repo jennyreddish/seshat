@@ -12,8 +12,8 @@ You may also wish to review the `team <../team.rst>`_ page, which includes a hel
 
    getting_started
    api
-   datasets
    cliopatria
+   datasets
    projects
 
 See also the `API documentation <../api/index.rst>`_.
