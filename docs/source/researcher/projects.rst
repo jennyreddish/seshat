@@ -26,15 +26,15 @@ A full list of academic publications associated with the project is available at
    * - `GitHub <https://github.com/jbennettgit/NADSM_PLOSONE/tree/v1.0.4>`_, `Zenodo <https://zenodo.org/records/5748186>`_
      - Python
      - `Retrodicting the rise, spread, and fall of large-scale states in the Old World <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0261816#sec009>`_
-    * - `OSF <https://osf.io/mkhde/>`_
+   * - `OSF <https://osf.io/mkhde/>`_
      - R
      - `Rise of the war machines: Charting the evolution of military technologies from the Neolithic to the Industrial Revolution <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0258161#sec012>`_
-    * - `OSF <https://osf.io/kjw8c/>`_
-      - R
-      - `An integrative approach to estimating productivity in past societies using Seshat: Global History Databank <https://journals.sagepub.com/doi/10.1177/0959683621994644>`_
-    * - `Harvard Dataverse <https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/8TP2S7>`_
-      - R
-      - `Duration of agriculture and distance from the steppe predict the evolution of large-scale human societies in Afro-Eurasia <https://www.nature.com/articles/s41599-020-0516-2#data-availability>`_
-    * - `Data Dryad <https://datadryad.org/stash/dataset/doi:10.17916/P6159W>`_
-      - R
-      - `Fitting Dynamic Regression Models to Seshat Data <https://escholarship.org/uc/item/99x6r11m>`_
+   * - `OSF <https://osf.io/kjw8c/>`_
+     - R
+     - `An integrative approach to estimating productivity in past societies using Seshat: Global History Databank <https://journals.sagepub.com/doi/10.1177/0959683621994644>`_
+   * - `Harvard Dataverse <https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/8TP2S7>`_
+     - R
+     - `Duration of agriculture and distance from the steppe predict the evolution of large-scale human societies in Afro-Eurasia <https://www.nature.com/articles/s41599-020-0516-2#data-availability>`_
+   * - `Data Dryad <https://datadryad.org/stash/dataset/doi:10.17916/P6159W>`_
+     - R
+     - `Fitting Dynamic Regression Models to Seshat Data <https://escholarship.org/uc/item/99x6r11m>`_
