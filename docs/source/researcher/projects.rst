@@ -1,7 +1,7 @@
 Analysis code from Seshat publications
 ======================================
 
-This page includes a list of Seshat publications which have re-usable anaylysis scripts hosted on GitHub, Zenodo and OSF.
+This page includes a list of Seshat publications which have re-usable anaylysis scripts hosted online including GitHub, Zenodo and OSF.
 
 A full list of academic publications associated with the project is available at `seshatdatabank.info/academic-publications <https://seshatdatabank.info/academic-publications>`_.
 
