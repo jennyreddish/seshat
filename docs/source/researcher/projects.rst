@@ -5,15 +5,27 @@ This page includes a list of Seshat publications which have re-usable anaylysis 
 
 A full list of academic publications associated with the project is available at `seshatdatabank.info/academic-publications <https://seshatdatabank.info/academic-publications>`_.
 
-.. list-table:: Papers that have attached code in data/supplementary materials
+.. list-table:: Papers that have attached code and/or supplementary materials
    :header-rows: 2
 
-   * - Code
+   * - Supplementary materials
      - Language
      - Paper
+   * - `OSF <https://osf.io/jqsfb/>`_
+     - N/A
+     - `Navigating Polycrisis: long-run socio-cultural factors shape response to changing climate <https://royalsocietypublishing.org/doi/10.1098/rstb.2022.0402>`_
    * - `GitHub <https://github.com/seshatdb/QingCollapse>`_, `Zenodo <https://doi.org/10.5281/zenodo.7267757>`_
      - R
      - `Structural-Demographic Analysis of the Qing Dynasty (1644–1912) Collapse in China <https://osf.io/preprints/socarxiv/5awhk>`_
+   * - `OSF <https://osf.io/mnxe7/>`_
+     - N/A
+     - `CRISES AVERTED How A Few Past Societies Found Adaptive Reforms in the Face of Structural- Demographic Crises <https://osf.io/preprints/socarxiv/hyj48>`_
+   * - N/A
+     - N/A
+     - `Decline and Fall, Growth and Spread, or Resilience? Approaches to Studying How and Why Societies Change <https://osf.io/preprints/socarxiv/43rgx>`_
+   * - N/A
+     - N/A
+     - `Multipath Forecasting: The Aftermath of the 2020 American Crisis <https://escholarship.org/uc/item/0g05k07v#article_main>`_
    * - `OSF <https://osf.io/pa4qf/>`_
      - R
      - `Explaining the rise of moralizing religions: a test of competing hypotheses using the Seshat Databank <https://www.tandfonline.com/doi/full/10.1080/2153599X.2022.2065345#d1e2379>`_
