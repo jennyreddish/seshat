@@ -50,3 +50,6 @@ A full list of academic publications associated with the project is available at
    * - `Data Dryad <https://datadryad.org/stash/dataset/doi:10.17916/P6159W>`_
      - R
      - `Fitting Dynamic Regression Models to Seshat Data <https://escholarship.org/uc/item/99x6r11m>`_
+   * - `OSF <https://osf.io/u6tsd/>`_
+     - N/A
+     - `A Systematic Assessment of “Axial Age” Proposals Using Global Comparative Historical Evidence <https://journals.sagepub.com/doi/10.1177/0003122418772567>`_
