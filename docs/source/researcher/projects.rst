@@ -9,11 +9,20 @@ A full list of academic publications associated with the project is available at
    :header-rows: 2
 
    * - Supplementary materials
-     - Language
+     - Included code language
      - Paper
+   * - `OSF <https://osf.io/dm5xb>`_
+     - N/A
+     - `All Crises are Unhappy in their Own Way: The role of societal instability in shaping the past <https://osf.io/gtzma/>`_
+   * - PDF in paper
+     - N/A
+     - `The characteristic time scale of cultural evolution <https://academic.oup.com/pnasnexus/article/3/2/pgae009/7601430#440037338>`_
    * - `OSF <https://osf.io/jqsfb/>`_
      - N/A
      - `Navigating Polycrisis: long-run socio-cultural factors shape response to changing climate <https://royalsocietypublishing.org/doi/10.1098/rstb.2022.0402>`_
+   * - `GitHub <https://github.com/dkondor/neolithic_simulation/>`_, `OSF <https://osf.io/qcndv/>`_
+     - C++, Python, R
+     - `Explaining population booms and busts in Mid-Holocene Europe <https://www.nature.com/articles/s41598-023-35920-z#Sec10>`_
    * - `GitHub <https://github.com/seshatdb/QingCollapse>`_, `Zenodo <https://doi.org/10.5281/zenodo.7267757>`_
      - R
      - `Structural-Demographic Analysis of the Qing Dynasty (1644–1912) Collapse in China <https://osf.io/preprints/socarxiv/5awhk>`_
