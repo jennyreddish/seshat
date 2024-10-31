@@ -29,6 +29,5 @@ Project Documentation
    resources
    software-tools
    how-to-update-these-docs
-   api/index
    code-of-conduct
 
