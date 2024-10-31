@@ -9,11 +9,14 @@ A full list of academic publications associated with the project is available at
    :header-rows: 2
 
    * - Supplementary materials
-     - Language
+     - Included code language
      - Paper
    * - `OSF <https://osf.io/dm5xb>`_
      - N/A
      - `All Crises are Unhappy in their Own Way: The role of societal instability in shaping the past <https://osf.io/gtzma/>`_
+   * - PDF in paper
+     - N/A
+     - `The characteristic time scale of cultural evolution <https://academic.oup.com/pnasnexus/article/3/2/pgae009/7601430#440037338>`_
    * - `OSF <https://osf.io/jqsfb/>`_
      - N/A
      - `Navigating Polycrisis: long-run socio-cultural factors shape response to changing climate <https://royalsocietypublishing.org/doi/10.1098/rstb.2022.0402>`_
