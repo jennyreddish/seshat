@@ -11,6 +11,9 @@ A full list of academic publications associated with the project is available at
    * - Supplementary materials
      - Language
      - Paper
+   * - `OSF <https://osf.io/dm5xb>`_
+     - N/A
+     - `All Crises are Unhappy in their Own Way: The role of societal instability in shaping the past <https://osf.io/gtzma/>`_
    * - `OSF <https://osf.io/jqsfb/>`_
      - N/A
      - `Navigating Polycrisis: long-run socio-cultural factors shape response to changing climate <https://royalsocietypublishing.org/doi/10.1098/rstb.2022.0402>`_
