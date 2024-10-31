@@ -46,7 +46,7 @@ Data downloads & code
 
 Navigate to the `Replication datasets <researcher/datasets.rst>`_ page for a list of datasets associated with the Seshat project, download links and links to code repositories that can reproduce the methodology used to generate the data downloads.
 
-Navigate to the `Analysis code <researcher/projects.rst>`_ page for a list of Seshat projects which include re-usable anaylysis scripts hosted on GitHub, Zenodo and OSF.
+Navigate to the `Code from Seshat publication supplementary materials <researcher/projects.rst>`_ page for a list of Seshat projects which include re-usable anaylysis scripts hosted on GitHub, Zenodo and OSF.
 
 Methods and codebook
 --------------------
