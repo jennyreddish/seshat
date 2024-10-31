@@ -20,6 +20,9 @@ A full list of academic publications associated with the project is available at
    * - `OSF <https://osf.io/jqsfb/>`_
      - N/A
      - `Navigating Polycrisis: long-run socio-cultural factors shape response to changing climate <https://royalsocietypublishing.org/doi/10.1098/rstb.2022.0402>`_
+   * - `GitHub <https://github.com/dkondor/neolithic_simulation/>`, `OSF <https://osf.io/qcndv/>`_
+     - C++, Python, R
+     - `Explaining population booms and busts in Mid-Holocene Europe <https://www.nature.com/articles/s41598-023-35920-z#Sec10>`_
    * - `GitHub <https://github.com/seshatdb/QingCollapse>`_, `Zenodo <https://doi.org/10.5281/zenodo.7267757>`_
      - R
      - `Structural-Demographic Analysis of the Qing Dynasty (1644–1912) Collapse in China <https://osf.io/preprints/socarxiv/5awhk>`_
