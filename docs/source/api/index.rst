@@ -19,5 +19,5 @@ The rest of this section og the documentation contains auto-generated API refere
 .. toctree::
    :titlesonly:
 
-   /admin/api/seshat/index
-   /admin/api/custom_filters/index
+   /api/seshat/index
+   /api/custom_filters/index
