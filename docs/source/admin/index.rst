@@ -19,7 +19,6 @@ You may also wish to review the `team <../team.rst>`_ page, which includes a hel
    testing
    websites
    setup/index
-   api/index
 
 
 
