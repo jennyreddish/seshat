@@ -41,6 +41,23 @@ Ed Chalstrey
 
 **Administrative privileges:** Seshat Admin
 
+Matilda Peruzzo
+~~~~~~~~~~~~~~~
+
+**Who am I?**
+
+- Research Data Scientist at the Alan Turing Institute
+- Working on the Seshat project from July 2024 until March 2025
+
+**What can I help with?**
+
+- Analysis of Seshat data
+- Usage of API and SeshatDataAnalysis packages
+- Data Science skills
+
+**Administrative privileges:** Researcher
+
+
 Contact
 -------
 
@@ -49,9 +66,10 @@ If you need to contact someone from the team, email them or use one of the commu
 - For emails of Complexity Science Hub staff, please refer to the `CSH staff page <https://www.csh.ac.at/people/>`_.
 - Alan Turing Institute staff emails are listed here:
     - Ed Chalstrey: `echalstrey@turing.ac.uk`
-    - Pieter Francois: `pfrancois@turing.ac.uk`
+    - Pieter Francois: `pieter.francois@anthro.ox.ac.uk`
     - Kalle Westerling: `kwesterling@turing.ac.uk`
     - Matilda Peruzzo: `mperuzzo@turing.ac.uk`
+    - Enrico Cioni: `enrico.a.cioni@gmail.com`
 
 Communication channels
 ----------------------
