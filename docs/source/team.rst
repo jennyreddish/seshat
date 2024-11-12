@@ -41,6 +41,23 @@ Ed Chalstrey
 
 **Administrative privileges:** Seshat Admin
 
+Matilda Peruzzo
+~~~~~~~~~~~~~~~
+
+**Who am I?**
+
+- Research Data Scientist at the Alan Turing Institute
+- Working on the Seshat project from July 2024 until March 2025
+
+**What can I help with?**
+
+- Analysis of Seshat data
+- Usage of API and SeshatDataAnalysis packages
+- Data Science skills
+
+**Administrative privileges:** Researcher
+
+
 Contact
 -------
 
@@ -52,6 +69,7 @@ If you need to contact someone from the team, email them or use one of the commu
     - Pieter Francois: `pfrancois@turing.ac.uk`
     - Kalle Westerling: `kwesterling@turing.ac.uk`
     - Matilda Peruzzo: `mperuzzo@turing.ac.uk`
+    - Enrico Cioni: `ecioni@turing.ac.uk`
 
 Communication channels
 ----------------------
