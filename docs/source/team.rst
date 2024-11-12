@@ -69,7 +69,7 @@ If you need to contact someone from the team, email them or use one of the commu
     - Pieter Francois: `pfrancois@turing.ac.uk`
     - Kalle Westerling: `kwesterling@turing.ac.uk`
     - Matilda Peruzzo: `mperuzzo@turing.ac.uk`
-    - Enrico Cioni: `ecioni@turing.ac.uk`
+    - Enrico Cioni: `enrico.a.cioni@gmail.com`
 
 Communication channels
 ----------------------
